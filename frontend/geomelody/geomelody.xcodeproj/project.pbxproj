@@ -1,0 +1,323 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		4707995A177C943F0098B2F8 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47079959177C943F0098B2F8 /* UIKit.framework */; };
+		4707995C177C943F0098B2F8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4707995B177C943F0098B2F8 /* Foundation.framework */; };
+		4707995E177C943F0098B2F8 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4707995D177C943F0098B2F8 /* CoreGraphics.framework */; };
+		47079964177C943F0098B2F8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 47079962177C943F0098B2F8 /* InfoPlist.strings */; };
+		47079966177C943F0098B2F8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 47079965177C943F0098B2F8 /* main.m */; };
+		4707996A177C94400098B2F8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 47079969177C94400098B2F8 /* AppDelegate.m */; };
+		4707996C177C94400098B2F8 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 4707996B177C94400098B2F8 /* Default.png */; };
+		4707996E177C94400098B2F8 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4707996D177C94400098B2F8 /* Default@2x.png */; };
+		47079970177C94400098B2F8 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4707996F177C94400098B2F8 /* Default-568h@2x.png */; };
+		47079973177C94400098B2F8 /* NearestSongMapListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 47079972177C94400098B2F8 /* NearestSongMapListViewController.m */; };
+		47079976177C94400098B2F8 /* PlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 47079975177C94400098B2F8 /* PlayerViewController.m */; };
+		47079979177C94400098B2F8 /* NearestSongMapListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47079977177C94400098B2F8 /* NearestSongMapListViewController.xib */; };
+		4707997C177C94400098B2F8 /* DetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4707997A177C94400098B2F8 /* DetailViewController.xib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		47079956177C943F0098B2F8 /* geomelody.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = geomelody.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		47079959177C943F0098B2F8 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		4707995B177C943F0098B2F8 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		4707995D177C943F0098B2F8 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		47079961177C943F0098B2F8 /* geomelody-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "geomelody-Info.plist"; sourceTree = "<group>"; };
+		47079963177C943F0098B2F8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		47079965177C943F0098B2F8 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		47079967177C94400098B2F8 /* geomelody-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "geomelody-Prefix.pch"; sourceTree = "<group>"; };
+		47079968177C94400098B2F8 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		47079969177C94400098B2F8 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		4707996B177C94400098B2F8 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		4707996D177C94400098B2F8 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		4707996F177C94400098B2F8 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		47079971177C94400098B2F8 /* NearestSongMapListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NearestSongMapListViewController.h; sourceTree = "<group>"; };
+		47079972177C94400098B2F8 /* NearestSongMapListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NearestSongMapListViewController.m; sourceTree = "<group>"; };
+		47079974177C94400098B2F8 /* PlayerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlayerViewController.h; sourceTree = "<group>"; };
+		47079975177C94400098B2F8 /* PlayerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PlayerViewController.m; sourceTree = "<group>"; };
+		47079978177C94400098B2F8 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/NearestSongMapListViewController.xib; sourceTree = "<group>"; };
+		4707997B177C94400098B2F8 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/DetailViewController.xib; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		47079953177C943F0098B2F8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4707995A177C943F0098B2F8 /* UIKit.framework in Frameworks */,
+				4707995C177C943F0098B2F8 /* Foundation.framework in Frameworks */,
+				4707995E177C943F0098B2F8 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		4707994D177C943F0098B2F8 = {
+			isa = PBXGroup;
+			children = (
+				4707995F177C943F0098B2F8 /* geomelody */,
+				47079958177C943F0098B2F8 /* Frameworks */,
+				47079957177C943F0098B2F8 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		47079957177C943F0098B2F8 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				47079956177C943F0098B2F8 /* geomelody.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		47079958177C943F0098B2F8 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				47079959177C943F0098B2F8 /* UIKit.framework */,
+				4707995B177C943F0098B2F8 /* Foundation.framework */,
+				4707995D177C943F0098B2F8 /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		4707995F177C943F0098B2F8 /* geomelody */ = {
+			isa = PBXGroup;
+			children = (
+				47079968177C94400098B2F8 /* AppDelegate.h */,
+				47079969177C94400098B2F8 /* AppDelegate.m */,
+				47079971177C94400098B2F8 /* NearestSongMapListViewController.h */,
+				47079972177C94400098B2F8 /* NearestSongMapListViewController.m */,
+				47079974177C94400098B2F8 /* PlayerViewController.h */,
+				47079975177C94400098B2F8 /* PlayerViewController.m */,
+				47079977177C94400098B2F8 /* NearestSongMapListViewController.xib */,
+				4707997A177C94400098B2F8 /* DetailViewController.xib */,
+				47079960177C943F0098B2F8 /* Supporting Files */,
+			);
+			path = geomelody;
+			sourceTree = "<group>";
+		};
+		47079960177C943F0098B2F8 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				47079961177C943F0098B2F8 /* geomelody-Info.plist */,
+				47079962177C943F0098B2F8 /* InfoPlist.strings */,
+				47079965177C943F0098B2F8 /* main.m */,
+				47079967177C94400098B2F8 /* geomelody-Prefix.pch */,
+				4707996B177C94400098B2F8 /* Default.png */,
+				4707996D177C94400098B2F8 /* Default@2x.png */,
+				4707996F177C94400098B2F8 /* Default-568h@2x.png */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		47079955177C943F0098B2F8 /* geomelody */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4707997F177C94400098B2F8 /* Build configuration list for PBXNativeTarget "geomelody" */;
+			buildPhases = (
+				47079952177C943F0098B2F8 /* Sources */,
+				47079953177C943F0098B2F8 /* Frameworks */,
+				47079954177C943F0098B2F8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = geomelody;
+			productName = geomelody;
+			productReference = 47079956177C943F0098B2F8 /* geomelody.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		4707994E177C943F0098B2F8 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = "Martin Steinegger";
+			};
+			buildConfigurationList = 47079951177C943F0098B2F8 /* Build configuration list for PBXProject "geomelody" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 4707994D177C943F0098B2F8;
+			productRefGroup = 47079957177C943F0098B2F8 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				47079955177C943F0098B2F8 /* geomelody */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		47079954177C943F0098B2F8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				47079964177C943F0098B2F8 /* InfoPlist.strings in Resources */,
+				4707996C177C94400098B2F8 /* Default.png in Resources */,
+				4707996E177C94400098B2F8 /* Default@2x.png in Resources */,
+				47079970177C94400098B2F8 /* Default-568h@2x.png in Resources */,
+				47079979177C94400098B2F8 /* NearestSongMapListViewController.xib in Resources */,
+				4707997C177C94400098B2F8 /* DetailViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		47079952177C943F0098B2F8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				47079966177C943F0098B2F8 /* main.m in Sources */,
+				4707996A177C94400098B2F8 /* AppDelegate.m in Sources */,
+				47079973177C94400098B2F8 /* NearestSongMapListViewController.m in Sources */,
+				47079976177C94400098B2F8 /* PlayerViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		47079962177C943F0098B2F8 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				47079963177C943F0098B2F8 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		47079977177C94400098B2F8 /* NearestSongMapListViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				47079978177C94400098B2F8 /* en */,
+			);
+			name = NearestSongMapListViewController.xib;
+			sourceTree = "<group>";
+		};
+		4707997A177C94400098B2F8 /* DetailViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4707997B177C94400098B2F8 /* en */,
+			);
+			name = DetailViewController.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		4707997D177C94400098B2F8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		4707997E177C94400098B2F8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		47079980177C94400098B2F8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "geomelody/geomelody-Prefix.pch";
+				INFOPLIST_FILE = "geomelody/geomelody-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		47079981177C94400098B2F8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "geomelody/geomelody-Prefix.pch";
+				INFOPLIST_FILE = "geomelody/geomelody-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		47079951177C943F0098B2F8 /* Build configuration list for PBXProject "geomelody" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4707997D177C94400098B2F8 /* Debug */,
+				4707997E177C94400098B2F8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4707997F177C94400098B2F8 /* Build configuration list for PBXNativeTarget "geomelody" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				47079980177C94400098B2F8 /* Debug */,
+				47079981177C94400098B2F8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 4707994E177C943F0098B2F8 /* Project object */;
+}
