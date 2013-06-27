@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin
+   id="net.sf.fjep.fatjar"
+   name="Fat Jar Plug-in"
+   version="0.0.31"
+   provider-name="Ferenc Hechler"
+   class="net.sf.fjep.fatjar.FatjarPlugin">
+   
+   <runtime>
+      <library name="fatjar.jar">
+         <export name="*"/>
+      </library>
+   </runtime>
+
+   <requires>
+      <import plugin="org.eclipse.ui"/>
+      <import plugin="org.eclipse.ui.forms"/>
+      <import plugin="org.eclipse.core.runtime"/>
+      <import plugin="org.eclipse.core.resources"/>
+      <import plugin="org.eclipse.jdt.core"/>
+      <import plugin="org.eclipse.jdt.ui"/>
+      <import plugin="org.eclipse.ui.ide"/>
+      <import plugin="org.eclipse.help"/>
+      <import plugin="org.eclipse.help.ui"/>
+      <import plugin="org.eclipse.help.base"/>
+      <import plugin="org.eclipse.ant.core"/>
+      <import plugin="org.apache.ant"/>
+   </requires>
+   <extension-point id="jarutil" name="Helper for JAR iteration and creation " schema="schema/jarutil.exsd"/>
+
+   <extension point="org.eclipse.ui.popupMenus">
+      <objectContribution
+            objectClass="org.eclipse.jdt.internal.core.JavaProject"
+            id="net.sf.fjep.fatjar.contribution2">
+         <action
+               enablesFor="1"
+               label="Build Fat Jar"
+               icon="icons/fjexport.gif"
+               class="net.sf.fjep.fatjar.popup.actions.BuildFatJar"
+               id="net.sf.fjep.fatjar.buildFatJar">
+         </action>
+      </objectContribution>
+      <objectContribution
+            objectClass="org.eclipse.core.resources.IFile"
+            nameFilter="*.fatjar"
+            id="net.sf.fjep.fatjar.objectContribution1">
+         <menu
+               label="Fat Jar"
+               id="net.sf.fjep.fatjar.menu1">
+            <groupMarker name="group1"/>
+         </menu>
+         <action
+               enablesFor="1"
+               label="Quick Build"
+               icon="icons/quickbuild.gif"
+               class="net.sf.fjep.fatjar.popup.actions.BuildFatJar"
+               menubarPath="net.sf.fjep.fatjar.menu1/group1"
+               id="net.sf.fjep.fatjar.quickBuildFatJarFromSettings"/>
+         <action
+               enablesFor="1"
+               label=" Build"
+               icon="icons/fjexport.gif"
+               class="net.sf.fjep.fatjar.popup.actions.BuildFatJar"
+               menubarPath="net.sf.fjep.fatjar.menu1/group1"
+               id="net.sf.fjep.fatjar.buildFatJarFromSettings"/>
+      </objectContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            class="net.sf.fjep.fatjar.preferences.FatJarPreferencePage"
+            name="Fat Jar Preferences"
+            id="net.sf.fjep.fatjar.preferences.FatJarPreferencePage"/>
+   </extension>
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+	  <initializer class="net.sf.fjep.fatjar.preferences.FatJarPreferenceInitializer"/>
+   </extension>
+   <extension
+        point="org.eclipse.ui.exportWizards">
+		<wizard id="net.sf.fjep.fatjar.wizard.FJExportWizard"
+		 		 name="Fat Jar Exporter"
+			     class="net.sf.fjep.fatjar.wizard.FJExportWizard"
+				 icon="./icons/fjexport.gif">
+			<description>
+            	Export project into one executable JAR
+ 			</description>
+			<selection class="org.eclipse.jdt.internal.core.JavaProject" />
+		</wizard>
+	</extension>
+   <extension
+         id="fatjarJarUtil"
+         name="Self provided extensionpoint"
+         point="net.sf.fjep.fatjar.jarutil">
+      <jarutilfactory class="net.sf.fjep.fatjar.extensionpoints.JarUtilFactory"/>
+   </extension>
+   <extension
+         point="org.eclipse.ant.core.antTasks">
+      <antTask
+            eclipseRuntime="false"
+            class="net.sf.fjep.anttask.FJBuildTask"
+            headless="true"
+            library="fatjar.jar"
+            name="fatjar.build"/>
+   </extension>
+   <extension
+         point="org.eclipse.ant.core.antTypes">
+      <antType
+            eclipseRuntime="false"
+            class="net.sf.fjep.anttask.FJFileSourceType"
+            headless="true"
+            library="fatjar.jar"
+            name="fatjar.filesource"/>
+      <antType
+            eclipseRuntime="false"
+            class="net.sf.fjep.anttask.FJJarSourceType"
+            headless="true"
+            library="fatjar.jar"
+            name="fatjar.jarsource"/>
+      <antType
+            eclipseRuntime="false"
+            class="net.sf.fjep.anttask.FJExcludeType"
+            headless="true"
+            library="fatjar.jar"
+            name="fatjar.exclude"/>
+      <antType
+            eclipseRuntime="false"
+            class="net.sf.fjep.anttask.FJManifestType"
+            headless="true"
+            library="fatjar.jar"
+            name="fatjar.manifest"/>
+   </extension>
+ 
+</plugin>
