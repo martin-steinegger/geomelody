@@ -7,7 +7,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Tag {
 	private String tag;
 
-	private Tag(String tag) {
+	public Tag() {
+	}
+	
+	public Tag(String tag) {
 		this.tag = tag;
 	}
 
