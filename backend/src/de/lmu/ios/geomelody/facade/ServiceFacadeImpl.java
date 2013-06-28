@@ -17,9 +17,9 @@ import javax.ws.rs.ext.Provider;
 import com.sun.jersey.api.json.JSONWithPadding;
 import com.sun.jersey.spi.resource.Singleton;
 
-import de.lmu.ios.geomelody.dom.Filters;
-import de.lmu.ios.geomelody.dom.Location;
+import de.lmu.ios.geomelody.dom.NearestSongQuery;
 import de.lmu.ios.geomelody.dom.Song;
+import de.lmu.ios.geomelody.dom.Songs;
 import de.lmu.ios.geomelody.server.Progress;
 import de.lmu.ios.geomelody.server.Result;
 import de.lmu.ios.geomelody.service.SongMappingService;
@@ -93,20 +93,20 @@ public class ServiceFacadeImpl implements ServiceFacade {
 	@Path("/song")
 	public Response saveSong(Song song) {
 		songMappingService.saveSong(song);
-		return Response.status(200).entity(null).build();
+		return Response.status(200).build();
 
 	}
 
 	@Override
 	@POST
-	@Path("/songs/nearby")
-	public Response getNearestSongs(Location location, Filters filters,
+	@Path("/song/nearby")
+	public Response getNearestSongs(NearestSongQuery query,
 			@QueryParam("callback") String callback) {
-		return Response
-				.status(200)
-				.entity(new JSONWithPadding(new GenericEntity<Object>(
-						songMappingService.getkNearestSongs(location, filters,
-								20)) {
+		Songs songs = new Songs(songMappingService.getkNearestSongs(
+				query.getLocation(), query.getFilters(), query.getCount()));
+		
+		return Response.status(200)
+				.entity(new JSONWithPadding(new GenericEntity<Object>(songs) {
 				}, callback)).build();
 	}
 }

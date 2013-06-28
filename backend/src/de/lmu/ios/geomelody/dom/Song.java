@@ -11,13 +11,13 @@ public class Song {
 	private int soundCloudUserId;
 	private String comment;
 	private Location location;
-	private List<Tag> tags;
+	private List<String> tags;
 
 	public Song() {
 	}
 
 	public Song(int soundCloudSongId, int soundCloudUserId,
-			String comment, Location location, List<Tag> tags) {
+			String comment, Location location, List<String> tags) {
 		this.soundCloudSongId = soundCloudSongId;
 		this.soundCloudUserId = soundCloudUserId;
 		this.comment = comment;
@@ -26,11 +26,11 @@ public class Song {
 	}
 
 	@XmlElement(name = "Tags")
-	public List<Tag> getTags() {
+	public List<String> getTags() {
 		return tags;
 	}
 
-	public void setTags(List<Tag> tags) {
+	public void setTags(List<String> tags) {
 		this.tags = tags;
 	}
 
