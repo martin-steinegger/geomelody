@@ -1,0 +1,220 @@
+                  The Fat Jar Eclipse Plug-In
+------------------------------------------------------------------------------
+
+todo:
+ - Bug #157455: make temp folder configurable, handle out-of disk space error   
+
+REMEMBER: 
+ - build with jdk 1.4! (see version 0.0.27)
+
+
+changes in version 0.0.31
+
+ - rebuilt with jdk1.4.2 (don´t know what went wrong last time)
+
+
+changes in version 0.0.29
+
+ - Bug #2602348: jarfiles from "linked folders" missing
+
+
+changes in version 0.0.28
+
+ - Bug #1821910: OneJar license file fails to be added to tmp dir
+   Thx to Matthew Sheppard
+
+
+Changes in version 0.0.27:
+
+ - rebuild for class-compatibility with jdk 1.4 and 1.5, no code changes
+ 
+
+Changes in version 0.0.26:
+
+ - updated one-jar to version 0.96
+
+ - Bug #1696611: error-handling for IO-Exception with output jar 
+
+ - Bug #1664614: include all libs regardless of their export status
+
+
+Changes in version 0.0.25:
+
+ - copied ResourceSorter (from Eclipse 3.2) for compatibility with 3.3M4
+
+Changes in version 0.0.24:
+
+ - updated one-jar to interim-version 0.95b 
+   1.) Fixes bug "Initilization Exception" in Help-Forum: 
+   http://sourceforge.net/forum/forum.php?thread_id=1481848&forum_id=396533
+   MainClass.class.getPackage() returns null
+   2.) Fixes problem with OS-X reported in Help-Forum:
+   https://sourceforge.net/forum/forum.php?thread_id=1479328&forum_id=396533
+   java.class.path='xxx.jar:...compatibility.jar' -> extract first entry of cp
+   
+Changes in version 0.0.23:
+
+ - fixed Bug 1383643: manifest must be 1th entry in jar
+
+Changes in version 0.0.22:
+
+ - fixed Bug 1372915: Exception "signer information does not match signer 
+   information of other classes in the same package": 
+   New checkbox "remove signer files (*.SF) in META-INF" avoids problem with
+   invalid Manifest Hash.
+ - ANT: added parameter virtualName to FJFileSourceType to rename files
+   Example: (fatjar.filesource path="/prj/cfg_3.xml" virtualName="cfg.xml" /)
+   The file cfg_3.xml is renamed to cfg.xml in the archive
+
+Changes in version 0.0.21:
+
+ - fixed BUG: Class-Path Settings were ignored when using the One-Jar Option
+
+Changes in version 0.0.20:
+
+ - fixed BUG 1268275: JARs are packaged twice using the One-Jar option
+ - changed default value for automatic checkout to true to be compatible to 
+   release 0.0.18 (0.0.19 was never released via Update-Site)
+ 
+Changes in version 0.0.19:
+
+ - hotfix for problems with subclipse:
+   enable/disable SCM automatic checkout in preferences
+
+Changes in version 0.0.18:
+
+ - support One-Jar in ANT
+ - support SCM like ClearCase for save settings and "build.xml"
+ - save settings only if changed (no need to check out for unchanged settings)
+ - allow regexp-exclude-filters in ANT, e.g. 
+   <fatjar.exclude regexp=".*\bCVS\b.*"/> 
+   to exclude CVS repositories
+
+Changes in version 0.0.17:
+
+ - experimental ANT-Support:
+   "export ANT..." button on File-Select Wizard page creates an build.xml 
+   file which can be executed with eclipse-ANT. 
+   The ANT-File can be executed without eclipse if the classpath includes
+   the fatjar.jar library.
+   Currently the One-Jar Option is not supported via ANT
+ - defines <fatjar.build>-ANT-Task and corresponding <fatjar.XXX>-ANT-Types 
+ - added input-field for Class-Path in manifest
+
+Changes in version 0.0.16:
+
+ - Allow other extension than ".jar" for output. Only a warning is displayed.
+ - Fixed multiple problems with QuickBuild and excludes.
+ - added "eclipse -clean" tip in installation description
+ - added ExtensionPoint "net.sf.fjep.fatjar.jarutils" 
+   based on "net.sf.fjep.fatjar.extensionpoints.IJarUtilFactory"
+   and implementation "net.sf.fjep.fatjar.fatjarJarUtil"
+ 
+Changes in version 0.0.15:
+
+ - Fixed problem with User-Libraries marked as System-Libraries.
+ - Checkbox "use extern Jar-Name" allows to save the jar outside of the project dir.
+ - Ignore variable JRE_LIB (.../jre/lib/rt.jar) in classpath.
+
+Changes in version 0.0.14:
+
+ - Fixed problem with C-string like ending MANIFEST.MF files when merging.
+   (java-getopt-1.0.10.jar)
+ - Fixed problem with projects without an bin/ subdir for classes:
+   exclude temp-build-dir (endless recursion) and output jar when collecting data.
+ - Fixed One-Jar build ignored exclude-files
+
+Changes in version 0.0.13:
+
+ - Current build settings can be saved to a file named "xxx.fatjar" 
+ - right-clicking on a "xxx.fatjar" file has "Fat Jar >" submenu with to
+   entries "Build" and "Quick Build"
+ - "Fat Jar" > "Build" starts the wizard with the saved settings. Any changes
+   will be saved to the "xxx.fatjar" file
+ - "Fat Jar" >"Quick Build" builds the jar using the saved settings, no wizard
+   appears.
+ - BUGFIX: inlude additional dir failed if root-checkbox was checked
+
+Changes in version 0.0.12:
+
+ - One-JAR integration and help.
+   Simon Tuffs joined Fat-Jar and has integrated his Project One-JAR (see 
+   http://one-jar.sourceforge.net/ ). 
+   Jar files are not extracted any more but included as "JAR in JAR" and a 
+   special class loader is added to handle theese JARs.
+
+Changes in version 0.0.11:
+
+ - removed setting of build-dir
+   Hard-coded dir name is now "tempBuildFatJar_erase_me"
+ - updated documentation (readme + http://fjep.sf.net )
+ - Fixed some bugs which occurred when included dirs or projects did not 
+   exist any more or were closed.
+
+Changes in version 0.0.10:
+
+ - support User Library
+
+Changes in version 0.0.9:
+
+ - "add Dir..." Button on File-Selection Page to include files
+   (selection is stored in properties)
+
+Changes in version 0.0.8:
+
+ - select files to exclude (selection is stored in properties)
+   [select files to include is still missing]
+ - export and right click on project use same export dialog
+ - removed submenu
+
+Changes in version 0.0.7:
+
+ - added support for subprojects: include output, exported jars and exported sub-sub-projects
+ - warning in preferences page that "BuildDir" will be deleted
+ - BUGFIX: added initializer for default-preferences
+ - BUGFIX: handle project without own output dir 
+           (classes and java under project root)
+
+ Changes in version 0.0.6:
+
+ - support ExportWizard "file->export->Fat Jar"
+ 
+Changes in version 0.0.5:
+
+ - Progress Bar shows progress of the build process
+ 
+ - Preferences Page to set Config-Filename, Jar-Name, Build-Dir, merge Manifests
+ 
+ - catch and display exceptions
+ 
+ 
+Changes in version 0.0.4:
+
+ - changed behaviour of Manifest merging.
+   Paste individual-sections of all other manifests to individual section of
+   own manifest. Ignore the main-sections.
+   Renamed Checkbox to "merge individual-sections of all MANIFEST.MF files"
+
+ - fixed problem with wrong order of directories and files in jar 
+   (e.g. "META-INF/MANIFEST.MF" before "META-INF/")
+
+Changes in version 0.0.3:
+
+ - added Feature Request [ 1003621 ] Manifest contents
+     optional merge all Manifest files from all jars together.
+     "Manifest-Version", "Main-Class" and "Created-By" are unique
+     and the last value found is set.
+     
+ - fixed bug CONFIG: "/<project>/" preceeding manifest.file after "browse..."
+ 
+ - fixed bug CONFIG: builddir validity check rejects current builddir if existent
+ 
+ 
+Changes in version 0.0.2:
+
+ - added support for external jars
+
+
+Changes in version 0.0.1:
+
+ - initial release

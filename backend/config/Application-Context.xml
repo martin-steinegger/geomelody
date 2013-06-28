@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context.xsd
+		">
+
+	<context:annotation-config />
+	
+	<bean id="songMappingService" class="de.lmu.ios.geomelody.service.SongMappingServiceImpl">
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+	
+	<bean id="serviceFacade" class="de.lmu.ios.geomelody.facade.ServiceFacadeImpl">
+		<property name="songMappingService" ref="songMappingService" />
+	</bean>
+
+	<bean id="loggingInterceptor" class="de.lmu.ios.geomelody.util.LoggingInterceptor" />
+	
+	<!-- Proxy Factory for logging -->
+	<bean name="proxyCreator"
+		class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+		<property name="beanNames">
+			<list>
+				<value>de.lmu.gobi.*</value>
+			</list>
+		</property>
+		<property name="interceptorNames">
+			<list>
+				<value>logger</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="logger"
+		class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
+		<property name="advice">
+			<ref local="loggingInterceptor" />
+		</property>
+		<property name="patterns">
+			<value>.*</value>
+		</property>
+	</bean>
+
+	<!-- 
+	<bean id="nativeJdbcExtractor"
+		class="org.springframework.jdbc.support.nativejdbc.CommonsDbcpNativeJdbcExtractor" />
+ 	-->
+ 	
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="org.postgresql.Driver" />
+		<property name="url"
+			value="jdbc:postgresql://127.0.0.1/geomelody" />
+		<property name="username" value="geomelody" />
+		<property name="password" value="s3cure" />
+	</bean>
+
+	<!-- 
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSource" />
+		<property name="fetchSize" value="1000" />
+	</bean>
+	-->
+</beans>

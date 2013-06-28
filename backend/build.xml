@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="GeoMelody" default="jar" basedir=".">
+	<property name="src.dir" value="src" />
+	<property name="lib.dir" value="lib" />
+	<property name="build.dir" value="build" />
+	<property name="classes.dir" value="${build.dir}/classes" />
+	<property name="config.dir" value="config" />
+	<property name="jar.dir" value="${build.dir}/jar" />
+	
+	<property name="fjepPath" value="tools/net.sf.fjep.fatjar_0.0.31/fatjar.jar" />
+	<taskdef name="fatjar.build" classname="net.sf.fjep.anttask.FJBuildTask" classpath="${fjepPath}" loaderref="${fjepPath}" />
+	<typedef name="fatjar.manifest" classname="net.sf.fjep.anttask.FJManifestType" classpath="${fjepPath}" loaderref="${fjepPath}" />
+	<typedef name="fatjar.exclude" classname="net.sf.fjep.anttask.FJExcludeType" classpath="${fjepPath}" loaderref="${fjepPath}" />
+	<typedef name="fatjar.jarsource" classname="net.sf.fjep.anttask.FJJarSourceType" classpath="${fjepPath}" loaderref="${fjepPath}" />
+	<typedef name="fatjar.filesource" classname="net.sf.fjep.anttask.FJFileSourceType" classpath="${fjepPath}" loaderref="${fjepPath}" />
+		
+	<target name="evaluation" depends="jar">
+		<fatjar.build output="${build.dir}/evaluation.jar">
+			<fatjar.manifest mainclass="de.lmu.hhsuite.evaluation.EvaluationRunner" />
+			<fatjar.filesource path="${classes.dir}" relpath="" />
+			<fatjar.jarsource file="${lib.dir}/jopt-simple-4.3.jar" />
+			<fatjar.jarsource file="${lib.dir}/commons-lang3-3.1.jar" />
+
+		</fatjar.build>
+	</target>
+	
+	<property name="ant.project.name" value="propra_backend" />
+
+	<path id="classpath">
+		<fileset dir="${lib.dir}" includes="**/*.jar" />
+	</path>
+
+	<target name="clean">
+		<delete dir="${build.dir}" />
+	</target>
+
+	<target name="compile">
+		<delete dir="${classdir.dir}" />
+		<mkdir dir="build/classes" />
+		<javac srcdir="src" destdir="build/classes" classpathref="classpath" />
+	</target>
+	<target name="jar" depends="clean,compile">
+		<mkdir dir="${jar.dir}" />
+		<jar destfile="${jar.dir}/${ant.project.name}.jar" basedir="${classes.dir}" />
+	</target>
+	
+
+    <target name="run">
+        <java jar="${build.dir}/${ant.project.name}.jar" fork="true"/>
+    </target>
+
+</project>
