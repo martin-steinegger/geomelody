@@ -53,8 +53,8 @@
 		<property name="driverClassName" value="org.postgresql.Driver" />
 		<property name="url"
 			value="jdbc:postgresql://127.0.0.1/geomelody" />
-		<property name="username" value="root" />
-		<property name="password" value="" />
+		<property name="username" value="geomelody" />
+		<property name="password" value="s3cure" />
 	</bean>
 
 	<!-- 
