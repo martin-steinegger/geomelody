@@ -54,8 +54,8 @@ public class SongMappingServiceImpl implements SongMappingService {
 		return jdbcTemplate
 				.query("SELECT soundcloud_song_id, soundcloud_user_id, comment "
 						+ "FROM songs AS s "
-						+ "INNER JOIN songs_tags AS st ON s.id = st.table1_id "
-						+ "INNER JOIN tags AS t ON st.id = t.table2_id "
+						+ "INNER JOIN songs_tags AS st ON s.id = st.song_id "
+						+ "INNER JOIN tags AS t ON t.id = st.tag_id "
 						+ "WHERE t.name IN (:filters) "
 						+ "ORDER BY s.geom <-> ST_SetSRID(ST_MakePoint(:longitude, :latitude), 4326) "
 						+ "LIMIT :k", params, new SongMapper());

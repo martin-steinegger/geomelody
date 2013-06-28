@@ -93,7 +93,7 @@ public class ServiceFacadeImpl implements ServiceFacade {
 	@Path("/song")
 	public Response saveSong(Song song) {
 		songMappingService.saveSong(song);
-		return Response.status(200).build();
+		return Response.status(200).entity(null).build();
 
 	}
 
