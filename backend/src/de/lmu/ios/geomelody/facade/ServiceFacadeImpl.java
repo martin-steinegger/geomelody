@@ -98,8 +98,8 @@ public class ServiceFacadeImpl implements ServiceFacade {
 	}
 
 	@Override
-	@GET
-	@Path("/song")
+	@POST
+	@Path("/songs/nearby")
 	public Response getNearestSongs(Location location, Filters filters,
 			@QueryParam("callback") String callback) {
 		return Response
