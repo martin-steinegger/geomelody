@@ -27,7 +27,6 @@
 		470799C0177C967D0098B2F8 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 470799BF177C967D0098B2F8 /* Security.framework */; };
 		47752C9917818C08000B4F24 /* GoToLibraryHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 47752C8F17818C08000B4F24 /* GoToLibraryHeaderView.m */; };
 		47752C9A17818C08000B4F24 /* GoToLibraryHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47752C9017818C08000B4F24 /* GoToLibraryHeaderView.xib */; };
-		47752C9B17818C08000B4F24 /* Song.m in Sources */ = {isa = PBXBuildFile; fileRef = 47752C9217818C08000B4F24 /* Song.m */; };
 		47752C9C17818C08000B4F24 /* SongCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 47752C9417818C08000B4F24 /* SongCell.m */; };
 		47752C9D17818C08000B4F24 /* SongCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47752C9517818C08000B4F24 /* SongCell.xib */; };
 		47752C9E17818C08000B4F24 /* TagFilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 47752C9717818C08000B4F24 /* TagFilterViewController.m */; };
@@ -177,8 +176,6 @@
 		47752C8E17818C08000B4F24 /* GoToLibraryHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoToLibraryHeaderView.h; sourceTree = "<group>"; };
 		47752C8F17818C08000B4F24 /* GoToLibraryHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoToLibraryHeaderView.m; sourceTree = "<group>"; };
 		47752C9017818C08000B4F24 /* GoToLibraryHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GoToLibraryHeaderView.xib; sourceTree = "<group>"; };
-		47752C9117818C08000B4F24 /* Song.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Song.h; sourceTree = "<group>"; };
-		47752C9217818C08000B4F24 /* Song.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Song.m; sourceTree = "<group>"; };
 		47752C9317818C08000B4F24 /* SongCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SongCell.h; sourceTree = "<group>"; };
 		47752C9417818C08000B4F24 /* SongCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SongCell.m; sourceTree = "<group>"; };
 		47752C9517818C08000B4F24 /* SongCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SongCell.xib; sourceTree = "<group>"; };
@@ -277,8 +274,6 @@
 				47752C8E17818C08000B4F24 /* GoToLibraryHeaderView.h */,
 				47752C8F17818C08000B4F24 /* GoToLibraryHeaderView.m */,
 				47752C9017818C08000B4F24 /* GoToLibraryHeaderView.xib */,
-				47752C9117818C08000B4F24 /* Song.h */,
-				47752C9217818C08000B4F24 /* Song.m */,
 				47752C9317818C08000B4F24 /* SongCell.h */,
 				47752C9417818C08000B4F24 /* SongCell.m */,
 				47752C9517818C08000B4F24 /* SongCell.xib */,
@@ -541,7 +536,6 @@
 				47079973177C94400098B2F8 /* NearestSongMapListViewController.m in Sources */,
 				47079976177C94400098B2F8 /* PlayerViewController.m in Sources */,
 				47752C9917818C08000B4F24 /* GoToLibraryHeaderView.m in Sources */,
-				47752C9B17818C08000B4F24 /* Song.m in Sources */,
 				47752C9C17818C08000B4F24 /* SongCell.m in Sources */,
 				47752C9E17818C08000B4F24 /* TagFilterViewController.m in Sources */,
 			);

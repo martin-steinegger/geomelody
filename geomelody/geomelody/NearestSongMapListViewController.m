@@ -12,9 +12,6 @@
 #import "TagFilterViewController.h"
 #import "GoToLibraryHeaderView.h"
 #import "PlayerViewController.h"
-#import "Song.h"
-
-
 
 
 @implementation NearestSongMapListViewController
@@ -31,6 +28,8 @@
         self.goToLibraryHeaderView = [[[NSBundle mainBundle] loadNibNamed:@"GoToLibraryHeaderView" owner:self options:nil] objectAtIndex:0];
         
     }
+    
+
 
     // initialize tag filter
     [self loadFilter];
@@ -47,14 +46,20 @@
 	// Do any additional setup after loading the view, typically from a nib.
     //self.navigationItem.leftBarButtonItem = self.editButtonItem;
 
+    
+    
     UIBarButtonItem *filterButton = [[UIBarButtonItem alloc] initWithTitle:@"Filter" style:UIBarButtonItemStylePlain target:self action:@selector(showFilter)];
     self.navigationItem.rightBarButtonItem = filterButton;
+
+    
+    
     
     UIBarButtonItem *logout = [[UIBarButtonItem alloc] initWithTitle:@"Logout" style:UIBarButtonItemStylePlain target:self action:@selector(logoutSoundCloud:)];
     self.navigationItem.leftBarButtonItem = logout;
     
     //change background of navigation bar to black
-    [[UINavigationBar appearance] setTintColor:[UIColor blackColor]];
+    self.navigationController.navigationBar.tintColor = [UIColor blackColor];
+    self.navigationController.navigationBar.translucent = YES;
     
     //get location updates for music 
     locationManager = [[CLLocationManager alloc] init];
