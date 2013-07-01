@@ -36,10 +36,13 @@
 
 @property (nonatomic, retain) AVAudioPlayer *audioPlayer;
 - (IBAction)volumeDidChange:(id)slider; 
-- (IBAction)togglePlayingState:(id)button; 
+- (IBAction)togglePlayingState:(id)button;
 - (void)playSong;
 - (void)pausePause;
 - (void)togglePlayPause;
+- (IBAction)playNextSong:(id)button;
+- (IBAction)playPreviousSong:(id)button;
+
 - (void)setSongItem:(id)newDetailItem;
 
 

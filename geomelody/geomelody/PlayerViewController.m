@@ -80,17 +80,39 @@
     }
 }
 
+- (IBAction)playNextSong:(id)button{
+    id song = [self.delegate getNextEntry];
+    [self setSongItem:song];
+}
+
+- (IBAction)playPreviousSong:(id)button{
+    id song = [self.delegate getPreviousEntry];
+    [self setSongItem:song];
+}
+
 -(void) handleSwipe:(UISwipeGestureRecognizer*) recognizer {
     id song;
-    if(recognizer.direction == UISwipeGestureRecognizerDirectionLeft)
+    [UIView animateWithDuration:0.55 animations:^{
+        [UIView setAnimationDelay:0.2];
+    }];
+    CATransition *animation = [CATransition animation];
+    [animation setType:kCATransitionPush];
+    [animation setTimingFunction:[CAMediaTimingFunction
+                                  functionWithName:kCAMediaTimingFunctionDefault]];
+    [animation setSpeed:0.4];
+    if(recognizer.direction == UISwipeGestureRecognizerDirectionLeft){
         song = [self.delegate getNextEntry];
-    else if(recognizer.direction == UISwipeGestureRecognizerDirectionRight)
+        [animation setSubtype:kCATransitionFromLeft];
+    }else if(recognizer.direction == UISwipeGestureRecognizerDirectionRight){
         song = [self.delegate getPreviousEntry];
-    
+        [animation setSubtype:kCAAlignmentRight];
+    }
     if(!song)
         return;
     
     [self setSongItem:song];
+    [[self.view layer] addAnimation:animation forKey:nil];
+
 }
 
 
