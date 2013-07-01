@@ -177,7 +177,7 @@
     if (!self.playerViewController) {
         self.playerViewController = [[PlayerViewController alloc] initWithNibName:@"PlayerViewController" bundle:nil];
     }
-    self.playerViewController.playingSong = song;
+//    self.playerViewController.playingSong = song;
     [self.navigationController pushViewController:self.playerViewController animated:YES];
 }
 
