@@ -13,9 +13,13 @@
 
 @property (strong, nonatomic) id songItem;
 
-@property (weak, nonatomic)   IBOutlet UILabel *detailDescriptionLabel;
+@property (weak, nonatomic)   IBOutlet UILabel  *detailDescriptionLabel;
 @property (nonatomic, retain) IBOutlet UIButton *playPauseButton;
 @property (nonatomic, retain) IBOutlet UISlider *volumeControl;
+@property (nonatomic, retain) IBOutlet UIImageView  *artwork_picture;
+@property (nonatomic, retain) IBOutlet UIImageView  *user_picture;
+
+
 @property (nonatomic, retain) AVAudioPlayer *audioPlayer;
 - (IBAction)volumeDidChange:(id)slider; 
 - (IBAction)togglePlayingState:(id)button; 

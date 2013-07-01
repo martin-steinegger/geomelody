@@ -113,17 +113,46 @@
                      
                      //[player prepareToPlay];
                      [self playAudio];
-                 }];
+                }];
+        
+        NSObject * artworkImageUrlObject;
+        if(( artworkImageUrlObject =[songItem objectForKey:@"artwork_url"])!=[NSNull null]){
+            NSURL *imageURL = [NSURL URLWithString:(NSString* )artworkImageUrlObject];
+            NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
+            UIImage *image = [UIImage imageWithData:imageData];
+            self.artwork_picture.image = image;
+        }
+        
+        NSDictionary *user  = [songItem objectForKey:@"user"];
+        NSObject * userImageUrlObject;
+        if(( userImageUrlObject =[user objectForKey:@"avatar_url"])!=[NSNull null]){
+            NSURL *imageURL = [NSURL URLWithString:(NSString* )userImageUrlObject];
+            NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
+            UIImage *image = [UIImage imageWithData:imageData];
+            self.user_picture.image = image;
+        }
+
+        
     }
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    UIBarButtonItem *postButton = [[UIBarButtonItem alloc] initWithTitle:@"Post" style:UIBarButtonItemStylePlain target:self action:@selector(postSong:)];
+    self.navigationItem.rightBarButtonItem = postButton;
+    
     [self createAudioSession];
 	// Do any additional setup after loading the view, typically from a nib.
     [self setUpSongAndPlayer];
 }
+
+
+- (IBAction) postSong:(id) sender{
+    
+}
+
 
 - (void)didReceiveMemoryWarning
 {
