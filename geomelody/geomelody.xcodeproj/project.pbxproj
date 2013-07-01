@@ -44,6 +44,7 @@
 		47DF9B62177C9DF000FBC5C3 /* libSoundCloudAPI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 47DF9B45177C9D8B00FBC5C3 /* libSoundCloudAPI.a */; };
 		47DF9B63177C9DF000FBC5C3 /* libSoundCloudUI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 47DF9B3A177C9D8200FBC5C3 /* libSoundCloudUI.a */; };
 		47DF9B65177C9FA100FBC5C3 /* SoundCloud.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 47DF9B64177C9FA100FBC5C3 /* SoundCloud.bundle */; };
+		84D1F2811781A9EE0031D50E /* tags.txt in Resources */ = {isa = PBXBuildFile; fileRef = 84D1F2801781A9EE0031D50E /* tags.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -195,6 +196,7 @@
 		47DF9B46177C9D9300FBC5C3 /* OAuth2Client.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = OAuth2Client.xcodeproj; path = ../OAuth2Client/OAuth2Client.xcodeproj; sourceTree = "<group>"; };
 		47DF9B4F177C9D9D00FBC5C3 /* OHAttributedLabel.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = OHAttributedLabel.xcodeproj; path = ../OHAttributedLabel/OHAttributedLabel.xcodeproj; sourceTree = "<group>"; };
 		47DF9B64177C9FA100FBC5C3 /* SoundCloud.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SoundCloud.bundle; sourceTree = "<group>"; };
+		84D1F2801781A9EE0031D50E /* tags.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tags.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -265,6 +267,7 @@
 		4707995F177C943F0098B2F8 /* geomelody */ = {
 			isa = PBXGroup;
 			children = (
+				84D1F2801781A9EE0031D50E /* tags.txt */,
 				47079968177C94400098B2F8 /* AppDelegate.h */,
 				47079969177C94400098B2F8 /* AppDelegate.m */,
 				47752C8E17818C08000B4F24 /* GoToLibraryHeaderView.h */,
@@ -518,6 +521,7 @@
 				47752CAE17818C57000B4F24 /* sample.jpg in Resources */,
 				47752CAF17818C57000B4F24 /* soundcloud.jpg in Resources */,
 				47752CB017818C57000B4F24 /* soundcloud.png in Resources */,
+				84D1F2811781A9EE0031D50E /* tags.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
