@@ -9,8 +9,15 @@
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
 
-@interface PlayerViewController : UIViewController 
+@protocol PlayerViewControllerProtocol <NSObject>
+- (id)getNextEntry;
+- (id)getPreviousEntry;
+@end
 
+
+@interface PlayerViewController : UIViewController
+
+@property (strong, nonatomic) id <PlayerViewControllerProtocol> delegate;
 @property (strong, nonatomic) id songItem;
 
 @property (weak, nonatomic)   IBOutlet UILabel  *detailDescriptionLabel;

@@ -80,6 +80,20 @@
     }
 }
 
+-(void) handleSwipe:(UISwipeGestureRecognizer*) recognizer {
+    id song;
+    if(recognizer.direction == UISwipeGestureRecognizerDirectionLeft)
+        song = [self.delegate getNextEntry];
+    else if(recognizer.direction == UISwipeGestureRecognizerDirectionRight)
+        song = [self.delegate getPreviousEntry];
+    
+    if(!song)
+        return;
+    
+    [self setSongItem:song];
+}
+
+
 #pragma mark - Managing the detail item
 
 
@@ -178,6 +192,17 @@
     
     UIBarButtonItem *postButton = [[UIBarButtonItem alloc] initWithTitle:@"Post" style:UIBarButtonItemStylePlain target:self action:@selector(postSong:)];
     self.navigationItem.rightBarButtonItem = postButton;
+    
+    UISwipeGestureRecognizer* gestureSwipeLeftRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipe:)];
+    gestureSwipeLeftRecognizer.direction = UISwipeGestureRecognizerDirectionLeft;
+    
+    [self.view addGestureRecognizer:gestureSwipeLeftRecognizer];
+    
+    UISwipeGestureRecognizer* gestureSwipeRightRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipe:)];
+    gestureSwipeRightRecognizer.direction = UISwipeGestureRecognizerDirectionRight;
+    
+    [self.view addGestureRecognizer:gestureSwipeRightRecognizer];
+    
     
     [self createAudioSession];
 	// Do any additional setup after loading the view, typically from a nib.

@@ -158,6 +158,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSLog(@"selected song at position: %d from %d songs",indexPath.row, tracks.count);
+    self.currentSongPosition = indexPath.row;
     NSDictionary *song = [self.tracks objectAtIndex:indexPath.row];
     
     //NSLog(@"selected song: %@",selectedSong.soundcloud_id);
@@ -186,6 +187,7 @@
 - (void) showPlayer:(NSDictionary*)song {
     if (!self.playerViewController) {
         self.playerViewController = [[PlayerViewController alloc] initWithNibName:@"PlayerViewController" bundle:nil];
+        self.playerViewController.delegate = self;
     }
     [self.playerViewController setSongItem:song];
     [self.navigationController pushViewController:self.playerViewController animated:YES];
@@ -240,6 +242,21 @@
              responseHandler:handler];
     
     
+}
+
+
+
+- (id)getPreviousEntry {
+    self.currentSongPosition--;
+    self.currentSongPosition=MAX(self.currentSongPosition, 0);
+    return tracks[self.currentSongPosition];
+    
+}
+
+- (id)getNextEntry {
+    self.currentSongPosition++;
+    self.currentSongPosition=MIN(self.currentSongPosition, [tracks count]-1);
+    return tracks[self.currentSongPosition];
 }
 
 
