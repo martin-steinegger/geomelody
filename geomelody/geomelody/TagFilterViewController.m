@@ -30,10 +30,14 @@
 - (void) loadSettings {
     NSLog(@"Load settings");
     // load static array of available genres
-    _tags = [NSArray arrayWithObjects:@"Rock",@"Pop",@"Techno", nil];
+    
+    NSString *fileString = [NSString stringWithContentsOfFile:[[NSBundle mainBundle]pathForResource:@"tags" ofType:@"txt"] encoding:NSUTF8StringEncoding error:nil];
+    NSMutableArray *stringsArray = [NSMutableArray arrayWithArray:[fileString componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]]];
+    _tags = [NSArray arrayWithArray:stringsArray];
+    
     //load user settings
     _filterEnabled = YES;
-    _tagFilter = [NSMutableArray arrayWithObjects:@"Rock",@"Pop", nil];
+    _tagFilter = [[NSMutableArray alloc] init];
 }
 
 - (void)viewDidLoad
@@ -56,17 +60,12 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 2;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (section ==0) {
-        return 1;
-    }else if (section ==1) {
-        return _tags.count;
-    }else
-        return 0;
+    return _tags.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -77,38 +76,61 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     cell.detailTextLabel.enabled = YES;
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    //section 0: switch for filter on/off
-    if(indexPath.section ==0 ) {
-        cell.textLabel.text = @"Genre Filter";
-        UISwitch *filterSwitch = [[UISwitch alloc] initWithFrame: CGRectZero];
-        [filterSwitch setOn:_filterEnabled animated:YES];
-        [filterSwitch addTarget:self action:@selector(toggleFilter:) forControlEvents:UIControlEventValueChanged];
-        cell.accessoryView = filterSwitch;
-        
-    }else {//section 1: for each filter tag add a selectable row
+    //section 1: for each filter tag add a selectable row
         cell.textLabel.text = [_tags objectAtIndex:indexPath.row];
+        if([_tagFilter containsObject: [_tags objectAtIndex:indexPath.row]]) {
+            [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
+        }else {
+            [cell setAccessoryType:UITableViewCellAccessoryNone];
+        }
         if(_filterEnabled){
             cell.userInteractionEnabled = YES;
+            cell.backgroundColor = [UIColor whiteColor];
+            cell.textLabel.textColor = [UIColor blackColor];
         }else{
             cell.userInteractionEnabled = NO;
+            cell.backgroundColor = [UIColor lightGrayColor];
+            cell.textLabel.textColor = [UIColor grayColor];
         }
-    }
     
     // Configure the cell...
     
     return cell;
 }
 
+// set header of table as GoToLibraryHeaderView
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    
+    UIView *header = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 70)];
+    UISwitch *filterSwitch = [[UISwitch alloc] initWithFrame: CGRectMake(220, 30, 100, 30)];
+    [filterSwitch setOn:_filterEnabled animated:YES];
+    [filterSwitch addTarget:self action:@selector(toggleFilter:) forControlEvents:UIControlEventValueChanged];
+    UILabel *headerText = [[UILabel alloc] initWithFrame:CGRectMake(15, 30, 150, 30)];
+    headerText.text = @"Genre Filter";
+    headerText.textColor = [UIColor darkGrayColor];
+    headerText.backgroundColor = [UIColor groupTableViewBackgroundColor];
+    [header addSubview:headerText];
+    [header addSubview:filterSwitch];
+    return header;
+    
+}
+
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    if(section ==1) {
-        return @"Genres";
-    }else return nil;
+    return @"Genre Filter";
+}
+- (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 70;
 }
 
 - (void) toggleFilter:(id)sender {
     _filterEnabled = !_filterEnabled;
     // todo: update view -> cells with genres need to be disabled/enabled
+    
+    NSRange range = NSMakeRange(0, [self numberOfSectionsInTableView:self.tableView]);
+    NSIndexSet *sections = [NSIndexSet indexSetWithIndexesInRange:range];
+    [self.tableView reloadSections:sections withRowAnimation:UITableViewRowAnimationFade];
 }
 
 /*
@@ -154,11 +176,20 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    //only
-    if(indexPath.section ==1) {
+    //only if a genre was selected/deselected
+
+        UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
         
-    }
-        
+        NSString *selectedTag = [_tags objectAtIndex:indexPath.row];
+        if([_tagFilter containsObject:selectedTag]) {
+            [_tagFilter removeObject:selectedTag];
+            [cell setAccessoryType:UITableViewCellAccessoryNone];
+        }else {
+            [_tagFilter addObject:selectedTag];
+            [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
+        }
+
+    
 }
 
 @end
