@@ -28,9 +28,6 @@
         self.goToLibraryHeaderView = [[[NSBundle mainBundle] loadNibNamed:@"GoToLibraryHeaderView" owner:self options:nil] objectAtIndex:0];
         
     }
-    
-
-
     // initialize tag filter
     [self loadFilter];
     

@@ -16,6 +16,13 @@
 @property (weak, nonatomic)   IBOutlet UILabel  *detailDescriptionLabel;
 @property (nonatomic, retain) IBOutlet UIButton *playPauseButton;
 @property (nonatomic, retain) IBOutlet UISlider *volumeControl;
+@property (nonatomic, retain) IBOutlet UISlider *songProgressControl;
+@property (nonatomic, retain) IBOutlet NSTimer  *songProgressTimer;
+@property (nonatomic, retain) IBOutlet NSDate   *pauseStart;
+@property (nonatomic, retain) IBOutlet NSDate   *previousFireDate;
+
+
+
 @property (nonatomic, retain) IBOutlet UIImageView  *artwork_picture;
 @property (nonatomic, retain) IBOutlet UIImageView  *user_picture;
 

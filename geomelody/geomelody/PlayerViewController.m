@@ -10,7 +10,8 @@
 #import "SCUI.h"
 
 @interface PlayerViewController ()
-- (void)setUpSongAndPlayer;
+- (void)setUpView;
+- (void)setUpSong;
 @end
 
 @implementation PlayerViewController
@@ -24,6 +25,12 @@
     //Handle the slider movement
     [audioPlayer setVolume:[slider value]];
 }
+
+- (IBAction)songProgressDidChange:(UISlider *)slider {
+    self.audioPlayer.currentTime = slider.value*self.audioPlayer.duration;
+}
+
+
 - (IBAction)togglePlayingState:(id)button {
     //Handle the button pressing
     [self togglePlayPause];
@@ -32,11 +39,20 @@
 - (void)playAudio {
     //Play the audio and set the button to represent the audio is playing
     [audioPlayer play];
+
+    float pauseTime = -1*[self.pauseStart timeIntervalSinceNow];    
+    [self.songProgressTimer setFireDate:[self.previousFireDate initWithTimeInterval:pauseTime sinceDate:self.previousFireDate]];
+
     [playPauseButton setTitle:@"Pause" forState:UIControlStateNormal];
 }
 - (void)pauseAudio {
     //Pause the audio and set the button to represent the audio is paused
     [audioPlayer pause];
+    
+    self.pauseStart = [NSDate dateWithTimeIntervalSinceNow:0];
+    self.previousFireDate = [self.songProgressTimer fireDate];
+    [self.songProgressTimer setFireDate:[NSDate distantFuture]];
+
     [playPauseButton setTitle:@"Play" forState:UIControlStateNormal];
 }
 - (void)togglePlayPause {
@@ -85,15 +101,16 @@
 {
     if (songItem != newDetailItem) {
         songItem = newDetailItem;
-        // Update the view.
-        [self setUpSongAndPlayer];
+        // Update the song.
+        [self.audioPlayer stop];
+        [self setUpView];
+        [self setUpSong];
+        
     }
 }
 
-- (void)setUpSongAndPlayer
-{
+- (void)setUpSong{
     if (self.songItem) {
-        self.detailDescriptionLabel.text = [self.songItem description];
 
         NSString *streamURL = [songItem objectForKey:@"stream_url"];
         
@@ -112,8 +129,18 @@
                      [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
                      
                      //[player prepareToPlay];
+                     self.songProgressTimer = [NSTimer scheduledTimerWithTimeInterval:0.23 target:self selector:@selector(updateProgressBar:) userInfo:nil repeats:YES];
+                     
                      [self playAudio];
-                }];
+                 }];
+    }
+}
+
+- (void)setUpView
+{
+    if (self.songItem) {
+        self.detailDescriptionLabel.text = [self.songItem description];
+
         
         NSObject * artworkImageUrlObject;
         if(( artworkImageUrlObject =[songItem objectForKey:@"artwork_url"])!=[NSNull null]){
@@ -136,6 +163,15 @@
     }
 }
 
+
+- (void)updateProgressBar:(NSTimer *)timer {
+    NSTimeInterval playTime = [self.audioPlayer currentTime];
+    NSTimeInterval duration = [self.audioPlayer duration];
+    float progress = playTime/duration;
+    [self.songProgressControl setValue:progress animated:YES];
+}
+
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -145,7 +181,7 @@
     
     [self createAudioSession];
 	// Do any additional setup after loading the view, typically from a nib.
-    [self setUpSongAndPlayer];
+    [self setUpView];
 }
 
 
