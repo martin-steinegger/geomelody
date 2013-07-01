@@ -17,9 +17,9 @@
 + (void)initialize;
 {
     [SCSoundCloud  setClientID:@"f0cfa9035abc5752e699580d5586d1e6"
-                        secret:@"49baf8628ee99e0e62d6af4742d33073"
-     redirectURL:[NSURL URLWithString:@"http://soundcloud.com/connect?client_id=f0cfa9035abc5752e699580d5586d1e6&redirect_uri=geomelody://oauth"]
-     ];
+                   secret:@"49baf8628ee99e0e62d6af4742d33073"
+		   redirectURL:[NSURL URLWithString:@"geomelody://oauth"]];
+ 
 }
 
 
