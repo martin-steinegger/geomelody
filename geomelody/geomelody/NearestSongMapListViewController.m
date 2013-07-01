@@ -8,22 +8,19 @@
 
 #import "NearestSongMapListViewController.h"
 
-#import "PlayerViewController.h"
 #import "SCUI.h"
 #import "TagFilterViewController.h"
-#import "Song.h"
 #import "GoToLibraryHeaderView.h"
+#import "PlayerViewController.h"
+#import "Song.h"
 
 
-@interface NearestSongMapListViewController () {
-    NSMutableArray *_songs;
-    NSArray *_tagFilter;
-}
 
-@end
 
 @implementation NearestSongMapListViewController
-
+@synthesize player;
+@synthesize tracks;
+@synthesize tagFilter;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -45,31 +42,63 @@
 {
     [super viewDidLoad];
     
-
 	// Do any additional setup after loading the view, typically from a nib.
     //self.navigationItem.leftBarButtonItem = self.editButtonItem;
 
     UIBarButtonItem *filterButton = [[UIBarButtonItem alloc] initWithTitle:@"Filter" style:UIBarButtonItemStylePlain target:self action:@selector(showFilter)];
     self.navigationItem.rightBarButtonItem = filterButton;
     
+    UIBarButtonItem *logout = [[UIBarButtonItem alloc] initWithTitle:@"Logout" style:UIBarButtonItemStylePlain target:self action:@selector(logoutSoundCloud:)];
+    self.navigationItem.leftBarButtonItem = logout;
+    
     //change background of navigation bar to black
     [[UINavigationBar appearance] setTintColor:[UIColor blackColor]];
+    
+    
+    
+  
+}
+
+- (IBAction) logoutSoundCloud:(id) sender
+{
+    [SCSoundCloud removeAccess];
+    [self checkLogin];
+}
+
+- (void)checkLogin{
+    SCAccount *account = [SCSoundCloud account];
+    if (account == nil) {
+        SCLoginViewControllerCompletionHandler handler = ^(NSError *error) {
+            if (SC_CANCELED(error)) {
+                NSLog(@"Canceled!");
+            } else if (error) {
+                NSLog(@"Error: %@", [error localizedDescription]);
+            } else {
+                NSLog(@"Done!");
+            }
+        };
+        
+        [SCSoundCloud requestAccessWithPreparedAuthorizationURLHandler:^(NSURL *preparedURL) {
+            SCLoginViewController *loginViewController;
+            
+            loginViewController = [SCLoginViewController
+                                   loginViewControllerWithPreparedURL:preparedURL
+                                   completionHandler:handler];
+            [self presentModalViewController:loginViewController animated:YES];
+        }];
+    }
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    // check SC Login
+    //[SCSoundCloud removeAccess]; //DEBUG only
+    [self checkLogin];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
-
-- (void)addSong:(Song *)newSong{
-    if (!_songs) {
-        _songs = [[NSMutableArray alloc] init];
-    }
-    [_songs insertObject:newSong atIndex:0];
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-    [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
 
@@ -82,7 +111,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _songs.count;
+    return tracks.count;
 }
 
 // Customize the appearance of table view cells.
@@ -96,13 +125,21 @@
         //cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
 
-    Song *song = [_songs objectAtIndex: indexPath.row];
+    NSDictionary *track = [self.tracks objectAtIndex:indexPath.row];
     //todo: get all information for the song (title, interpret, genre/tags, likes, image)
-    cell.songTitle.text = song.title;
-    cell.songInterpreter.text = song.interpreter;
-    cell.likes.text = [NSString stringWithFormat:@"%d", (int)song.likes];
-    cell.songImage.image = song.songImage;
+    cell.songTitle.text = [track objectForKey:@"title"];
+    NSDictionary *user  = [track objectForKey:@"user"];
+    cell.songInterpreter.text = [user objectForKey:@"username"];
     
+    NSNumber *favoritings_count = [track objectForKey:@"favoritings_count"];
+    cell.likes.text = [NSString stringWithFormat:@"%d",(int)[favoritings_count intValue]];
+    NSObject * imageUrlObject;
+    if(( imageUrlObject =[track objectForKey:@"artwork_url"])!=[NSNull null]){
+        NSURL *imageURL = [NSURL URLWithString:(NSString* )imageUrlObject];
+        NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
+        UIImage *image = [UIImage imageWithData:imageData];
+        cell.songImage.image = image;
+    }
     return cell;
 }
 
@@ -141,13 +178,19 @@
     return 70;
 }
 
+- (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 70;
+}
+
+
 // showPlayer is called when user taps on a item
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"selected song at position: %d from %d songs",indexPath.row, _songs.count);
-    Song *selectedSong = [_songs objectAtIndex:indexPath.row];
-    NSLog(@"selected song: %@",selectedSong.soundcloud_id);
-    [self showPlayer:selectedSong];
+    NSLog(@"selected song at position: %d from %d songs",indexPath.row, tracks.count);
+    NSDictionary *song = [self.tracks objectAtIndex:indexPath.row];
+    
+    //NSLog(@"selected song: %@",selectedSong.soundcloud_id);
+    [self showPlayer:song];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
@@ -156,12 +199,8 @@
 
 // set header of table as GoToLibraryHeaderView
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-
     return self.goToLibraryHeaderView;
 
-}
-- (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 70;
 }
 
 // change to TagFilterView
@@ -173,11 +212,11 @@
 }
 
 // change to PlayerView, which is initialised with the defined song object
-- (void) showPlayer:(Song*)song {
+- (void) showPlayer:(NSDictionary*)song {
     if (!self.playerViewController) {
         self.playerViewController = [[PlayerViewController alloc] initWithNibName:@"PlayerViewController" bundle:nil];
     }
-//    self.playerViewController.playingSong = song;
+    self.playerViewController.songItem = song;
     [self.navigationController pushViewController:self.playerViewController animated:YES];
 }
 
@@ -192,34 +231,57 @@
 
     //todo: load from storage
     //filter for testing: rock pop
-    _tagFilter = [NSArray arrayWithObjects:@"Rock",@"Pop", nil];
+    tagFilter = [NSArray arrayWithObjects:@"Rock",@"Pop", nil];
     
 }
 
 // updates the tagFilter and the nearest song list accordingly; filterList = NULL if no filter is set
 // DELEGATE from TagFilterViewController
 - (void) setFilter:(NSMutableArray *)filterList{
-    _tagFilter = filterList;
+    tagFilter = filterList;
     [self updateNearestSongList];
 }
 
 - (void) updateNearestSongList {
 
-    [_songs removeAllObjects];
     // 1) todo: get nearest songs from database
-    NSMutableArray *nearestSongList = [[NSMutableArray alloc] init];
-    // create test songs
-    for(int i=0; i<5; i++) {
-        [nearestSongList addObject:[[Song alloc] initWithPrimaryKey:i]];
-    }
-    // 2) filter songs by tags
-    for(Song *nearestSong in nearestSongList) {
-        // accept song if tagFilter is not set or if it contains the genre of the song
-        if(_tagFilter==NULL || [_tagFilter containsObject: [nearestSong genreTag]]) {
-            // add song to songlist
-            [self addSong:nearestSong];
+    
+    // getSoundCloudSongs
+    SCAccount *account = [SCSoundCloud account];
+    SCRequestResponseHandler handler;
+    handler = ^(NSURLResponse *response, NSData *data, NSError *error) {
+        NSError *jsonError = nil;
+        NSJSONSerialization *jsonResponse = [NSJSONSerialization
+                                             JSONObjectWithData:data
+                                             options:0
+                                             error:&jsonError];
+        if (!jsonError && [jsonResponse isKindOfClass:[NSArray class]]) {
+            tracks = (NSArray *)jsonResponse;
+            [self.tableView reloadData];
         }
-    }
+    };
+    
+    NSString *resourceURL = @"https://api.soundcloud.com/me/tracks.json";
+    [SCRequest performMethod:SCRequestMethodGET
+                  onResource:[NSURL URLWithString:resourceURL]
+             usingParameters:nil
+                 withAccount:account
+      sendingProgressHandler:nil
+             responseHandler:handler];
+    
+    
+//    // create test songs
+//    for(int i=0; i<5; i++) {
+//        [nearestSongList addObject:[[Song alloc] initWithPrimaryKey:i]];
+//    }
+//    // 2) filter songs by tags
+//    for(Song *nearestSong in nearestSongList) {
+//        // accept song if tagFilter is not set or if it contains the genre of the song
+//        if(_tagFilter==NULL || [_tagFilter containsObject: [nearestSong genreTag]]) {
+//            // add song to songlist
+//            [self addSong:nearestSong];
+//        }
+//    }
     
 }
 

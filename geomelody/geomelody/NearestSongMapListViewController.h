@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <AVFoundation/AVFoundation.h>
 #import "SongCell.h"
+
 
 @class PlayerViewController;
 @class TagFilterViewController;
@@ -18,6 +20,10 @@
 @property (strong, nonatomic) PlayerViewController *playerViewController;
 @property (strong, nonatomic) TagFilterViewController *tagFilterViewController;
 @property (strong, nonatomic) GoToLibraryHeaderView *goToLibraryHeaderView;
+
+@property (nonatomic, strong) NSArray *tracks;
+@property (nonatomic, strong) AVAudioPlayer *player;
+@property (nonatomic, strong) NSArray *tagFilter;
 
 - (void) setFilter:(NSMutableArray *)filterList;
 

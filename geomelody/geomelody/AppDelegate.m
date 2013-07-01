@@ -9,17 +9,29 @@
 #import "AppDelegate.h"
 
 #import "NearestSongMapListViewController.h"
-
+#import "SCUI.h"
 @implementation AppDelegate
+
+
++ (void)initialize;
+{
+    [SCSoundCloud  setClientID:@"f0cfa9035abc5752e699580d5586d1e6"
+                        secret:@"49baf8628ee99e0e62d6af4742d33073"
+                   redirectURL:[NSURL URLWithString:@"geomelody://oauth"]];
+}
+
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    
+    
+    
     // Override point for customization after application launch.
-
     NearestSongMapListViewController *masterViewController = [[NearestSongMapListViewController alloc] initWithNibName:@"NearestSongMapListViewController" bundle:nil];
     self.navigationController = [[UINavigationController alloc] initWithRootViewController:masterViewController];
     self.window.rootViewController = self.navigationController;
+    //call window
     [self.window makeKeyAndVisible];
     return YES;
 }
