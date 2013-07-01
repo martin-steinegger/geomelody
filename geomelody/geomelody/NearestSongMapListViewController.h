@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
+#import <CoreLocation/CoreLocation.h>
 #import "SongCell.h"
 
 
@@ -15,8 +16,8 @@
 @class TagFilterViewController;
 @class GoToLibraryHeaderView;
 
-@interface NearestSongMapListViewController : UITableViewController
-
+@interface NearestSongMapListViewController : UITableViewController<CLLocationManagerDelegate> 
+@property (strong, nonatomic) CLLocationManager *locationManager;
 @property (strong, nonatomic) PlayerViewController *playerViewController;
 @property (strong, nonatomic) TagFilterViewController *tagFilterViewController;
 @property (strong, nonatomic) GoToLibraryHeaderView *goToLibraryHeaderView;

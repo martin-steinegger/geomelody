@@ -10,7 +10,7 @@
 #import "SCUI.h"
 
 @interface PlayerViewController ()
-- (void)configureView;
+- (void)setUpSongAndPlayer;
 @end
 
 @implementation PlayerViewController
@@ -81,26 +81,21 @@
     
 }
 
-- (void)setDetailItem:(id)newDetailItem
+- (void)setSongItem:(id)newDetailItem
 {
     if (songItem != newDetailItem) {
         songItem = newDetailItem;
         // Update the view.
-        [self configureView];
+        [self setUpSongAndPlayer];
     }
 }
 
-- (void)configureView
+- (void)setUpSongAndPlayer
 {
-    // Update the user interface for the detail item.
-
     if (self.songItem) {
         self.detailDescriptionLabel.text = [self.songItem description];
 
         NSString *streamURL = [songItem objectForKey:@"stream_url"];
-        
-        
-        
         
         SCAccount *account = [SCSoundCloud account];
         
@@ -127,7 +122,7 @@
     [super viewDidLoad];
     [self createAudioSession];
 	// Do any additional setup after loading the view, typically from a nib.
-    [self configureView];
+    [self setUpSongAndPlayer];
 }
 
 - (void)didReceiveMemoryWarning

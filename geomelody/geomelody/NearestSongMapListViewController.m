@@ -21,6 +21,8 @@
 @synthesize player;
 @synthesize tracks;
 @synthesize tagFilter;
+@synthesize locationManager;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -54,8 +56,12 @@
     //change background of navigation bar to black
     [[UINavigationBar appearance] setTintColor:[UIColor blackColor]];
     
-    
-    
+    //get location updates for music 
+    locationManager = [[CLLocationManager alloc] init];
+    [locationManager setDesiredAccuracy:kCLLocationAccuracyBest];
+    [locationManager setDelegate:self];
+    [locationManager setDistanceFilter:10]; //only every ten meters
+    [locationManager startUpdatingLocation];
   
 }
 
@@ -84,10 +90,23 @@
             loginViewController = [SCLoginViewController
                                    loginViewControllerWithPreparedURL:preparedURL
                                    completionHandler:handler];
-            [self presentModalViewController:loginViewController animated:YES];
+            [self presentViewController:loginViewController animated:YES completion:nil];
         }];
     }
+    [self updateNearestSongList];
 }
+
+-(void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
+    //updated    newLocation
+    [self updateNearestSongList];
+}
+
+-(void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
+    NSLog(@"%@", [error description]);
+}
+
+
+
 
 - (void)viewDidAppear:(BOOL)animated {
     // check SC Login
@@ -103,16 +122,6 @@
 
 
 #pragma mark - Table View
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 1;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return tracks.count;
-}
 
 // Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -142,46 +151,6 @@
     }
     return cell;
 }
-
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return NO;
-}
-
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    /*if (editingStyle == UITableViewCellEditingStyleDelete) {
-        [_objects removeObjectAtIndex:indexPath.row];
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
-    }*/
-}
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 70;
-}
-
-- (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 70;
-}
-
 
 // showPlayer is called when user taps on a item
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -216,7 +185,7 @@
     if (!self.playerViewController) {
         self.playerViewController = [[PlayerViewController alloc] initWithNibName:@"PlayerViewController" bundle:nil];
     }
-    self.playerViewController.songItem = song;
+    [self.playerViewController setSongItem:song];
     [self.navigationController pushViewController:self.playerViewController animated:YES];
 }
 
@@ -227,8 +196,6 @@
 
 // load tag filter list from user settings -> tagFilter
 - (void) loadFilter {
-
-
     //todo: load from storage
     //filter for testing: rock pop
     tagFilter = [NSArray arrayWithObjects:@"Rock",@"Pop", nil];
@@ -244,8 +211,9 @@
 
 - (void) updateNearestSongList {
 
-    // 1) todo: get nearest songs from database
-    
+    // 1) todo: get nearest songs from database with filter
+    // 2) ask soundcloud for information http://api.soundcloud.com/tracks?client_id=f0cfa9035abc5752e699580d5586d1e6&ids=41558714,13158665
+    // 3) order by favoritings_count and playback_count
     // getSoundCloudSongs
     SCAccount *account = [SCSoundCloud account];
     SCRequestResponseHandler handler;
@@ -270,19 +238,30 @@
              responseHandler:handler];
     
     
-//    // create test songs
-//    for(int i=0; i<5; i++) {
-//        [nearestSongList addObject:[[Song alloc] initWithPrimaryKey:i]];
-//    }
-//    // 2) filter songs by tags
-//    for(Song *nearestSong in nearestSongList) {
-//        // accept song if tagFilter is not set or if it contains the genre of the song
-//        if(_tagFilter==NULL || [_tagFilter containsObject: [nearestSong genreTag]]) {
-//            // add song to songlist
-//            [self addSong:nearestSong];
-//        }
-//    }
-    
+}
+
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return tracks.count;
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return NO;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 70;
+}
+
+- (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 70;
 }
 
 

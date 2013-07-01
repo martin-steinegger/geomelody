@@ -21,6 +21,8 @@
 - (IBAction)togglePlayingState:(id)button; 
 - (void)playSong;
 - (void)pausePause;
-- (void)togglePlayPause; 
+- (void)togglePlayPause;
+- (void)setSongItem:(id)newDetailItem;
+
 
 @end
