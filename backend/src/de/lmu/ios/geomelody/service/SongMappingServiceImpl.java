@@ -11,6 +11,7 @@ import java.util.Map;
 import javax.sql.DataSource;
 
 import org.springframework.jdbc.core.ResultSetExtractor;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -79,11 +80,11 @@ public class SongMappingServiceImpl implements SongMappingService {
 
 	@Override
 	public List<Song> getkNearestSongs(final Location location, final Filters filters, final int k) {
-		Map<String, Object> params = new HashMap<String, Object>(4);
-		params.put("longitude", location.getLongitude());
-		params.put("latitude", location.getLatitude());
-		params.put("k", k);
-		params.put("filters", filters != null ? filters.getFilters() : null);
+		MapSqlParameterSource params = new MapSqlParameterSource();
+		params.addValue("longitude", location.getLongitude());
+		params.addValue("latitude", location.getLatitude());
+		params.addValue("k", k);
+		params.addValue("filters", filters != null ? filters.getFilters() : null);
 
 		String query = "SELECT s.id, s.soundcloud_song_id, s.soundcloud_user_id, s.comment, " + 
 				"	array_to_string(ARRAY(SELECT t.name " + 
