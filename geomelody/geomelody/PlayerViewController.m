@@ -36,7 +36,7 @@
     self.isPlaying = true;
     float pauseTime = -1*[self.pauseStart timeIntervalSinceNow];
     [self.songProgressTimer setFireDate:[self.previousFireDate initWithTimeInterval:pauseTime sinceDate:self.previousFireDate]];
-    [playPauseButton setTitle:@"Pause" forState:UIControlStateNormal];
+    [self.playPauseButton setImage:[UIImage imageNamed:@"pause64.png"] forState:UIControlStateNormal];
 }
 
 - (void)pauseAudio {
@@ -46,8 +46,7 @@
     self.pauseStart = [NSDate dateWithTimeIntervalSinceNow:0];
     self.previousFireDate = [self.songProgressTimer fireDate];
     [self.songProgressTimer setFireDate:[NSDate distantFuture]];
-    
-    [playPauseButton setTitle:@"Play" forState:UIControlStateNormal];
+    [self.playPauseButton setImage:[UIImage imageNamed:@"play64.png"] forState:UIControlStateNormal];
 }
 - (void)togglePlayPause {
     //Toggle if the music is playing or paused
@@ -220,11 +219,24 @@
     
     [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
     [self becomeFirstResponder];
-   
-    
+
     [self.songProgressControl addTarget:self action:@selector(songProgressDidChange:) forControlEvents:UIControlEventValueChanged];
     self.songProgressControl.sliderStyle = UICircularSliderStyleCircle;
     self.songProgressControl.maximumTrackTintColor = [UIColor blackColor];
+    
+    [self.playPauseButton setBackgroundColor:[UIColor clearColor]];
+    [self.playPauseButton setOpaque:NO];
+    [self.playPauseButton setImage:[UIImage imageNamed:@"pause64.png"] forState:UIControlStateNormal];
+
+    [self.nextButton setBackgroundColor:[UIColor clearColor]];
+    [self.nextButton setOpaque:NO];
+    [self.nextButton setImage:[UIImage imageNamed:@"arrow-right64.png"] forState:UIControlStateNormal];
+
+    [self.previousButton setBackgroundColor:[UIColor clearColor]];
+    [self.previousButton setOpaque:NO];
+    [self.previousButton setImage:[UIImage imageNamed:@"arrow-left64.png"] forState:UIControlStateNormal];
+
+    
     UIBarButtonItem *postButton = [[UIBarButtonItem alloc] initWithTitle:@"Post" style:UIBarButtonItemStylePlain target:self action:@selector(postSong:)];
     self.navigationItem.rightBarButtonItem = postButton;
     

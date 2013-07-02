@@ -195,7 +195,8 @@
 
 - (void)drawRect:(CGRect)rect {
     CGContextRef context = UIGraphicsGetCurrentContext();
-	
+	self.backgroundColor = [UIColor clearColor];
+
 	CGPoint middlePoint;
 	middlePoint.x = self.bounds.origin.x + self.bounds.size.width/2;
 	middlePoint.y = self.bounds.origin.y + self.bounds.size.height/2;

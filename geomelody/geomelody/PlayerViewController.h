@@ -23,6 +23,10 @@
 @property (strong, nonatomic) id songItem;
 
 @property (nonatomic, retain) IBOutlet UIButton *playPauseButton;
+@property (nonatomic, retain) IBOutlet UIButton *nextButton;
+@property (nonatomic, retain) IBOutlet UIButton *previousButton;
+
+
 @property (nonatomic, retain) IBOutlet UICircularSlider *songProgressControl;
 @property (nonatomic, retain) IBOutlet NSTimer  *songProgressTimer;
 @property (nonatomic, retain) IBOutlet NSDate   *pauseStart;
