@@ -84,26 +84,34 @@ public class SongMappingServiceImpl implements SongMappingService {
 		params.addValue("longitude", location.getLongitude());
 		params.addValue("latitude", location.getLatitude());
 		params.addValue("k", k);
-		params.addValue("filters", filters != null ? filters.getFilters() : null);
+	
+		StringBuilder sb = new StringBuilder()
+		.append("SELECT s.id, s.soundcloud_song_id, s.soundcloud_user_id, s.comment, ")
+		.append("	array_to_string(ARRAY(SELECT t.name ")
+		.append("	    FROM tags AS T ")
+		.append("	    INNER JOIN songs_tags AS st ON t.id = st.tag_id ")
+		.append("	    WHERE ")
+		.append("		st.song_id = s.id), ',') as tags, ")
+		.append("		ST_X(geom) as longitude, ")
+		.append("		ST_Y(geom) as latitude ")
+		.append("	FROM songs AS s ")
+		.append("		INNER JOIN songs_tags AS st ON s.id = st.song_id ")
+		.append("		INNER JOIN tags AS t ON t.id = st.tag_id ");
+		
+		if(filters != null && filters.getFilters().size() > 0) {
+			params.addValue("filters", filters.getFilters());
+			sb.append("	WHERE ")
+			.append("		t.name IN (:filters) ");
+		}
 
-		String query = "SELECT s.id, s.soundcloud_song_id, s.soundcloud_user_id, s.comment, " + 
-				"	array_to_string(ARRAY(SELECT t.name " + 
-				"	    FROM tags AS T " + 
-				"	    INNER JOIN songs_tags AS st ON t.id = st.tag_id " + 
-				"	    WHERE " + 
-				"		st.song_id = s.id), ',') as tags, " + 
-				"		ST_X(geom) as longitude, " + 
-				"		ST_Y(geom) as latitude " + 
-				"	FROM songs AS s " + 
-				"		INNER JOIN songs_tags AS st ON s.id = st.song_id " + 
-				"		INNER JOIN tags AS t ON t.id = st.tag_id " + 
-				"	WHERE " + 
-				"		(:filters) IS NULL OR t.name IN (:filters) " + 
-				"	GROUP BY " + 
-				"		s.id " + 
-				"	ORDER BY " + 
-				"		s.geom <-> ST_SetSRID(ST_MakePoint(:longitude, :latitude), 4326) " + 
-				"	LIMIT :k";
+		sb.append("	GROUP BY ")
+		.append("		s.id ")
+		.append("	ORDER BY ")
+		.append("		s.geom <-> ST_SetSRID(ST_MakePoint(:longitude, :latitude), 4326) ")
+		.append("	LIMIT :k");
+		
+		String query = sb.toString();
+		
 		
 		return jdbcTemplate
 				.query(query, params, new SongMapper());
