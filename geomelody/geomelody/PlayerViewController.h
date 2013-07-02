@@ -10,7 +10,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import <MediaPlayer/MPNowPlayingInfoCenter.h>
 #import <MediaPlayer/MPMediaItem.h>
-
+#import "UICircularSlider.h"
 @protocol PlayerViewControllerProtocol <NSObject>
 - (id)getNextEntry;
 - (id)getPreviousEntry;
@@ -22,9 +22,8 @@
 @property (strong, nonatomic) id <PlayerViewControllerProtocol> delegate;
 @property (strong, nonatomic) id songItem;
 
-@property (weak, nonatomic)   IBOutlet UILabel  *detailDescriptionLabel;
 @property (nonatomic, retain) IBOutlet UIButton *playPauseButton;
-@property (nonatomic, retain) IBOutlet UISlider *songProgressControl;
+@property (nonatomic, retain) IBOutlet UICircularSlider *songProgressControl;
 @property (nonatomic, retain) IBOutlet NSTimer  *songProgressTimer;
 @property (nonatomic, retain) IBOutlet NSDate   *pauseStart;
 @property (nonatomic, retain) IBOutlet NSDate   *previousFireDate;
@@ -36,13 +35,13 @@
 
 
 @property (nonatomic, retain) AVPlayer *audioPlayer;
-- (IBAction)volumeDidChange:(id)slider; 
 - (IBAction)togglePlayingState:(id)button;
 - (void)playSong;
 - (void)pausePause;
 - (void)togglePlayPause;
 - (IBAction)playNextSong:(id)button;
 - (IBAction)playPreviousSong:(id)button;
+- (IBAction)songProgressDidChange:(UISlider *)slider;
 
 - (void)setSongItem:(id)newDetailItem;
 

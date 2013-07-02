@@ -46,7 +46,7 @@
     self.pauseStart = [NSDate dateWithTimeIntervalSinceNow:0];
     self.previousFireDate = [self.songProgressTimer fireDate];
     [self.songProgressTimer setFireDate:[NSDate distantFuture]];
-
+    
     [playPauseButton setTitle:@"Play" forState:UIControlStateNormal];
 }
 - (void)togglePlayPause {
@@ -78,7 +78,6 @@
         } else if (event.subtype == UIEventSubtypeRemoteControlPreviousTrack) {
             [self playPreviousSong:NULL];
         }
-
     }
 }
 
@@ -148,20 +147,23 @@
         NSURL *url = [NSURL URLWithString:streamClientAuth];
         AVURLAsset * avAsset = [AVURLAsset URLAssetWithURL:url options:nil];
         AVPlayerItem * playerItem = [AVPlayerItem playerItemWithAsset:avAsset];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(songDidFinishPlaying) name:AVPlayerItemDidPlayToEndTimeNotification object:playerItem];
+        
         self.audioPlayer = [AVPlayer playerWithPlayerItem:playerItem];
         self.songProgressTimer = [NSTimer scheduledTimerWithTimeInterval:0.23 target:self selector:@selector(updateProgressBar:) userInfo:nil repeats:YES];
         self.songProgressControl.maximumValue = [self durationInSeconds];
         self.songProgressControl.minimumValue = 0.0;
-        self.songProgressControl.continuous = YES;        
+        self.songProgressControl.continuous = YES;
     }
+}
+
+- (void) songDidFinishPlaying {
+    [self playNextSong:NULL];
 }
 
 - (void)setUpView
 {
     if (self.songItem) {
-        self.detailDescriptionLabel.text = [self.songItem description];
-
-        
         NSObject * artworkImageUrlObject;
         UIImage *art_work_image=NULL;
         if(( artworkImageUrlObject =[songItem objectForKey:@"artwork_url"])!=[NSNull null]){
@@ -180,44 +182,37 @@
             self.user_picture.image = image;
         }
         
-        
         Class playingInfoCenter = NSClassFromString(@"MPNowPlayingInfoCenter");
-        
         if (playingInfoCenter) {
             NSMutableDictionary *songInfo = [[NSMutableDictionary alloc] init];
-            
+            [songInfo setObject:[self.songItem objectForKey:@"title"] forKey:MPMediaItemPropertyTitle];
+            [songInfo setObject:[user objectForKey:@"username"] forKey:MPMediaItemPropertyArtist];
+            [songInfo setObject:@"Sound Cloud" forKey:MPMediaItemPropertyAlbumTitle];
             if(art_work_image != NULL){
                 MPMediaItemArtwork *albumArt = [[MPMediaItemArtwork alloc] initWithImage: art_work_image];
                 [songInfo setObject:albumArt forKey:MPMediaItemPropertyArtwork];
+            }else{
+                [songInfo setObject:nil forKey:MPMediaItemPropertyArtwork];
             }
-            [songInfo setObject:[songItem objectForKey:@"title"] forKey:MPMediaItemPropertyTitle];
-            [songInfo setObject:[user objectForKey:@"username"] forKey:MPMediaItemPropertyArtist];
-            [songInfo setObject:@"Sound Cloud" forKey:MPMediaItemPropertyAlbumTitle];
-            [[MPNowPlayingInfoCenter defaultCenter] setNowPlayingInfo:songInfo];
+            [MPNowPlayingInfoCenter defaultCenter].nowPlayingInfo = songInfo;
         }
     }
 }
-
-
-
 
 - (Float64)durationInSeconds {
     Float64 dur = CMTimeGetSeconds(self.audioPlayer.currentItem.asset.duration);
     return dur;
 }
 
-
 - (Float64)currentTimeInSeconds {
     Float64 dur = CMTimeGetSeconds([self.audioPlayer currentTime]);
     return dur;
 }
 
-
 - (void)updateProgressBar:(NSTimer *)timer {
     self.songProgressControl.maximumValue = [self durationInSeconds];
-    self.songProgressControl.value = [self currentTimeInSeconds];
+    [self.songProgressControl setValueWithoutUpdate:[self currentTimeInSeconds]];
 }
-
 
 - (void)viewDidLoad
 {
@@ -225,20 +220,22 @@
     
     [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
     [self becomeFirstResponder];
-
+   
+    
+    [self.songProgressControl addTarget:self action:@selector(songProgressDidChange:) forControlEvents:UIControlEventValueChanged];
+    self.songProgressControl.sliderStyle = UICircularSliderStyleCircle;
+    self.songProgressControl.maximumTrackTintColor = [UIColor blackColor];
     UIBarButtonItem *postButton = [[UIBarButtonItem alloc] initWithTitle:@"Post" style:UIBarButtonItemStylePlain target:self action:@selector(postSong:)];
     self.navigationItem.rightBarButtonItem = postButton;
     
     UISwipeGestureRecognizer* gestureSwipeLeftRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipe:)];
     gestureSwipeLeftRecognizer.direction = UISwipeGestureRecognizerDirectionLeft;
-    
     [self.view addGestureRecognizer:gestureSwipeLeftRecognizer];
     
     UISwipeGestureRecognizer* gestureSwipeRightRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipe:)];
     gestureSwipeRightRecognizer.direction = UISwipeGestureRecognizerDirectionRight;
-    
     [self.view addGestureRecognizer:gestureSwipeRightRecognizer];
-    
+
     [self createAudioSession];
 	// Do any additional setup after loading the view, typically from a nib.
     [self setUpView];
@@ -261,5 +258,5 @@
     }
     return self;
 }
-							
+
 @end

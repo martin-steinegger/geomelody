@@ -26,6 +26,7 @@
 		470799BE177C96770098B2F8 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 470799BD177C96770098B2F8 /* QuartzCore.framework */; };
 		470799C0177C967D0098B2F8 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 470799BF177C967D0098B2F8 /* Security.framework */; };
 		472EBB4F17831BC300B6600A /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 472EBB4E17831BC300B6600A /* CoreMedia.framework */; };
+		472EBB52178337A300B6600A /* UICircularSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 472EBB51178337A300B6600A /* UICircularSlider.m */; };
 		47752C9917818C08000B4F24 /* GoToLibraryHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 47752C8F17818C08000B4F24 /* GoToLibraryHeaderView.m */; };
 		47752C9A17818C08000B4F24 /* GoToLibraryHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47752C9017818C08000B4F24 /* GoToLibraryHeaderView.xib */; };
 		47752C9C17818C08000B4F24 /* SongCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 47752C9417818C08000B4F24 /* SongCell.m */; };
@@ -188,6 +189,8 @@
 		470799BD177C96770098B2F8 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		470799BF177C967D0098B2F8 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		472EBB4E17831BC300B6600A /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		472EBB50178337A300B6600A /* UICircularSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UICircularSlider.h; path = ../UICircularSlider/UICircularSlider.h; sourceTree = "<group>"; };
+		472EBB51178337A300B6600A /* UICircularSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UICircularSlider.m; path = ../UICircularSlider/UICircularSlider.m; sourceTree = "<group>"; };
 		47752C8E17818C08000B4F24 /* GoToLibraryHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoToLibraryHeaderView.h; sourceTree = "<group>"; };
 		47752C8F17818C08000B4F24 /* GoToLibraryHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoToLibraryHeaderView.m; sourceTree = "<group>"; };
 		47752C9017818C08000B4F24 /* GoToLibraryHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GoToLibraryHeaderView.xib; sourceTree = "<group>"; };
@@ -277,6 +280,7 @@
 				47DF9B3D177C9D8A00FBC5C3 /* SoundCloudAPI.xcodeproj */,
 				47DF9B34177C9D8200FBC5C3 /* SoundCloudUI.xcodeproj */,
 				47DF9B2B177C9D7A00FBC5C3 /* JSONKit.xcodeproj */,
+				472EBB53178337A900B6600A /* UICircularSlider */,
 				4707995F177C943F0098B2F8 /* geomelody */,
 				47752CA617818C57000B4F24 /* images */,
 				47079958177C943F0098B2F8 /* Frameworks */,
@@ -352,6 +356,15 @@
 				4707996F177C94400098B2F8 /* Default-568h@2x.png */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		472EBB53178337A900B6600A /* UICircularSlider */ = {
+			isa = PBXGroup;
+			children = (
+				472EBB50178337A300B6600A /* UICircularSlider.h */,
+				472EBB51178337A300B6600A /* UICircularSlider.m */,
+			);
+			name = UICircularSlider;
 			sourceTree = "<group>";
 		};
 		47752CA617818C57000B4F24 /* images */ = {
@@ -637,6 +650,7 @@
 				84504754178314A0004B9421 /* AFURLConnectionOperation.m in Sources */,
 				84504755178314A0004B9421 /* AFXMLRequestOperation.m in Sources */,
 				84504756178314A0004B9421 /* UIImageView+AFNetworking.m in Sources */,
+				472EBB52178337A300B6600A /* UICircularSlider.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
