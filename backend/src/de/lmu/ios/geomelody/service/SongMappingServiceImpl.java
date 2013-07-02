@@ -83,7 +83,7 @@ public class SongMappingServiceImpl implements SongMappingService {
 		params.put("longitude", location.getLongitude());
 		params.put("latitude", location.getLatitude());
 		params.put("k", k);
-		params.put("filters", filters.getFilters());
+		params.put("filters", filters != null ? filters.getFilters() : null);
 
 		String query = "SELECT s.id, s.soundcloud_song_id, s.soundcloud_user_id, s.comment, " + 
 				"	array_to_string(ARRAY(SELECT t.name " + 
