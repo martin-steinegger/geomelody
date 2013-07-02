@@ -44,6 +44,18 @@
 		47DF9B62177C9DF000FBC5C3 /* libSoundCloudAPI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 47DF9B45177C9D8B00FBC5C3 /* libSoundCloudAPI.a */; };
 		47DF9B63177C9DF000FBC5C3 /* libSoundCloudUI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 47DF9B3A177C9D8200FBC5C3 /* libSoundCloudUI.a */; };
 		47DF9B65177C9FA100FBC5C3 /* SoundCloud.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 47DF9B64177C9FA100FBC5C3 /* SoundCloud.bundle */; };
+		8450474E178314A0004B9421 /* AFHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 8450473C178314A0004B9421 /* AFHTTPClient.m */; };
+		8450474F178314A0004B9421 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8450473E178314A0004B9421 /* AFHTTPRequestOperation.m */; };
+		84504750178314A0004B9421 /* AFImageRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 84504740178314A0004B9421 /* AFImageRequestOperation.m */; };
+		84504751178314A0004B9421 /* AFJSONRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 84504742178314A0004B9421 /* AFJSONRequestOperation.m */; };
+		84504752178314A0004B9421 /* AFNetworkActivityIndicatorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 84504744178314A0004B9421 /* AFNetworkActivityIndicatorManager.m */; };
+		84504753178314A0004B9421 /* AFPropertyListRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 84504747178314A0004B9421 /* AFPropertyListRequestOperation.m */; };
+		84504754178314A0004B9421 /* AFURLConnectionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 84504749178314A0004B9421 /* AFURLConnectionOperation.m */; };
+		84504755178314A0004B9421 /* AFXMLRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8450474B178314A0004B9421 /* AFXMLRequestOperation.m */; };
+		84504756178314A0004B9421 /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 8450474D178314A0004B9421 /* UIImageView+AFNetworking.m */; };
+		84CBE36C1782296000C4B1F2 /* BackendApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 84CBE36B1782296000C4B1F2 /* BackendApi.m */; };
+		84CBE3781782360000C4B1F2 /* GeoMelodyBackendSong.m in Sources */ = {isa = PBXBuildFile; fileRef = 84CBE3771782360000C4B1F2 /* GeoMelodyBackendSong.m */; };
+		84CBE37B1782367C00C4B1F2 /* GeoMelodyBackendLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 84CBE37A1782367C00C4B1F2 /* GeoMelodyBackendLocation.m */; };
 		84D1F2811781A9EE0031D50E /* tags.txt in Resources */ = {isa = PBXBuildFile; fileRef = 84D1F2801781A9EE0031D50E /* tags.txt */; };
 /* End PBXBuildFile section */
 
@@ -195,6 +207,31 @@
 		47DF9B46177C9D9300FBC5C3 /* OAuth2Client.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = OAuth2Client.xcodeproj; path = ../OAuth2Client/OAuth2Client.xcodeproj; sourceTree = "<group>"; };
 		47DF9B4F177C9D9D00FBC5C3 /* OHAttributedLabel.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = OHAttributedLabel.xcodeproj; path = ../OHAttributedLabel/OHAttributedLabel.xcodeproj; sourceTree = "<group>"; };
 		47DF9B64177C9FA100FBC5C3 /* SoundCloud.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SoundCloud.bundle; sourceTree = "<group>"; };
+		8450473B178314A0004B9421 /* AFHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPClient.h; sourceTree = "<group>"; };
+		8450473C178314A0004B9421 /* AFHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPClient.m; sourceTree = "<group>"; };
+		8450473D178314A0004B9421 /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
+		8450473E178314A0004B9421 /* AFHTTPRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPRequestOperation.m; sourceTree = "<group>"; };
+		8450473F178314A0004B9421 /* AFImageRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFImageRequestOperation.h; sourceTree = "<group>"; };
+		84504740178314A0004B9421 /* AFImageRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFImageRequestOperation.m; sourceTree = "<group>"; };
+		84504741178314A0004B9421 /* AFJSONRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFJSONRequestOperation.h; sourceTree = "<group>"; };
+		84504742178314A0004B9421 /* AFJSONRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFJSONRequestOperation.m; sourceTree = "<group>"; };
+		84504743178314A0004B9421 /* AFNetworkActivityIndicatorManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworkActivityIndicatorManager.h; sourceTree = "<group>"; };
+		84504744178314A0004B9421 /* AFNetworkActivityIndicatorManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFNetworkActivityIndicatorManager.m; sourceTree = "<group>"; };
+		84504745178314A0004B9421 /* AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworking.h; sourceTree = "<group>"; };
+		84504746178314A0004B9421 /* AFPropertyListRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFPropertyListRequestOperation.h; sourceTree = "<group>"; };
+		84504747178314A0004B9421 /* AFPropertyListRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFPropertyListRequestOperation.m; sourceTree = "<group>"; };
+		84504748178314A0004B9421 /* AFURLConnectionOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLConnectionOperation.h; sourceTree = "<group>"; };
+		84504749178314A0004B9421 /* AFURLConnectionOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLConnectionOperation.m; sourceTree = "<group>"; };
+		8450474A178314A0004B9421 /* AFXMLRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFXMLRequestOperation.h; sourceTree = "<group>"; };
+		8450474B178314A0004B9421 /* AFXMLRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFXMLRequestOperation.m; sourceTree = "<group>"; };
+		8450474C178314A0004B9421 /* UIImageView+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+AFNetworking.h"; sourceTree = "<group>"; };
+		8450474D178314A0004B9421 /* UIImageView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+AFNetworking.m"; sourceTree = "<group>"; };
+		84CBE36A1782296000C4B1F2 /* BackendApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackendApi.h; sourceTree = "<group>"; };
+		84CBE36B1782296000C4B1F2 /* BackendApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackendApi.m; sourceTree = "<group>"; };
+		84CBE3761782360000C4B1F2 /* GeoMelodyBackendSong.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeoMelodyBackendSong.h; sourceTree = "<group>"; };
+		84CBE3771782360000C4B1F2 /* GeoMelodyBackendSong.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeoMelodyBackendSong.m; sourceTree = "<group>"; };
+		84CBE3791782367C00C4B1F2 /* GeoMelodyBackendLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeoMelodyBackendLocation.h; sourceTree = "<group>"; };
+		84CBE37A1782367C00C4B1F2 /* GeoMelodyBackendLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeoMelodyBackendLocation.m; sourceTree = "<group>"; };
 		84D1F2801781A9EE0031D50E /* tags.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tags.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -203,6 +240,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				470799BA177C96680098B2F8 /* CoreLocation.framework in Frameworks */,
 				47DF9B5F177C9DF000FBC5C3 /* libJSONKit.a in Frameworks */,
 				47DF9B60177C9DF000FBC5C3 /* libOAuth2Client.a in Frameworks */,
 				47DF9B61177C9DF000FBC5C3 /* libOHAttributedLabel.a in Frameworks */,
@@ -212,7 +250,6 @@
 				470799B8177C965E0098B2F8 /* AddressBookUI.framework in Frameworks */,
 				47752CB71781B521000B4F24 /* AVFoundation.framework in Frameworks */,
 				4707995E177C943F0098B2F8 /* CoreGraphics.framework in Frameworks */,
-				470799BA177C96680098B2F8 /* CoreLocation.framework in Frameworks */,
 				470799BC177C966F0098B2F8 /* CoreText.framework in Frameworks */,
 				470799BE177C96770098B2F8 /* QuartzCore.framework in Frameworks */,
 				470799C0177C967D0098B2F8 /* Security.framework in Frameworks */,
@@ -227,6 +264,7 @@
 		4707994D177C943F0098B2F8 = {
 			isa = PBXGroup;
 			children = (
+				8450473A178314A0004B9421 /* AFNetworking */,
 				47DF9B64177C9FA100FBC5C3 /* SoundCloud.bundle */,
 				47DF9B4F177C9D9D00FBC5C3 /* OHAttributedLabel.xcodeproj */,
 				47DF9B46177C9D9300FBC5C3 /* OAuth2Client.xcodeproj */,
@@ -268,6 +306,7 @@
 		4707995F177C943F0098B2F8 /* geomelody */ = {
 			isa = PBXGroup;
 			children = (
+				84CBE375178235E800C4B1F2 /* Domain */,
 				84D1F2801781A9EE0031D50E /* tags.txt */,
 				47079968177C94400098B2F8 /* AppDelegate.h */,
 				47079969177C94400098B2F8 /* AppDelegate.m */,
@@ -287,6 +326,8 @@
 				47079975177C94400098B2F8 /* PlayerViewController.m */,
 				4707997A177C94400098B2F8 /* PlayerViewController.xib */,
 				47079960177C943F0098B2F8 /* Supporting Files */,
+				84CBE36A1782296000C4B1F2 /* BackendApi.h */,
+				84CBE36B1782296000C4B1F2 /* BackendApi.m */,
 			);
 			path = geomelody;
 			sourceTree = "<group>";
@@ -359,6 +400,44 @@
 				47DF9B54177C9D9D00FBC5C3 /* libOHAttributedLabel.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		8450473A178314A0004B9421 /* AFNetworking */ = {
+			isa = PBXGroup;
+			children = (
+				8450473B178314A0004B9421 /* AFHTTPClient.h */,
+				8450473C178314A0004B9421 /* AFHTTPClient.m */,
+				8450473D178314A0004B9421 /* AFHTTPRequestOperation.h */,
+				8450473E178314A0004B9421 /* AFHTTPRequestOperation.m */,
+				8450473F178314A0004B9421 /* AFImageRequestOperation.h */,
+				84504740178314A0004B9421 /* AFImageRequestOperation.m */,
+				84504741178314A0004B9421 /* AFJSONRequestOperation.h */,
+				84504742178314A0004B9421 /* AFJSONRequestOperation.m */,
+				84504743178314A0004B9421 /* AFNetworkActivityIndicatorManager.h */,
+				84504744178314A0004B9421 /* AFNetworkActivityIndicatorManager.m */,
+				84504745178314A0004B9421 /* AFNetworking.h */,
+				84504746178314A0004B9421 /* AFPropertyListRequestOperation.h */,
+				84504747178314A0004B9421 /* AFPropertyListRequestOperation.m */,
+				84504748178314A0004B9421 /* AFURLConnectionOperation.h */,
+				84504749178314A0004B9421 /* AFURLConnectionOperation.m */,
+				8450474A178314A0004B9421 /* AFXMLRequestOperation.h */,
+				8450474B178314A0004B9421 /* AFXMLRequestOperation.m */,
+				8450474C178314A0004B9421 /* UIImageView+AFNetworking.h */,
+				8450474D178314A0004B9421 /* UIImageView+AFNetworking.m */,
+			);
+			name = AFNetworking;
+			path = ../AFNetworking/AFNetworking;
+			sourceTree = "<group>";
+		};
+		84CBE375178235E800C4B1F2 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				84CBE3761782360000C4B1F2 /* GeoMelodyBackendSong.h */,
+				84CBE3771782360000C4B1F2 /* GeoMelodyBackendSong.m */,
+				84CBE3791782367C00C4B1F2 /* GeoMelodyBackendLocation.h */,
+				84CBE37A1782367C00C4B1F2 /* GeoMelodyBackendLocation.m */,
+			);
+			name = Domain;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -538,6 +617,18 @@
 				47752C9917818C08000B4F24 /* GoToLibraryHeaderView.m in Sources */,
 				47752C9C17818C08000B4F24 /* SongCell.m in Sources */,
 				47752C9E17818C08000B4F24 /* TagFilterViewController.m in Sources */,
+				84CBE36C1782296000C4B1F2 /* BackendApi.m in Sources */,
+				84CBE3781782360000C4B1F2 /* GeoMelodyBackendSong.m in Sources */,
+				84CBE37B1782367C00C4B1F2 /* GeoMelodyBackendLocation.m in Sources */,
+				8450474E178314A0004B9421 /* AFHTTPClient.m in Sources */,
+				8450474F178314A0004B9421 /* AFHTTPRequestOperation.m in Sources */,
+				84504750178314A0004B9421 /* AFImageRequestOperation.m in Sources */,
+				84504751178314A0004B9421 /* AFJSONRequestOperation.m in Sources */,
+				84504752178314A0004B9421 /* AFNetworkActivityIndicatorManager.m in Sources */,
+				84504753178314A0004B9421 /* AFPropertyListRequestOperation.m in Sources */,
+				84504754178314A0004B9421 /* AFURLConnectionOperation.m in Sources */,
+				84504755178314A0004B9421 /* AFXMLRequestOperation.m in Sources */,
+				84504756178314A0004B9421 /* UIImageView+AFNetworking.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -654,6 +745,7 @@
 				GCC_PREFIX_HEADER = "geomelody/geomelody-Prefix.pch";
 				HEADER_SEARCH_PATHS = "$PROJECT_DIR/../**";
 				INFOPLIST_FILE = "geomelody/geomelody-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_LDFLAGS = (
 					"-all_load",
 					"-ObjC",
@@ -670,6 +762,7 @@
 				GCC_PREFIX_HEADER = "geomelody/geomelody-Prefix.pch";
 				HEADER_SEARCH_PATHS = "$PROJECT_DIR/../**";
 				INFOPLIST_FILE = "geomelody/geomelody-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_LDFLAGS = (
 					"-all_load",
 					"-ObjC",
