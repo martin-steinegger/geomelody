@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import de.lmu.ios.geomelody.dom.Filters;
 import de.lmu.ios.geomelody.dom.Location;
 import de.lmu.ios.geomelody.dom.Song;
+import de.lmu.ios.geomelody.dom.Songs;
 import de.lmu.ios.geomelody.mapper.SongMapper;
 
 public class SongMappingServiceImpl implements SongMappingService {
@@ -79,7 +80,7 @@ public class SongMappingServiceImpl implements SongMappingService {
 	}
 
 	@Override
-	public List<Song> getkNearestSongs(final Location location, final Filters filters, final int k) {
+	public Songs getkNearestSongs(final Location location, final Filters filters, final int k) {
 		MapSqlParameterSource params = new MapSqlParameterSource();
 		params.addValue("longitude", location.getLongitude());
 		params.addValue("latitude", location.getLatitude());
@@ -105,7 +106,9 @@ public class SongMappingServiceImpl implements SongMappingService {
 				"		s.geom <-> ST_SetSRID(ST_MakePoint(:longitude, :latitude), 4326) " + 
 				"	LIMIT :k";
 		
-		return jdbcTemplate
+		List<Song> songs = jdbcTemplate
 				.query(query, params, new SongMapper());
+		
+		return new Songs(songs);
 	}
 }
