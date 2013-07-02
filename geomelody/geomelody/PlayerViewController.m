@@ -191,7 +191,7 @@
                 MPMediaItemArtwork *albumArt = [[MPMediaItemArtwork alloc] initWithImage: art_work_image];
                 [songInfo setObject:albumArt forKey:MPMediaItemPropertyArtwork];
             }else{
-                [songInfo setObject:nil forKey:MPMediaItemPropertyArtwork];
+                [songInfo removeObjectForKey:MPMediaItemPropertyArtwork];
             }
             [MPNowPlayingInfoCenter defaultCenter].nowPlayingInfo = songInfo;
         }
@@ -229,12 +229,8 @@
     [self.playPauseButton setImage:[UIImage imageNamed:@"pause64.png"] forState:UIControlStateNormal];
 
     [self.nextButton setBackgroundColor:[UIColor clearColor]];
-    [self.nextButton setOpaque:NO];
-    [self.nextButton setImage:[UIImage imageNamed:@"arrow-right64.png"] forState:UIControlStateNormal];
 
     [self.previousButton setBackgroundColor:[UIColor clearColor]];
-    [self.previousButton setOpaque:NO];
-    [self.previousButton setImage:[UIImage imageNamed:@"arrow-left64.png"] forState:UIControlStateNormal];
 
     
     UIBarButtonItem *postButton = [[UIBarButtonItem alloc] initWithTitle:@"Post" style:UIBarButtonItemStylePlain target:self action:@selector(postSong:)];

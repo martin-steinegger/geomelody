@@ -102,7 +102,6 @@
 						<string key="NSFrame">{{127, 46}, {42, 21}}</string>
 						<reference key="NSSuperview" ref="653987869"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -150,7 +149,7 @@
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<object class="NSCustomResource" key="IBUIImage">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">likes.png</string>
+							<string key="NSResourceName">heart-24.png</string>
 						</object>
 					</object>
 				</array>
@@ -326,8 +325,8 @@
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<object class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
-			<string key="NS.key.0">likes.png</string>
-			<string key="NS.object.0">{457, 389}</string>
+			<string key="NS.key.0">heart-24.png</string>
+			<string key="NS.object.0">{20, 20}</string>
 		</object>
 		<string key="IBCocoaTouchPluginVersion">2083</string>
 	</data>

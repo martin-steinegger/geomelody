@@ -43,7 +43,7 @@
 						<string key="NSFrame">{{0, 39}, {320, 270}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="542955711"/>
+						<reference key="NSNextKeyView" ref="1063613071"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -55,7 +55,7 @@
 							<object class="IBUIButton" id="542955711">
 								<reference key="NSNextResponder" ref="1063613071"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{65, 94}, {38, 44}}</string>
+								<string key="NSFrame">{{48, 84}, {64, 64}}</string>
 								<reference key="NSSuperview" ref="1063613071"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="784089984"/>
@@ -94,10 +94,10 @@
 							<object class="IBUIButton" id="575022889">
 								<reference key="NSNextResponder" ref="1063613071"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{178, 94}, {38, 44}}</string>
+								<string key="NSFrame">{{168, 84}, {64, 64}}</string>
 								<reference key="NSSuperview" ref="1063613071"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="1063613071"/>
+								<reference key="NSNextKeyView" ref="584665343"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -120,7 +120,7 @@
 							<object class="IBUIButton" id="784089984">
 								<reference key="NSNextResponder" ref="1063613071"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{104, 94}, {73, 44}}</string>
+								<string key="NSFrame">{{108, 84}, {64, 64}}</string>
 								<reference key="NSSuperview" ref="1063613071"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="575022889"/>
@@ -146,14 +146,11 @@
 						<string key="NSFrame">{{20, 58}, {280, 232}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="584665343"/>
+						<reference key="NSNextKeyView" ref="542955711"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
-							<int key="NSColorSpace">3</int>
-							<bytes key="NSWhite">MQA</bytes>
-							<object class="NSColorSpace" key="NSCustomColorSpace" id="870590793">
-								<int key="NSID">2</int>
-							</object>
+							<int key="NSColorSpace">1</int>
+							<bytes key="NSRGB">MSAxIDEgMAA</bytes>
 						</object>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 					</object>
@@ -163,6 +160,7 @@
 						<string key="NSFrame">{{124, 309}, {176, 115}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">1</int>
@@ -205,7 +203,9 @@
 				<object class="NSColor" key="IBUIBackgroundColor">
 					<int key="NSColorSpace">3</int>
 					<bytes key="NSWhite">MQA</bytes>
-					<reference key="NSCustomColorSpace" ref="870590793"/>
+					<object class="NSColorSpace" key="NSCustomColorSpace">
+						<int key="NSID">2</int>
+					</object>
 				</object>
 				<object class="IBUISimulatedStatusBarMetrics" key="IBUISimulatedStatusBarMetrics"/>
 				<object class="IBUIScreenMetrics" key="IBUISimulatedDestinationMetrics">
@@ -342,9 +342,9 @@
 						<int key="objectID">35</int>
 						<reference key="object" ref="1063613071"/>
 						<array class="NSMutableArray" key="children">
+							<reference ref="784089984"/>
 							<reference ref="542955711"/>
 							<reference ref="575022889"/>
-							<reference ref="784089984"/>
 						</array>
 						<reference key="parent" ref="191373211"/>
 					</object>
@@ -499,7 +499,7 @@
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
 			<string key="arrow-left64.png">{64, 64}</string>
 			<string key="arrow-right64.png">{64, 64}</string>
-			<string key="pause64.png">{48, 48}</string>
+			<string key="pause64.png">{64, 64}</string>
 		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">2083</string>
 	</data>
