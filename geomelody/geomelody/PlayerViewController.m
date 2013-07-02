@@ -5,7 +5,6 @@
 //  Created by Martin Steinegger on 27.06.13.
 //  Copyright (c) 2013 Martin Steinegger. All rights reserved.
 //
-
 #import "PlayerViewController.h"
 #import "SCUI.h"
 
@@ -67,6 +66,8 @@
 - (BOOL)canBecomeFirstResponder {
     return YES;
 }
+
+// handle headphone events
 - (void)remoteControlReceivedWithEvent:(UIEvent *)event {
     //if it is a remote control event handle it correctly
     if (event.type == UIEventTypeRemoteControl) {
@@ -76,7 +77,12 @@
             [self pauseAudio];
         } else if (event.subtype == UIEventSubtypeRemoteControlTogglePlayPause) {
             [self togglePlayPause];
+        } else if (event.subtype == UIEventSubtypeRemoteControlNextTrack) {
+            [self playNextSong:NULL];
+        } else if (event.subtype == UIEventSubtypeRemoteControlPreviousTrack) {
+            [self playPreviousSong:NULL];
         }
+
     }
 }
 
@@ -138,9 +144,10 @@
     if (songItem != newDetailItem) {
         songItem = newDetailItem;
         // Update the song.
-        [self.audioPlayer stop];
-        [self setUpView];
+        [audioPlayer stop];
+        audioPlayer = nil;
         [self setUpSong];
+        [self setUpView];
         
     }
 }
@@ -149,7 +156,7 @@
     if (self.songItem) {
 
         NSString *streamURL = [songItem objectForKey:@"stream_url"];
-        
+
         SCAccount *account = [SCSoundCloud account];
         
         [SCRequest performMethod:SCRequestMethodGET
@@ -162,7 +169,6 @@
                      audioPlayer = [[AVAudioPlayer alloc] initWithData:data error:&playerError];
                      [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
                      [[AVAudioSession sharedInstance] setActive: YES error: nil];
-                     [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
                      
                      //[player prepareToPlay];
                      self.songProgressTimer = [NSTimer scheduledTimerWithTimeInterval:0.23 target:self selector:@selector(updateProgressBar:) userInfo:nil repeats:YES];
@@ -179,11 +185,12 @@
 
         
         NSObject * artworkImageUrlObject;
+        UIImage *art_work_image=NULL;
         if(( artworkImageUrlObject =[songItem objectForKey:@"artwork_url"])!=[NSNull null]){
             NSURL *imageURL = [NSURL URLWithString:(NSString* )artworkImageUrlObject];
             NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
-            UIImage *image = [UIImage imageWithData:imageData];
-            self.artwork_picture.image = image;
+            art_work_image = [UIImage imageWithData:imageData];
+            self.artwork_picture.image = art_work_image;
         }
         
         NSDictionary *user  = [songItem objectForKey:@"user"];
@@ -194,6 +201,29 @@
             UIImage *image = [UIImage imageWithData:imageData];
             self.user_picture.image = image;
         }
+        
+        
+        Class playingInfoCenter = NSClassFromString(@"MPNowPlayingInfoCenter");
+        
+        if (playingInfoCenter) {
+            
+            
+            NSMutableDictionary *songInfo = [[NSMutableDictionary alloc] init];
+            
+            if(art_work_image != NULL){
+                MPMediaItemArtwork *albumArt = [[MPMediaItemArtwork alloc] initWithImage: art_work_image];
+                [songInfo setObject:albumArt forKey:MPMediaItemPropertyArtwork];
+            }
+            
+            
+            [songInfo setObject:[songItem objectForKey:@"title"] forKey:MPMediaItemPropertyTitle];
+            [songInfo setObject:[user objectForKey:@"username"] forKey:MPMediaItemPropertyArtist];
+            [songInfo setObject:@"Sound Cloud" forKey:MPMediaItemPropertyAlbumTitle];
+            [[MPNowPlayingInfoCenter defaultCenter] setNowPlayingInfo:songInfo];
+            
+            
+        }
+        
 
         
     }
@@ -211,6 +241,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
+    [self becomeFirstResponder];
+
+    
     
     UIBarButtonItem *postButton = [[UIBarButtonItem alloc] initWithTitle:@"Post" style:UIBarButtonItemStylePlain target:self action:@selector(postSong:)];
     self.navigationItem.rightBarButtonItem = postButton;
@@ -230,6 +265,11 @@
 	// Do any additional setup after loading the view, typically from a nib.
     [self setUpView];
 }
+
+
+
+
+
 
 
 - (IBAction) postSong:(id) sender{
