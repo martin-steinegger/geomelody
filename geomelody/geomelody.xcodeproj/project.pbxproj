@@ -25,6 +25,7 @@
 		470799BC177C966F0098B2F8 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 470799BB177C966F0098B2F8 /* CoreText.framework */; };
 		470799BE177C96770098B2F8 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 470799BD177C96770098B2F8 /* QuartzCore.framework */; };
 		470799C0177C967D0098B2F8 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 470799BF177C967D0098B2F8 /* Security.framework */; };
+		472EBB4F17831BC300B6600A /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 472EBB4E17831BC300B6600A /* CoreMedia.framework */; };
 		47752C9917818C08000B4F24 /* GoToLibraryHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 47752C8F17818C08000B4F24 /* GoToLibraryHeaderView.m */; };
 		47752C9A17818C08000B4F24 /* GoToLibraryHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47752C9017818C08000B4F24 /* GoToLibraryHeaderView.xib */; };
 		47752C9C17818C08000B4F24 /* SongCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 47752C9417818C08000B4F24 /* SongCell.m */; };
@@ -38,6 +39,7 @@
 		47752CAF17818C57000B4F24 /* soundcloud.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 47752CAA17818C57000B4F24 /* soundcloud.jpg */; };
 		47752CB017818C57000B4F24 /* soundcloud.png in Resources */ = {isa = PBXBuildFile; fileRef = 47752CAB17818C57000B4F24 /* soundcloud.png */; };
 		47752CB71781B521000B4F24 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47752CB61781B521000B4F24 /* AVFoundation.framework */; };
+		47752CD01782CFA3000B4F24 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47752CCF1782CFA2000B4F24 /* MediaPlayer.framework */; };
 		47DF9B5F177C9DF000FBC5C3 /* libJSONKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 47DF9B31177C9D7B00FBC5C3 /* libJSONKit.a */; };
 		47DF9B60177C9DF000FBC5C3 /* libOAuth2Client.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 47DF9B4E177C9D9400FBC5C3 /* libOAuth2Client.a */; };
 		47DF9B61177C9DF000FBC5C3 /* libOHAttributedLabel.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 47DF9B54177C9D9D00FBC5C3 /* libOHAttributedLabel.a */; };
@@ -185,6 +187,7 @@
 		470799BB177C966F0098B2F8 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		470799BD177C96770098B2F8 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		470799BF177C967D0098B2F8 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		472EBB4E17831BC300B6600A /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		47752C8E17818C08000B4F24 /* GoToLibraryHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoToLibraryHeaderView.h; sourceTree = "<group>"; };
 		47752C8F17818C08000B4F24 /* GoToLibraryHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoToLibraryHeaderView.m; sourceTree = "<group>"; };
 		47752C9017818C08000B4F24 /* GoToLibraryHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GoToLibraryHeaderView.xib; sourceTree = "<group>"; };
@@ -201,6 +204,7 @@
 		47752CAA17818C57000B4F24 /* soundcloud.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = soundcloud.jpg; sourceTree = "<group>"; };
 		47752CAB17818C57000B4F24 /* soundcloud.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = soundcloud.png; sourceTree = "<group>"; };
 		47752CB61781B521000B4F24 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		47752CCF1782CFA2000B4F24 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		47DF9B2B177C9D7A00FBC5C3 /* JSONKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = JSONKit.xcodeproj; path = ../JSONKit/JSONKit.xcodeproj; sourceTree = "<group>"; };
 		47DF9B34177C9D8200FBC5C3 /* SoundCloudUI.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SoundCloudUI.xcodeproj; path = ../CocoaSoundCloudUI/SoundCloudUI.xcodeproj; sourceTree = "<group>"; };
 		47DF9B3D177C9D8A00FBC5C3 /* SoundCloudAPI.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SoundCloudAPI.xcodeproj; path = ../CocoaSoundCloudAPI/SoundCloudAPI.xcodeproj; sourceTree = "<group>"; };
@@ -246,12 +250,14 @@
 				47DF9B61177C9DF000FBC5C3 /* libOHAttributedLabel.a in Frameworks */,
 				47DF9B62177C9DF000FBC5C3 /* libSoundCloudAPI.a in Frameworks */,
 				47DF9B63177C9DF000FBC5C3 /* libSoundCloudUI.a in Frameworks */,
+				472EBB4F17831BC300B6600A /* CoreMedia.framework in Frameworks */,
 				470799B7177C965E0098B2F8 /* AddressBook.framework in Frameworks */,
 				470799B8177C965E0098B2F8 /* AddressBookUI.framework in Frameworks */,
 				47752CB71781B521000B4F24 /* AVFoundation.framework in Frameworks */,
 				4707995E177C943F0098B2F8 /* CoreGraphics.framework in Frameworks */,
 				470799BC177C966F0098B2F8 /* CoreText.framework in Frameworks */,
 				470799BE177C96770098B2F8 /* QuartzCore.framework in Frameworks */,
+				47752CD01782CFA3000B4F24 /* MediaPlayer.framework in Frameworks */,
 				470799C0177C967D0098B2F8 /* Security.framework in Frameworks */,
 				4707995A177C943F0098B2F8 /* UIKit.framework in Frameworks */,
 				4707995C177C943F0098B2F8 /* Foundation.framework in Frameworks */,
@@ -289,6 +295,8 @@
 		47079958177C943F0098B2F8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				472EBB4E17831BC300B6600A /* CoreMedia.framework */,
+				47752CCF1782CFA2000B4F24 /* MediaPlayer.framework */,
 				47752CB61781B521000B4F24 /* AVFoundation.framework */,
 				470799BF177C967D0098B2F8 /* Security.framework */,
 				470799BD177C96770098B2F8 /* QuartzCore.framework */,
@@ -751,6 +759,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -768,6 +777,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

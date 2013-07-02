@@ -28,10 +28,8 @@ import de.lmu.ios.geomelody.service.model.ProgressStatus;
 @Provider
 @Singleton
 @Path("/v1")
-@Consumes({ "application/x-javascript", MediaType.APPLICATION_XML,
-		MediaType.APPLICATION_JSON })
-@Produces({ "application/x-javascript", MediaType.APPLICATION_XML,
-		MediaType.APPLICATION_JSON })
+@Consumes({ MediaType.APPLICATION_JSON })
+@Produces({ MediaType.APPLICATION_JSON })
 public class ServiceFacadeImpl implements ServiceFacade {
 	@Context
 	private UriInfo uri;
