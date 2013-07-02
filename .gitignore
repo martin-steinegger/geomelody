@@ -18,3 +18,4 @@ DerivedData
 .idea/
 
 *.class
+backend/log/
