@@ -25,6 +25,7 @@
 		470799BC177C966F0098B2F8 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 470799BB177C966F0098B2F8 /* CoreText.framework */; };
 		470799BE177C96770098B2F8 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 470799BD177C96770098B2F8 /* QuartzCore.framework */; };
 		470799C0177C967D0098B2F8 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 470799BF177C967D0098B2F8 /* Security.framework */; };
+		472EBB4F17831BC300B6600A /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 472EBB4E17831BC300B6600A /* CoreMedia.framework */; };
 		47752C9917818C08000B4F24 /* GoToLibraryHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 47752C8F17818C08000B4F24 /* GoToLibraryHeaderView.m */; };
 		47752C9A17818C08000B4F24 /* GoToLibraryHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47752C9017818C08000B4F24 /* GoToLibraryHeaderView.xib */; };
 		47752C9C17818C08000B4F24 /* SongCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 47752C9417818C08000B4F24 /* SongCell.m */; };
@@ -174,6 +175,7 @@
 		470799BB177C966F0098B2F8 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		470799BD177C96770098B2F8 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		470799BF177C967D0098B2F8 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		472EBB4E17831BC300B6600A /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		47752C8E17818C08000B4F24 /* GoToLibraryHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoToLibraryHeaderView.h; sourceTree = "<group>"; };
 		47752C8F17818C08000B4F24 /* GoToLibraryHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoToLibraryHeaderView.m; sourceTree = "<group>"; };
 		47752C9017818C08000B4F24 /* GoToLibraryHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GoToLibraryHeaderView.xib; sourceTree = "<group>"; };
@@ -210,6 +212,7 @@
 				47DF9B61177C9DF000FBC5C3 /* libOHAttributedLabel.a in Frameworks */,
 				47DF9B62177C9DF000FBC5C3 /* libSoundCloudAPI.a in Frameworks */,
 				47DF9B63177C9DF000FBC5C3 /* libSoundCloudUI.a in Frameworks */,
+				472EBB4F17831BC300B6600A /* CoreMedia.framework in Frameworks */,
 				470799B7177C965E0098B2F8 /* AddressBook.framework in Frameworks */,
 				470799B8177C965E0098B2F8 /* AddressBookUI.framework in Frameworks */,
 				47752CB71781B521000B4F24 /* AVFoundation.framework in Frameworks */,
@@ -230,7 +233,6 @@
 		4707994D177C943F0098B2F8 = {
 			isa = PBXGroup;
 			children = (
-				47752CCF1782CFA2000B4F24 /* MediaPlayer.framework */,
 				47DF9B64177C9FA100FBC5C3 /* SoundCloud.bundle */,
 				47DF9B4F177C9D9D00FBC5C3 /* OHAttributedLabel.xcodeproj */,
 				47DF9B46177C9D9300FBC5C3 /* OAuth2Client.xcodeproj */,
@@ -255,6 +257,8 @@
 		47079958177C943F0098B2F8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				472EBB4E17831BC300B6600A /* CoreMedia.framework */,
+				47752CCF1782CFA2000B4F24 /* MediaPlayer.framework */,
 				47752CB61781B521000B4F24 /* AVFoundation.framework */,
 				470799BF177C967D0098B2F8 /* Security.framework */,
 				470799BD177C96770098B2F8 /* QuartzCore.framework */,
