@@ -33,21 +33,6 @@ public class SongMappingServiceImpl implements SongMappingService {
 	@Override
 	@Transactional
 	public void saveSong(final Song song) {
-		final Map<String, Integer> tagIdMap = jdbcTemplate.query(
-				"SELECT id, name FROM tags", emptyMap,
-				new ResultSetExtractor<Map<String, Integer>>() {
-					public Map<String, Integer> extractData(ResultSet rs)
-							throws SQLException {
-						Map<String, Integer> map = new LinkedHashMap<String, Integer>(30);
-						while (rs.next()) {
-							int col1 = rs.getInt("id");
-							String col2 = rs.getString("name");
-							map.put(col2, col1);
-						}
-						return map;
-					};
-				});
-
 		Map<String, Object> params = new HashMap<String, Object>(5);
 		params.put("soundcloud_song_id", song.getSoundCloudSongId());
 		params.put("soundcloud_user_id", song.getSoundCloudUserId());
@@ -65,15 +50,31 @@ public class SongMappingServiceImpl implements SongMappingService {
 				"SELECT CURRVAL('songs_id_seq')", emptyMap);
 		
 		final List<String> tags = song.getTags();
-
-		for(String tag : tags) {
-			Integer tagId;
-			if((tagId = tagIdMap.get(tag)) != null) {
-				Map<String, Object> insertMap = new HashMap<String, Object>(2);
-				insertMap.put("song_id", songId);
-				insertMap.put("tag_id", tagId);
-				jdbcTemplate.update(
-						"INSERT INTO songs_tags (song_id, tag_id) VALUES (:song_id, :tag_id)", insertMap);
+		if(tags != null) {
+			final Map<String, Integer> tagIdMap = jdbcTemplate.query(
+					"SELECT id, name FROM tags", emptyMap,
+					new ResultSetExtractor<Map<String, Integer>>() {
+						public Map<String, Integer> extractData(ResultSet rs)
+								throws SQLException {
+							Map<String, Integer> map = new LinkedHashMap<String, Integer>(30);
+							while (rs.next()) {
+								int col1 = rs.getInt("id");
+								String col2 = rs.getString("name");
+								map.put(col2, col1);
+							}
+							return map;
+						};
+					});
+			
+			for(String tag : tags) {
+				Integer tagId;
+				if((tagId = tagIdMap.get(tag)) != null) {
+					Map<String, Object> insertMap = new HashMap<String, Object>(2);
+					insertMap.put("song_id", songId);
+					insertMap.put("tag_id", tagId);
+					jdbcTemplate.update(
+							"INSERT INTO songs_tags (song_id, tag_id) VALUES (:song_id, :tag_id)", insertMap);
+				}
 			}
 		}
 	}
