@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import javax.sql.DataSource;
 
@@ -56,7 +57,7 @@ public class SongMappingServiceImpl implements SongMappingService {
 					new ResultSetExtractor<Map<String, Integer>>() {
 						public Map<String, Integer> extractData(ResultSet rs)
 								throws SQLException {
-							Map<String, Integer> map = new LinkedHashMap<String, Integer>(30);
+							Map<String, Integer> map = new TreeMap<String, Integer>(String.CASE_INSENSITIVE_ORDER);
 							while (rs.next()) {
 								int col1 = rs.getInt("id");
 								String col2 = rs.getString("name");
@@ -99,7 +100,7 @@ public class SongMappingServiceImpl implements SongMappingService {
 		.append("		INNER JOIN songs_tags AS st ON s.id = st.song_id ")
 		.append("		INNER JOIN tags AS t ON t.id = st.tag_id ");
 		
-		if(filters != null && filters.getFilters().size() > 0) {
+		if(filters != null && filters.getFilters() != null && filters.getFilters().size() > 0) {
 			params.addValue("filters", filters.getFilters());
 			sb.append("	WHERE ")
 			.append("		t.name IN (:filters) ");
