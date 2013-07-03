@@ -10,7 +10,6 @@
 
 #import "SCUI.h"
 #import "TagFilterViewController.h"
-#import "GoToLibraryHeaderView.h"
 #import "PlayerViewController.h"
 
 
@@ -133,52 +132,55 @@
 {
     static NSString *CellIdentifier = @"Cell";
     
-    SongCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if(cell == nil) {
-        cell = [[SongCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-        //cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    if(indexPath.section == 0) {
+        UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        if (cell == nil) {
+            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"GoToLibraryCell" owner:self options:nil];
+            cell = (UITableViewCell *)[nib objectAtIndex:0];
+            cell.selectionStyle = UITableViewCellEditingStyleNone;
+        }
+        return cell;
+    }else {
+        SongCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        if(cell == nil) {
+            cell = [[SongCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+            //cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        }
+        
+        NSDictionary *track = [self.tracks objectAtIndex:indexPath.row];
+        //todo: get all information for the song (title, interpret, genre/tags, likes, image)
+        cell.songTitle.text = [track objectForKey:@"title"];
+        NSDictionary *user  = [track objectForKey:@"user"];
+        cell.songInterpreter.text = [user objectForKey:@"username"];
+        
+        NSNumber *favoritings_count = [track objectForKey:@"favoritings_count"];
+        cell.likes.text = [NSString stringWithFormat:@"%d",(int)[favoritings_count intValue]];
+        
+        NSNumber *shared_count = [track objectForKey:@"shared_to_count"];
+        cell.shares.text = [NSString stringWithFormat:@"%d",(int)[shared_count intValue]];
+        NSObject * imageUrlObject;
+        if(( imageUrlObject =[track objectForKey:@"artwork_url"])!=[NSNull null]){
+            NSURL *imageURL = [NSURL URLWithString:(NSString* )imageUrlObject];
+            NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
+            UIImage *image = [UIImage imageWithData:imageData];
+            cell.songImage.image = image;
+        }
+        return cell;
     }
-
-    NSDictionary *track = [self.tracks objectAtIndex:indexPath.row];
-    //todo: get all information for the song (title, interpret, genre/tags, likes, image)
-    cell.songTitle.text = [track objectForKey:@"title"];
-    NSDictionary *user  = [track objectForKey:@"user"];
-    cell.songInterpreter.text = [user objectForKey:@"username"];
     
-    NSNumber *favoritings_count = [track objectForKey:@"favoritings_count"];
-    cell.likes.text = [NSString stringWithFormat:@"%d",(int)[favoritings_count intValue]];
-    
-    NSNumber *shared_count = [track objectForKey:@"shared_to_count"];
-    cell.shares.text = [NSString stringWithFormat:@"%d",(int)[shared_count intValue]];
-    NSObject * imageUrlObject;
-    if(( imageUrlObject =[track objectForKey:@"artwork_url"])!=[NSNull null]){
-        NSURL *imageURL = [NSURL URLWithString:(NSString* )imageUrlObject];
-        NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
-        UIImage *image = [UIImage imageWithData:imageData];
-        cell.songImage.image = image;
-    }
-    return cell;
 }
 
 // showPlayer is called when user taps on a item
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"selected song at position: %d from %d songs",indexPath.row, tracks.count);
-    self.currentSongPosition = indexPath.row;
-    NSDictionary *song = [self.tracks objectAtIndex:indexPath.row];
-    
-    //NSLog(@"selected song: %@",selectedSong.soundcloud_id);
-    [self showPlayer:song];
-}
-
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
-    return @"header";
-}
-
-// set header of table as GoToLibraryHeaderView
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    return self.goToLibraryHeaderView;
-
+    if(indexPath.section>0) {
+        NSLog(@"selected song at position: %d from %d songs",indexPath.row, tracks.count);
+        self.currentSongPosition = indexPath.row;
+        NSDictionary *song = [self.tracks objectAtIndex:indexPath.row];
+        
+        //NSLog(@"selected song: %@",selectedSong.soundcloud_id);
+        [self showPlayer:song];
+    }
 }
 
 // change to TagFilterView
@@ -254,12 +256,15 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return tracks.count;
+    if(section==0)
+        return 1;
+    else
+        return tracks.count;
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
@@ -271,9 +276,6 @@
     return 100;
 }
 
-- (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 100;
-}
 
 
 @end
