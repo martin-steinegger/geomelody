@@ -47,7 +47,7 @@ static BackendApi *gBackendApi;
 }
 
 -(void) getkNearestSongsWithLocation:(GeoMelodyBackendLocation *)location andFilters:(NSArray *)filters k:(NSInteger)k onSuccess:(GetNearestSongsRequestBlock)successCallback onFail:(ResponseErrorBlock)failiureCallback {
-    id filterValue = filters ? filters : [NSNull null];
+    id filterValue = filters ? [NSDictionary dictionaryWithObjectsAndKeys: filters, @"Filters", nil] : [NSNull null];
     NSDictionary* requestData = [NSDictionary dictionaryWithObjectsAndKeys:[location toDictionary], @"Location", filterValue, @"Filters", [NSNumber numberWithInt:k], @"Count", nil];
     
     AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:API_ENDPOINT]];
