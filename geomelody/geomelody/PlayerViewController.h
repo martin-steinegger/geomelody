@@ -36,6 +36,10 @@
 
 @property (nonatomic, retain) IBOutlet UIImageView  *artwork_picture;
 @property (nonatomic, retain) IBOutlet UIImageView  *user_picture;
+@property (nonatomic, retain) IBOutlet UILabel *songTitle;
+@property (nonatomic, retain) IBOutlet UILabel *songInterpreter;
+@property (nonatomic, retain) IBOutlet UILabel *likes;
+@property (nonatomic, retain) IBOutlet UILabel *shares;
 
 
 @property (nonatomic, retain) AVPlayer *audioPlayer;
