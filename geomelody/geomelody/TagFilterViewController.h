@@ -7,8 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+@protocol TagFilterViewControllerProtocol <NSObject>
+- (void) updateNearestSongList;
+@end
 
 @interface TagFilterViewController : UITableViewController
+
+@property (strong, nonatomic) id <TagFilterViewControllerProtocol> delegate;
 
 - (NSMutableArray *)getTagFilter;
 

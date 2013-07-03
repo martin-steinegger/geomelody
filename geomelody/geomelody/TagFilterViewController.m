@@ -219,6 +219,7 @@
 //save changes when go back button is pressed
 - (void)viewWillDisappear:(BOOL)animated {
     [self saveTagFilterData];
+    [self.delegate updateNearestSongList];
     //[self.nearestSongMapListViewController setFilter:_tagFilter];
 }
 

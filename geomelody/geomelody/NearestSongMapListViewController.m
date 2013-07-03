@@ -17,7 +17,6 @@
 @implementation NearestSongMapListViewController
 @synthesize player;
 @synthesize tracks;
-@synthesize tagFilter;
 @synthesize locationManager;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -98,6 +97,8 @@
             [self presentViewController:loginViewController animated:YES completion:nil];
         }];
     }
+    
+    // update song list
     [self updateNearestSongList];
 }
 
@@ -115,9 +116,7 @@
     // check SC Login
     //[SCSoundCloud removeAccess]; //DEBUG only
     [self checkLogin];
-    
-    // update filter
-    tagFilter = [self.tagFilterViewController getTagFilter];
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -205,6 +204,8 @@
 }
 
 - (void) updateNearestSongList {
+    
+    NSArray *tagFilter = [self.tagFilterViewController getTagFilter];
 
     // 1) todo: get nearest songs from database with filter
     // 2) ask soundcloud for information http://api.soundcloud.com/tracks?client_id=f0cfa9035abc5752e699580d5586d1e6&ids=41558714,13158665
