@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <AVFoundation/AVFoundation.h>
 #import <CoreLocation/CoreLocation.h>
 #import "SongCell.h"
 #import "PlayerViewController.h"
@@ -22,9 +21,9 @@
 @property (strong, nonatomic) PlayerViewController *playerViewController;
 @property (strong, nonatomic) TagFilterViewController *tagFilterViewController;
 @property (strong, nonatomic) GoToLibraryHeaderView *goToLibraryHeaderView;
-
-@property (nonatomic, strong) NSArray *tracks;
-@property (nonatomic, strong) AVAudioPlayer *player;
+@property (strong,nonatomic) NSArray *tracks;
+@property (strong,nonatomic) CLLocation   *currentLocation;
+@property (strong,nonatomic) NSDictionary *activeUser;
 
 @property NSInteger currentSongPosition;
 

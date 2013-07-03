@@ -6,7 +6,9 @@
 //  Copyright (c) 2013 Martin Steinegger. All rights reserved.
 //
 #import "PlayerViewController.h"
+#import <CoreLocation/CoreLocation.h>
 #import "SCUI.h"
+#import "BackendApi.h"
 
 @interface PlayerViewController ()
 - (void)setUpView;
@@ -160,6 +162,17 @@
     [self playNextSong:NULL];
 }
 
+- (NSString *) changeUrlForPictureQuality:(NSString *) url{
+    NSRange start =[url rangeOfString:@"-" options:NSBackwardsSearch];
+    NSRange end   =[url rangeOfString:@"." options:NSBackwardsSearch];
+    if(end.location < start.location){
+        NSLog(@"Start > End");
+        return url;
+    }
+    NSRange range = NSMakeRange(start.location+1,(end.location-start.location)-1);
+    return [url stringByReplacingCharactersInRange:range withString:@"t300x300"];
+}
+
 - (void)setUpView
 {
     if (self.songItem) {
@@ -177,6 +190,8 @@
         NSObject * artworkImageUrlObject;
         UIImage *art_work_image=NULL;
         if(( artworkImageUrlObject =[songItem objectForKey:@"artwork_url"])!=[NSNull null]){
+            artworkImageUrlObject=[self changeUrlForPictureQuality:(NSString *)artworkImageUrlObject];
+
             NSURL *imageURL = [NSURL URLWithString:(NSString* )artworkImageUrlObject];
             NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
             art_work_image = [UIImage imageWithData:imageData];
@@ -184,7 +199,7 @@
         }
         
         NSObject * userImageUrlObject;
-        if(( userImageUrlObject =[user objectForKey:@"avatar_url"])!=[NSNull null]){
+        if(( userImageUrlObject =[user objectForKey:@"avatar_url"])!=[NSNull null]){            
             NSURL *imageURL = [NSURL URLWithString:(NSString* )userImageUrlObject];
             NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
             UIImage *image = [UIImage imageWithData:imageData];
@@ -254,7 +269,20 @@
     self.artwork_picture.layer.shadowOpacity = 0.5f;
     self.artwork_picture.layer.shadowPath = shadowPath.CGPath;
     
+    
+    [self.user_comment.layer setBackgroundColor: [[UIColor whiteColor] CGColor]];
+    [self.user_comment.layer setBorderColor: [[UIColor grayColor] CGColor]];
+    [self.user_comment.layer setBorderWidth: 1.0];
+    [self.user_comment.layer setCornerRadius:8.0f];
+    [self.user_comment.layer setMasksToBounds:YES];
+    self.user_comment.clipsToBounds = YES;
 
+
+    UIImage *redImage = [UIImage imageNamed:@"stretchable_image_red.png"];
+    UIImage *redButtonImage = [redImage stretchableImageWithLeftCapWidth:12 topCapHeight:0];
+    [self.post_button setBackgroundImage:redButtonImage forState:UIControlStateHighlighted];
+    [self.post_button setBackgroundImage:redButtonImage forState:UIControlStateNormal];
+    
     
     CAGradientLayer *gradientLayer = [CAGradientLayer layer];
     gradientLayer.frame = self.artwork_picture.layer.bounds;
@@ -350,12 +378,35 @@
 }
 
 
+
+
+
 - (void)backButtonDidPressed:(id)aResponder {
     [self.navigationController popViewControllerAnimated:TRUE];
 }
 
 - (IBAction) postSong:(id) sender{
-    
+    CLLocation* location = [self.delegate getCurrentGeoPosition];
+    BackendApi* backendApi=[BackendApi sharedBackendApi];
+    GeoMelodyBackendLocation *backendLocation = [GeoMelodyBackendLocation alloc];
+    backendLocation.latitude = [NSNumber numberWithDouble:location.coordinate.latitude];
+    backendLocation.longitude = [NSNumber numberWithDouble:location.coordinate.longitude];
+    GeoMelodyBackendSong * song = [GeoMelodyBackendSong alloc];
+    song.location = backendLocation;
+    song.comment = self.user_comment.text;
+    NSString *tag_string=[self.songItem objectForKey:@"tag_list"];
+    if(tag_string != NULL){
+        NSArray *tags = [tag_string componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+        song.tags = tags;
+    }
+    song.soundCloudSongId = [self.songItem objectForKey:@"id"];
+    NSDictionary * activeUser = [self.delegate getActiveUser];
+    song.soundCloudUserId = [activeUser objectForKey:@"id"];
+    [backendApi saveSong:song onSuccess:^{
+        NSLog(@"Post Song successful");
+    } onFail:^(NSError * error)  {
+        NSLog(@"Post Song error");
+    }];
 }
 
 - (void)didReceiveMemoryWarning
