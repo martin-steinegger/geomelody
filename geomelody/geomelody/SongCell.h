@@ -14,5 +14,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *songTitle;
 @property (weak, nonatomic) IBOutlet UILabel *songInterpreter;
 @property (weak, nonatomic) IBOutlet UILabel *likes;
+@property (weak, nonatomic) IBOutlet UILabel *shares;
+
 
 @end

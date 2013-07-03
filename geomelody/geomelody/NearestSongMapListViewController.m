@@ -144,6 +144,9 @@
     
     NSNumber *favoritings_count = [track objectForKey:@"favoritings_count"];
     cell.likes.text = [NSString stringWithFormat:@"%d",(int)[favoritings_count intValue]];
+    
+    NSNumber *shared_count = [track objectForKey:@"shared_to_count"];
+    cell.shares.text = [NSString stringWithFormat:@"%d",(int)[shared_count intValue]];
     NSObject * imageUrlObject;
     if(( imageUrlObject =[track objectForKey:@"artwork_url"])!=[NSNull null]){
         NSURL *imageURL = [NSURL URLWithString:(NSString* )imageUrlObject];
