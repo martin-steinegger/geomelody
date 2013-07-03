@@ -28,8 +28,11 @@
         self.goToLibraryHeaderView = [[[NSBundle mainBundle] loadNibNamed:@"GoToLibraryHeaderView" owner:self options:nil] objectAtIndex:0];
         
     }
-    // initialize tag filter
-    [self loadFilter];
+    
+    // initialize TagFilterViewController
+    if (!self.tagFilterViewController) {
+        self.tagFilterViewController = [[TagFilterViewController alloc] initWithNibName:@"TagFilterViewController" bundle:nil];
+    }
     
     [self updateNearestSongList];
     
@@ -108,12 +111,13 @@
 }
 
 
-
-
 - (void)viewDidAppear:(BOOL)animated {
     // check SC Login
     //[SCSoundCloud removeAccess]; //DEBUG only
     [self checkLogin];
+    
+    // update filter
+    tagFilter = [self.tagFilterViewController getTagFilter];
 }
 
 - (void)didReceiveMemoryWarning
@@ -177,10 +181,9 @@
 
 // change to TagFilterView
 - (void) showFilter {
-    if (!self.tagFilterViewController) {
-        self.tagFilterViewController = [[TagFilterViewController alloc] initWithNibName:@"TagFilterViewController" bundle:nil];
-        [self.navigationController pushViewController:self.tagFilterViewController animated:YES];
-    }
+
+    [self.navigationController pushViewController:self.tagFilterViewController animated:YES];
+
 }
 
 // change to PlayerView, which is initialised with the defined song object
@@ -196,21 +199,6 @@
 // change to user's soundcloud library
 - (void) showLibrary {
     //todo
-}
-
-// load tag filter list from user settings -> tagFilter
-- (void) loadFilter {
-    //todo: load from storage
-    //filter for testing: rock pop
-    tagFilter = [NSArray arrayWithObjects:@"Rock",@"Pop", nil];
-    
-}
-
-// updates the tagFilter and the nearest song list accordingly; filterList = NULL if no filter is set
-// DELEGATE from TagFilterViewController
-- (void) setFilter:(NSMutableArray *)filterList{
-    tagFilter = filterList;
-    [self updateNearestSongList];
 }
 
 - (void) updateNearestSongList {

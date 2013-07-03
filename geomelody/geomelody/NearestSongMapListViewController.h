@@ -29,6 +29,5 @@
 
 @property NSInteger currentSongPosition;
 
-- (void) setFilter:(NSMutableArray *)filterList;
 
 @end

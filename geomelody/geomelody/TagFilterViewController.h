@@ -10,4 +10,6 @@
 
 @interface TagFilterViewController : UITableViewController
 
+- (NSMutableArray *)getTagFilter;
+
 @end
