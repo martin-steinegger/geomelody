@@ -24,6 +24,8 @@
     if (self) {
         self.title = @"Filter Settings";
     }
+    //initially set to disabled (only needed, when user starts app for the first time and has not changed the filter yet)
+    _filterEnabled = NO;
     return self;
 }
 
@@ -36,8 +38,7 @@
     _tags = [NSArray arrayWithArray:stringsArray];
     
     //load user settings
-    _filterEnabled = YES;
-    _tagFilter = [[NSMutableArray alloc] init];
+    [self loadTagFilterData];
 }
 
 - (void)viewDidLoad
@@ -188,8 +189,51 @@
             [_tagFilter addObject:selectedTag];
             [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
         }
+}
 
+
+-(NSString *)getStoragePath
+{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *directory = [paths objectAtIndex:0];
+    NSLog(@"storage: %@", directory);
+    return [directory stringByAppendingPathComponent:@"tagfilter.archive"];
+}
+
+- (void) saveTagFilterData {
     
+    [[NSUserDefaults standardUserDefaults] setBool:_filterEnabled forKey:@"filterEnabled"];
+    NSLog(@"save succeeded: %@", [NSKeyedArchiver archiveRootObject:_tagFilter toFile:[self getStoragePath]] ? @"YES" : @"NO");
+    
+}
+
+- (void) loadTagFilterData {
+    
+    _filterEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:@"filterEnabled"];
+    _tagFilter = [NSKeyedUnarchiver unarchiveObjectWithFile:[self getStoragePath]];
+    if(_tagFilter == nil)
+        _tagFilter = [[NSMutableArray alloc] initWithArray:_tags];
+    
+}
+
+//save changes when go back button is pressed
+- (void)viewWillDisappear:(BOOL)animated {
+    [self saveTagFilterData];
+    [self.delegate updateNearestSongList];
+    //[self.nearestSongMapListViewController setFilter:_tagFilter];
+}
+
+//return NULL, if filter is disabled -> all tags accepted
+//return the list of accepted tags, if filter is enabled
+- (NSMutableArray *)getTagFilter {
+    // load settings from storage if not yet initialized
+    if(_tagFilter == nil){
+        [self loadTagFilterData];
+    }
+    if (_filterEnabled) {
+        return _tagFilter;
+    }else
+        return NULL;
 }
 
 @end

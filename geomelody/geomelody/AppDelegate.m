@@ -26,7 +26,9 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    
+    //no shadows for navigationbar
+    [[UINavigationBar appearance]setShadowImage:[[UIImage alloc] init]];
+
     
     
     // Override point for customization after application launch.

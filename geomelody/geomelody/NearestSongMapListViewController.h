@@ -25,10 +25,8 @@
 
 @property (nonatomic, strong) NSArray *tracks;
 @property (nonatomic, strong) AVAudioPlayer *player;
-@property (nonatomic, strong) NSArray *tagFilter;
 
 @property NSInteger currentSongPosition;
 
-- (void) setFilter:(NSMutableArray *)filterList;
 
 @end
