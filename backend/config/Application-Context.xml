@@ -17,6 +17,17 @@
 		<property name="songMappingService" ref="songMappingService" />
 	</bean>
 
+	<bean id="log4jInitialization"
+		class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+		<property name="targetClass" value="org.springframework.util.Log4jConfigurer" />
+		<property name="targetMethod" value="initLogging" />
+		<property name="arguments">
+			<list>
+				<value>conf/log4j.properties</value>
+			</list>
+		</property>
+	</bean>
+
 	<bean id="loggingInterceptor" class="de.lmu.ios.geomelody.util.LoggingInterceptor" />
 	
 	<!-- Proxy Factory for logging -->
