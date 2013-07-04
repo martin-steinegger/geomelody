@@ -206,6 +206,11 @@
         else
             [self.audioPlayer replaceCurrentItemWithPlayerItem:playerItem];
         self.songProgressTimer = [NSTimer scheduledTimerWithTimeInterval:0.23 target:self selector:@selector(updateSongProgressBar:) userInfo:nil repeats:YES];
+        if(self.activityTimer!=NULL){
+            [self.activityTimer setFireDate:[NSDate distantFuture]];
+            [self.activityTimer invalidate];
+            self.activityTimer=nil ;
+        }
         self.activityTimer     = [NSTimer scheduledTimerWithTimeInterval:5    target:self selector:@selector(checkActivity:) userInfo:nil repeats:YES];
         self.lastActivityDate = [[NSDate alloc] init];
         self.pauseStart = [NSDate dateWithTimeIntervalSinceNow:0];
@@ -484,8 +489,16 @@
     song.soundCloudUserId = [activeUser objectForKey:@"id"];
     [backendApi saveSong:song onSuccess:^{
         NSLog(@"Post Song successful");
+        [self.post_button setEnabled:FALSE];
+        [self.post_button setTitle:@"Post Done" forState:0 ];
     } onFail:^(NSError * error)  {
         NSLog(@"Post Song error");
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Post was not successful"
+                                                        message:@"You must be connected to the internet to use this app."
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];        
     }];
 }
 
@@ -531,10 +544,8 @@
 
 - (void)handleCommentSelect
 {
-    YIPopupTextView* popupTextView = [[YIPopupTextView alloc] initWithPlaceHolder:@"input here"
-                                                                         maxCount:1000
-                                                                      buttonStyle:YIPopupTextViewButtonStyleLeftCancelRightDone
-                                                                  tintsDoneButton:YES];
+    YIPopupTextView* popupTextView = [[YIPopupTextView alloc] initWithPlaceHolder:@"input here" maxCount:1000
+                                        buttonStyle:YIPopupTextViewButtonStyleLeftCancelRightDone tintsDoneButton:YES];
     popupTextView.delegate = self;
     popupTextView.caretShiftGestureEnabled = YES;   // default = NO
     popupTextView.text = self.user_comment.text;
