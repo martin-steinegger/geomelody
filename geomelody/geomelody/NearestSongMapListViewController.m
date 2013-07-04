@@ -158,15 +158,15 @@
 {
     static NSString *CellIdentifier = @"Cell";
     
-//    if(indexPath.section == 0) {
-//        UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-//        if (cell == nil) {
-//     //       NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"GoToLibraryCell" owner:self options:nil];
-//     //       cell = (UITableViewCell *)[nib objectAtIndex:0];
-//     //       cell.selectionStyle = UITableViewCellEditingStyleNone;
-//        }
-//        return cell;
-//    }else {
+    if(indexPath.section == 0) {
+        UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        if (cell == nil) {
+            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"GoToLibraryCell" owner:self options:nil];
+            cell = (UITableViewCell *)[nib objectAtIndex:0];
+            cell.selectionStyle = UITableViewCellEditingStyleNone;
+        }
+        return cell;
+    }else {
         SongCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if(cell == nil) {
             cell = [[SongCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
@@ -192,7 +192,7 @@
             cell.songImage.image = image;
         }
         return cell;
-//    }
+    }
     
 }
 

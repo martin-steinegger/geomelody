@@ -42,6 +42,7 @@
 		472EBB8A1785AE7A00B6600A /* point1sec.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 472EBB891785AE7A00B6600A /* point1sec.mp3 */; };
 		472EBB921785B0A200B6600A /* GenreFilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 472EBB901785B0A100B6600A /* GenreFilterViewController.m */; };
 		472EBB931785B0A200B6600A /* GenreFilterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 472EBB911785B0A100B6600A /* GenreFilterViewController.xib */; };
+		472EBB951785B17800B6600A /* GoToLibraryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 472EBB941785B17700B6600A /* GoToLibraryCell.xib */; };
 		47752C9C17818C08000B4F24 /* SongCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 47752C9417818C08000B4F24 /* SongCell.m */; };
 		47752C9D17818C08000B4F24 /* SongCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47752C9517818C08000B4F24 /* SongCell.xib */; };
 		47752CA517818C1E000B4F24 /* NearestSongMapListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47752CA417818C1E000B4F24 /* NearestSongMapListViewController.xib */; };
@@ -218,6 +219,7 @@
 		472EBB8F1785B0A100B6600A /* GenreFilterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GenreFilterViewController.h; sourceTree = "<group>"; };
 		472EBB901785B0A100B6600A /* GenreFilterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GenreFilterViewController.m; sourceTree = "<group>"; };
 		472EBB911785B0A100B6600A /* GenreFilterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GenreFilterViewController.xib; sourceTree = "<group>"; };
+		472EBB941785B17700B6600A /* GoToLibraryCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GoToLibraryCell.xib; sourceTree = "<group>"; };
 		47752C9317818C08000B4F24 /* SongCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SongCell.h; sourceTree = "<group>"; };
 		47752C9417818C08000B4F24 /* SongCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SongCell.m; sourceTree = "<group>"; };
 		47752C9517818C08000B4F24 /* SongCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SongCell.xib; sourceTree = "<group>"; };
@@ -346,6 +348,7 @@
 				47752C9317818C08000B4F24 /* SongCell.h */,
 				47752C9417818C08000B4F24 /* SongCell.m */,
 				47752C9517818C08000B4F24 /* SongCell.xib */,
+				472EBB941785B17700B6600A /* GoToLibraryCell.xib */,
 				47079971177C94400098B2F8 /* NearestSongMapListViewController.h */,
 				47079972177C94400098B2F8 /* NearestSongMapListViewController.m */,
 				47752CA417818C1E000B4F24 /* NearestSongMapListViewController.xib */,
@@ -664,6 +667,7 @@
 				472EBB7E1784573400B6600A /* stretchable_image_red.png in Resources */,
 				472EBB8A1785AE7A00B6600A /* point1sec.mp3 in Resources */,
 				472EBB931785B0A200B6600A /* GenreFilterViewController.xib in Resources */,
+				472EBB951785B17800B6600A /* GoToLibraryCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
