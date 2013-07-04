@@ -21,10 +21,58 @@
 
 @synthesize audioPlayer;
 
-- (IBAction)songProgressDidChange:(UISlider *)slider {
-    float chosenSongSecond=self.songProgressControl.value;
-    CMTime newTime = CMTimeMakeWithSeconds(chosenSongSecond, 1);
-    [self.audioPlayer seekToTime:newTime toleranceBefore:kCMTimeZero toleranceAfter:kCMTimeZero];
+
+- (IBAction)songProgressTouchStart:(UISlider *)slider {
+    NSLog(@"songProgressTouchStart");
+    self.songProgressTouch = YES;
+//    [self pauseAudio];
+}
+
+- (IBAction)songProgressTouchEnd:(UISlider *)slider {
+    NSLog(@"songProgressTouchStart");
+
+    if (self.songProgressTouch==YES) {
+        self.songProgressTouch = NO;
+        self.lastActivityDate = [[NSDate alloc] init];
+
+        float chosenSongSecond=self.songProgressControl.value;
+        CMTime newTime = CMTimeMakeWithSeconds(chosenSongSecond, 1);
+        [self.audioPlayer seekToTime:newTime toleranceBefore:kCMTimeZero toleranceAfter:kCMTimeZero];
+        [self.songProgressTimer invalidate];
+        self.songProgressTimer = nil;
+
+        NSDate *future = [NSDate dateWithTimeIntervalSinceNow: 1.2 ];
+        
+        [NSThread sleepUntilDate:future];
+        self.songProgressTimer = [NSTimer scheduledTimerWithTimeInterval:0.23 target:self selector:@selector(updateSongProgressBar:)  userInfo:nil repeats:YES];
+        
+
+    }
+}
+
+
+- (void)updateSongProgressBar:(NSTimer *)timer {
+    
+    if(self.songProgressTouch == NO){
+        self.songProgressControl.maximumValue = [self durationInSeconds];
+        [self.songProgressControl setValueWithoutUpdate:[self currentTimeInSeconds]];
+    }
+}
+
+- (void)checkActivity:(NSTimer *)timer {
+    if(self.songProgressTouch == NO){
+        NSDate *now = [[NSDate alloc] init];
+        NSTimeInterval diff = [now timeIntervalSinceDate:self.lastActivityDate];
+        NSInteger diff_time = diff;
+        if(diff_time > 5){
+            [self hidePlayerControls];
+            [self.activityTimer setFireDate:[NSDate distantFuture]];
+            [self.activityTimer invalidate];
+            self.activityTimer=nil ;
+
+        }
+    }
+    
 }
 
 - (IBAction)togglePlayingState:(id)button {
@@ -52,6 +100,7 @@
 }
 - (void)togglePlayPause {
     //Toggle if the music is playing or paused
+    self.lastActivityDate = [[NSDate alloc] init];
     if (!self.isPlaying) {
         [self playAudio];
     } else if (self.isPlaying) {
@@ -131,7 +180,10 @@
 
 - (void)setSongItem:(id)newDetailItem
 {
-    if (songItem != newDetailItem) {
+    NSDictionary * newSongDict = (NSDictionary* ) newDetailItem;
+    NSDictionary * oldSongDict = (NSDictionary* ) songItem;
+    if([[newSongDict objectForKey:@"id"] isEqual:[oldSongDict objectForKey:@"id"]]==false)
+    {
         songItem = newDetailItem;
         // Update the song.
         audioPlayer = nil;
@@ -153,7 +205,12 @@
             self.audioPlayer = [AVPlayer playerWithPlayerItem:playerItem];
         else
             [self.audioPlayer replaceCurrentItemWithPlayerItem:playerItem];
-        self.songProgressTimer = [NSTimer scheduledTimerWithTimeInterval:0.23 target:self selector:@selector(updateProgressBar:) userInfo:nil repeats:YES];
+        self.songProgressTimer = [NSTimer scheduledTimerWithTimeInterval:0.23 target:self selector:@selector(updateSongProgressBar:) userInfo:nil repeats:YES];
+        self.activityTimer     = [NSTimer scheduledTimerWithTimeInterval:5    target:self selector:@selector(checkActivity:) userInfo:nil repeats:YES];
+        self.lastActivityDate = [[NSDate alloc] init];
+        self.pauseStart = [NSDate dateWithTimeIntervalSinceNow:0];
+        self.previousFireDate = [self.songProgressTimer fireDate];
+
         self.songProgressControl.maximumValue = [self durationInSeconds];
         self.songProgressControl.minimumValue = 0.0;
         self.songProgressControl.continuous = YES;
@@ -198,6 +255,8 @@
             NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
             art_work_image = [UIImage imageWithData:imageData];
             self.artwork_picture.image = art_work_image;
+        } else {
+            self.artwork_picture.image = nil;
         }
         
         NSObject * userImageUrlObject;
@@ -235,11 +294,6 @@
     return dur;
 }
 
-- (void)updateProgressBar:(NSTimer *)timer {
-    self.songProgressControl.maximumValue = [self durationInSeconds];
-    [self.songProgressControl setValueWithoutUpdate:[self currentTimeInSeconds]];
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -255,9 +309,14 @@
     [self.navigationController.navigationBar setBackgroundImage:maskedImage forBarMetrics:UIBarMetricsDefault];
     [[UINavigationBar appearance] setShadowImage: [[UIImage alloc] init]];
 
-    [self.songProgressControl addTarget:self action:@selector(songProgressDidChange:) forControlEvents:UIControlEventValueChanged];
+    [self.songProgressControl addTarget:self action:@selector(songProgressTouchStart:) forControlEvents:UIControlEventTouchDown];
+    [self.songProgressControl addTarget:self action:@selector(songProgressTouchEnd:)   forControlEvents:UIControlEventTouchUpInside];
+
+
     self.songProgressControl.sliderStyle = UICircularSliderStyleCircle;
-    self.songProgressControl.maximumTrackTintColor = [UIColor blackColor];
+    self.songProgressControl.maximumTrackTintColor = [[UIColor lightGrayColor] colorWithAlphaComponent:0.5];
+    self.songProgressControl.minimumTrackTintColor = [UIColor whiteColor];
+    self.songProgressControl.thumbTintColor =  [UIColor whiteColor];
     
     [self.playPauseButton setBackgroundColor:[UIColor clearColor]];
     [self.playPauseButton setImage:[UIImage imageNamed:@"pause64.png"] forState:UIControlStateNormal];
@@ -273,7 +332,7 @@
     
     
     [self.user_comment.layer setBackgroundColor: [[UIColor whiteColor] CGColor]];
-    [self.user_comment.layer setBorderColor: [[UIColor grayColor] CGColor]];
+    [self.user_comment.layer setBorderColor: [[UIColor whiteColor] CGColor]];
     [self.user_comment.layer setBorderWidth: 1.0];
     [self.user_comment.layer setCornerRadius:8.0f];
     [self.user_comment.layer setMasksToBounds:YES];
@@ -282,16 +341,17 @@
 
     UIImage *redImage = [UIImage imageNamed:@"stretchable_image_red.png"];
     UIImage *redButtonImage = [redImage stretchableImageWithLeftCapWidth:12 topCapHeight:0];
+    [self.post_button addTarget:self action:@selector(postSong:) forControlEvents:UIControlEventTouchUpInside];
     [self.post_button setBackgroundImage:redButtonImage forState:UIControlStateHighlighted];
     [self.post_button setBackgroundImage:redButtonImage forState:UIControlStateNormal];
     
     
     CAGradientLayer *gradientLayer = [CAGradientLayer layer];
     gradientLayer.frame = self.artwork_picture.layer.bounds;
-    
+
     gradientLayer.colors = [NSArray arrayWithObjects:
-                            (id)[UIColor colorWithWhite:0.9f alpha:0.8f].CGColor,
-                            (id)[UIColor colorWithWhite:0.0f alpha:0.3f].CGColor,
+                            (id)[UIColor colorWithRed:(0/255.0) green:(0/255.0) blue:(0/255.0) alpha:0.7f].CGColor,
+                            (id)[UIColor colorWithRed:(0/255.0) green:(0/255.0) blue:(0/255.0) alpha:0.3f].CGColor,
                             nil];
     
     gradientLayer.locations = [NSArray arrayWithObjects:
@@ -307,6 +367,7 @@
     // Hack http://stackoverflow.com/questions/900461/slow-start-for-avaudioplayer-the-first-time-a-sound-is-played
 
     
+    
     UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
     
     [backButton setTitle:@"Back" forState:UIControlStateNormal];
@@ -316,13 +377,6 @@
     
     self.navigationItem.leftBarButtonItem = backButtonItem;
     
-    UIButton *postButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [postButton setTitle:@"Post" forState:UIControlStateNormal];
-    [postButton addTarget:self action:@selector(postSong:) forControlEvents:UIControlEventTouchUpInside];
-    postButton.frame = CGRectMake(0.0f, 0.0f, 64.0f, 41.0f);
-    UIBarButtonItem *postButtonItem = [[UIBarButtonItem alloc] initWithCustomView:postButton];
-    self.navigationItem.rightBarButtonItem = postButtonItem;
-    
     
     UISwipeGestureRecognizer* gestureSwipeLeftRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipe:)];
     gestureSwipeLeftRecognizer.direction = UISwipeGestureRecognizerDirectionLeft;
@@ -331,14 +385,29 @@
     UISwipeGestureRecognizer* gestureSwipeRightRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipe:)];
     gestureSwipeRightRecognizer.direction = UISwipeGestureRecognizerDirectionRight;
     [self.artwork_picture addGestureRecognizer:gestureSwipeRightRecognizer];
+    
+    UISwipeGestureRecognizer* gestureSwipeLeftSongProgressControl = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipe:)];
+    gestureSwipeLeftSongProgressControl.direction = UISwipeGestureRecognizerDirectionLeft;
+    [self.songProgressControl addGestureRecognizer:gestureSwipeLeftSongProgressControl];
+    
+    UISwipeGestureRecognizer* gestureSwipeRightSongProgressControl = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipe:)];
+    gestureSwipeRightSongProgressControl.direction = UISwipeGestureRecognizerDirectionRight;
+    [self.songProgressControl addGestureRecognizer:gestureSwipeRightSongProgressControl];
+    
 
     UITapGestureRecognizer *single_tap_songprogress_recognizer =[[UITapGestureRecognizer alloc] initWithTarget: self action:@selector(handleSingleTapArtwork)];
     single_tap_songprogress_recognizer.numberOfTapsRequired = 1;
     [self.songProgressControl addGestureRecognizer:single_tap_songprogress_recognizer];
+    
     UITapGestureRecognizer *single_tap_artwork_recognizer =[[UITapGestureRecognizer alloc] initWithTarget: self action:@selector(handleSingleTapArtwork)];
     single_tap_artwork_recognizer.numberOfTapsRequired = 1;
     [self.artwork_picture addGestureRecognizer:single_tap_artwork_recognizer];
 
+    
+    UITapGestureRecognizer *single_tap_comment_field =[[UITapGestureRecognizer alloc] initWithTarget: self action:@selector(handleCommentSelect)];
+    single_tap_comment_field.numberOfTapsRequired = 1;
+    [self.user_comment addGestureRecognizer:single_tap_comment_field];
+    self.playerControlsHidden = NO;
 
     [self createAudioSession];
 	// Do any additional setup after loading the view, typically from a nib.
@@ -346,45 +415,46 @@
 }
 
 - (void)handleSingleTapArtwork {
-    static BOOL firstTap = NO;
     // single tap action
     NSLog(@"Single Tap");
-    if(firstTap) {
-        // show
-        firstTap = NO;
-        CATransition *animation = [CATransition animation];
-        animation.type = kCATransitionFade;
-        animation.duration = 0.4;
-        [self.previousButton.layer addAnimation:animation forKey:nil];
-        [self.playPauseButton.layer addAnimation:animation forKey:nil];
-        [self.nextButton.layer addAnimation:animation forKey:nil];
-        [self.songProgressControl.layer addAnimation:animation forKey:nil];
-        self.previousButton.hidden = NO;
-        self.playPauseButton.hidden = NO;
-        self.nextButton.hidden = NO;
-        self.songProgressControl.hidden = NO;
+    if(self.playerControlsHidden ) {
+        [self showPlayerControls];
     } else {
         // hide
-        firstTap = YES;
-        CATransition *animation = [CATransition animation];
-        animation.type = kCATransitionFade;
-        animation.duration = 0.4;
-        [self.previousButton.layer addAnimation:animation forKey:nil];
-        [self.playPauseButton.layer addAnimation:animation forKey:nil];
-        [self.nextButton.layer addAnimation:animation forKey:nil];
-        [self.songProgressControl.layer addAnimation:animation forKey:nil];
-        self.previousButton.hidden = YES;
-        self.playPauseButton.hidden = YES;
-        self.nextButton.hidden = YES;
-        self.songProgressControl.hidden = YES;
-        
-
+        [self hidePlayerControls];
     }
 }
 
+- (void)showPlayerControls{
+    // show
+    self.playerControlsHidden = NO;
+    CATransition *animation = [CATransition animation];
+    animation.type = kCATransitionFade;
+    animation.duration = 0.4;
+    [self.previousButton.layer addAnimation:animation forKey:nil];
+    [self.playPauseButton.layer addAnimation:animation forKey:nil];
+    [self.nextButton.layer addAnimation:animation forKey:nil];
+    [self.songProgressControl.layer addAnimation:animation forKey:nil];
+    self.previousButton.hidden = NO;
+    self.playPauseButton.hidden = NO;
+    self.nextButton.hidden = NO;
+    self.songProgressControl.hidden = NO;
+}
+-(void)hidePlayerControls{
+    self.playerControlsHidden = YES;
 
-
-
+    CATransition *animation = [CATransition animation];
+    animation.type = kCATransitionFade;
+    animation.duration = 0.4;
+    [self.previousButton.layer addAnimation:animation forKey:nil];
+    [self.playPauseButton.layer addAnimation:animation forKey:nil];
+    [self.nextButton.layer addAnimation:animation forKey:nil];
+    [self.songProgressControl.layer addAnimation:animation forKey:nil];
+    self.previousButton.hidden = YES;
+    self.playPauseButton.hidden = YES;
+    self.nextButton.hidden = YES;
+    self.songProgressControl.hidden = YES;
+}
 
 - (void)backButtonDidPressed:(id)aResponder {
     [self.navigationController popViewControllerAnimated:TRUE];
@@ -402,7 +472,12 @@
     NSString *tag_string=[self.songItem objectForKey:@"tag_list"];
     if(tag_string != NULL){
         NSArray *tags = [tag_string componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-        song.tags = tags;
+        NSMutableArray *genre_and_tags = [(NSArray*)tags mutableCopy];
+        NSString *genre=[self.songItem objectForKey:@"genre"];
+        if(genre!=NULL){
+            [genre_and_tags addObject:genre];
+        }
+        song.tags = genre_and_tags;
     }
     song.soundCloudSongId = [self.songItem objectForKey:@"id"];
     NSDictionary * activeUser = [self.delegate getActiveUser];
@@ -424,5 +499,50 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     return self;
 }
+
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+- (BOOL)shouldAutorotate
+{
+    return NO;
+}
+
+- (NSUInteger)supportedInterfaceOrientations
+{
+    return UIInterfaceOrientationMaskPortrait;
+}
+
+- (void)popupTextView:(YIPopupTextView *)textView willDismissWithText:(NSString *)text cancelled:(BOOL)cancelled
+{
+    NSLog(@"will dismiss: cancelled=%d",cancelled);
+    if(cancelled==NO)
+        self.user_comment.text = text;
+}
+
+- (void)popupTextView:(YIPopupTextView *)textView didDismissWithText:(NSString *)text cancelled:(BOOL)cancelled
+{
+    NSLog(@"did dismiss: cancelled=%d",cancelled);
+}
+
+
+- (void)handleCommentSelect
+{
+    YIPopupTextView* popupTextView = [[YIPopupTextView alloc] initWithPlaceHolder:@"input here"
+                                                                         maxCount:1000
+                                                                      buttonStyle:YIPopupTextViewButtonStyleLeftCancelRightDone
+                                                                  tintsDoneButton:YES];
+    popupTextView.delegate = self;
+    popupTextView.caretShiftGestureEnabled = YES;   // default = NO
+    popupTextView.text = self.user_comment.text;
+    //    popupTextView.editable = NO;                  // set editable=NO to show without keyboard
+    [popupTextView showInView:NULL];
+    
+
+}
+
 
 @end

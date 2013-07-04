@@ -151,7 +151,9 @@
 	
 	CGContextMoveToPoint(context, sliderButtonCenterPoint.x, sliderButtonCenterPoint.y);
 	CGContextAddArc(context, sliderButtonCenterPoint.x, sliderButtonCenterPoint.y, kThumbRadius, 0.0, 2*M_PI, NO);
-	
+    UIColor * shadowColor = [UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:0.5];
+    CGContextSetShadowWithColor(context, CGSizeMake(0, 0), 5.0, shadowColor.CGColor);
+
 	CGContextFillPath(context);
 	UIGraphicsPopContext();
 }
@@ -233,11 +235,30 @@
 	return CGRectContainsPoint(thumbTouchRect, point);
 }
 
+
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    // Pass to top of chain
+    UITouch *touch = [touches anyObject];
+    CGPoint tapLocation = [touch locationInView:[touch view]];
+    if ([self isPointInThumb:tapLocation]) {
+         [self sendActionsForControlEvents:UIControlEventTouchDown];
+    }
+    else {
+    }
+   
+
+}
+
 /** @name UIGestureRecognizer management methods */
 #pragma mark - UIGestureRecognizer management methods
 - (void)panGestureHappened:(UIPanGestureRecognizer *)panGestureRecognizer {
 	CGPoint tapLocation = [panGestureRecognizer locationInView:self];
 	switch (panGestureRecognizer.state) {
+        case UIGestureRecognizerStateBegan:
+            [self sendActionsForControlEvents:UIControlEventTouchDown];
+            break;
+            
 		case UIGestureRecognizerStateChanged: {
 			CGFloat radius = [self sliderRadius];
 			CGPoint sliderCenter = CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2);
@@ -254,6 +275,10 @@
 			self.value = translateValueFromSourceIntervalToDestinationInterval(angle, 0, 2*M_PI, self.minimumValue, self.maximumValue);
 			break;
 		}
+        case UIGestureRecognizerStateEnded: {
+            [self sendActionsForControlEvents:UIControlEventTouchUpInside];
+            break;
+        }
 		default:
 			break;
 	}
