@@ -16,3 +16,6 @@
 [submodule "AFNetworking"]
 	path = AFNetworking
 	url = https://github.com/AFNetworking/AFNetworking.git
+[submodule "PPRevealSideViewController"]
+	path = PPRevealSideViewController
+	url = git://github.com/ipup/PPRevealSideViewController.git
