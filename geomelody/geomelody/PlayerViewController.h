@@ -31,11 +31,15 @@
 @property (nonatomic, retain) IBOutlet UIButton *previousButton;
 @property (nonatomic, retain) IBOutlet UICircularSlider *songProgressControl;
 @property (nonatomic, retain) IBOutlet NSTimer  *songProgressTimer;
+@property (nonatomic, retain) IBOutlet NSTimer  *activityTimer;
+@property (nonatomic, retain) IBOutlet NSDate   *lastActivityDate;
+
+
 @property(nonatomic) BOOL songProgressTouch;
 @property (nonatomic, retain) IBOutlet NSDate   *pauseStart;
 @property (nonatomic, retain) IBOutlet NSDate   *previousFireDate;
 @property(nonatomic) BOOL isPlaying;
-
+@property(nonatomic) BOOL playerControlsHidden;
 
 @property (nonatomic, retain) IBOutlet UIImageView  *artwork_picture;
 @property (nonatomic, retain) IBOutlet UIImageView  *user_picture;

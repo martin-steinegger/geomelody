@@ -33,6 +33,8 @@
 
     if (self.songProgressTouch==YES) {
         self.songProgressTouch = NO;
+        self.lastActivityDate = [[NSDate alloc] init];
+
         float chosenSongSecond=self.songProgressControl.value;
         CMTime newTime = CMTimeMakeWithSeconds(chosenSongSecond, 1);
         [self.audioPlayer seekToTime:newTime toleranceBefore:kCMTimeZero toleranceAfter:kCMTimeZero];
@@ -57,6 +59,21 @@
     }
 }
 
+- (void)checkActivity:(NSTimer *)timer {
+    if(self.songProgressTouch == NO){
+        NSDate *now = [[NSDate alloc] init];
+        NSTimeInterval diff = [now timeIntervalSinceDate:self.lastActivityDate];
+        NSInteger diff_time = diff;
+        if(diff_time > 5){
+            [self hidePlayerControls];
+            [self.activityTimer setFireDate:[NSDate distantFuture]];
+            [self.activityTimer invalidate];
+            self.activityTimer=nil ;
+
+        }
+    }
+    
+}
 
 - (IBAction)togglePlayingState:(id)button {
     //Handle the button pressing
@@ -83,6 +100,7 @@
 }
 - (void)togglePlayPause {
     //Toggle if the music is playing or paused
+    self.lastActivityDate = [[NSDate alloc] init];
     if (!self.isPlaying) {
         [self playAudio];
     } else if (self.isPlaying) {
@@ -188,6 +206,8 @@
         else
             [self.audioPlayer replaceCurrentItemWithPlayerItem:playerItem];
         self.songProgressTimer = [NSTimer scheduledTimerWithTimeInterval:0.23 target:self selector:@selector(updateSongProgressBar:) userInfo:nil repeats:YES];
+        self.activityTimer     = [NSTimer scheduledTimerWithTimeInterval:5    target:self selector:@selector(checkActivity:) userInfo:nil repeats:YES];
+        self.lastActivityDate = [[NSDate alloc] init];
         self.pauseStart = [NSDate dateWithTimeIntervalSinceNow:0];
         self.previousFireDate = [self.songProgressTimer fireDate];
 
@@ -365,6 +385,15 @@
     UISwipeGestureRecognizer* gestureSwipeRightRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipe:)];
     gestureSwipeRightRecognizer.direction = UISwipeGestureRecognizerDirectionRight;
     [self.artwork_picture addGestureRecognizer:gestureSwipeRightRecognizer];
+    
+    UISwipeGestureRecognizer* gestureSwipeLeftSongProgressControl = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipe:)];
+    gestureSwipeLeftSongProgressControl.direction = UISwipeGestureRecognizerDirectionLeft;
+    [self.songProgressControl addGestureRecognizer:gestureSwipeLeftSongProgressControl];
+    
+    UISwipeGestureRecognizer* gestureSwipeRightSongProgressControl = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipe:)];
+    gestureSwipeRightSongProgressControl.direction = UISwipeGestureRecognizerDirectionRight;
+    [self.songProgressControl addGestureRecognizer:gestureSwipeRightSongProgressControl];
+    
 
     UITapGestureRecognizer *single_tap_songprogress_recognizer =[[UITapGestureRecognizer alloc] initWithTarget: self action:@selector(handleSingleTapArtwork)];
     single_tap_songprogress_recognizer.numberOfTapsRequired = 1;
@@ -378,6 +407,7 @@
     UITapGestureRecognizer *single_tap_comment_field =[[UITapGestureRecognizer alloc] initWithTarget: self action:@selector(handleCommentSelect)];
     single_tap_comment_field.numberOfTapsRequired = 1;
     [self.user_comment addGestureRecognizer:single_tap_comment_field];
+    self.playerControlsHidden = NO;
 
     [self createAudioSession];
 	// Do any additional setup after loading the view, typically from a nib.
@@ -385,40 +415,45 @@
 }
 
 - (void)handleSingleTapArtwork {
-    static BOOL firstTap = NO;
     // single tap action
     NSLog(@"Single Tap");
-    if(firstTap) {
-        // show
-        firstTap = NO;
-        CATransition *animation = [CATransition animation];
-        animation.type = kCATransitionFade;
-        animation.duration = 0.4;
-        [self.previousButton.layer addAnimation:animation forKey:nil];
-        [self.playPauseButton.layer addAnimation:animation forKey:nil];
-        [self.nextButton.layer addAnimation:animation forKey:nil];
-        [self.songProgressControl.layer addAnimation:animation forKey:nil];
-        self.previousButton.hidden = NO;
-        self.playPauseButton.hidden = NO;
-        self.nextButton.hidden = NO;
-        self.songProgressControl.hidden = NO;
+    if(self.playerControlsHidden ) {
+        [self showPlayerControls];
     } else {
         // hide
-        firstTap = YES;
-        CATransition *animation = [CATransition animation];
-        animation.type = kCATransitionFade;
-        animation.duration = 0.4;
-        [self.previousButton.layer addAnimation:animation forKey:nil];
-        [self.playPauseButton.layer addAnimation:animation forKey:nil];
-        [self.nextButton.layer addAnimation:animation forKey:nil];
-        [self.songProgressControl.layer addAnimation:animation forKey:nil];
-        self.previousButton.hidden = YES;
-        self.playPauseButton.hidden = YES;
-        self.nextButton.hidden = YES;
-        self.songProgressControl.hidden = YES;
-        
-
+        [self hidePlayerControls];
     }
+}
+
+- (void)showPlayerControls{
+    // show
+    self.playerControlsHidden = NO;
+    CATransition *animation = [CATransition animation];
+    animation.type = kCATransitionFade;
+    animation.duration = 0.4;
+    [self.previousButton.layer addAnimation:animation forKey:nil];
+    [self.playPauseButton.layer addAnimation:animation forKey:nil];
+    [self.nextButton.layer addAnimation:animation forKey:nil];
+    [self.songProgressControl.layer addAnimation:animation forKey:nil];
+    self.previousButton.hidden = NO;
+    self.playPauseButton.hidden = NO;
+    self.nextButton.hidden = NO;
+    self.songProgressControl.hidden = NO;
+}
+-(void)hidePlayerControls{
+    self.playerControlsHidden = YES;
+
+    CATransition *animation = [CATransition animation];
+    animation.type = kCATransitionFade;
+    animation.duration = 0.4;
+    [self.previousButton.layer addAnimation:animation forKey:nil];
+    [self.playPauseButton.layer addAnimation:animation forKey:nil];
+    [self.nextButton.layer addAnimation:animation forKey:nil];
+    [self.songProgressControl.layer addAnimation:animation forKey:nil];
+    self.previousButton.hidden = YES;
+    self.playPauseButton.hidden = YES;
+    self.nextButton.hidden = YES;
+    self.songProgressControl.hidden = YES;
 }
 
 - (void)backButtonDidPressed:(id)aResponder {

@@ -45,6 +45,7 @@
 		472EBB951785B17800B6600A /* GoToLibraryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 472EBB941785B17700B6600A /* GoToLibraryCell.xib */; };
 		472EBB9F1785BF7B00B6600A /* YIPopupTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 472EBB9C1785BF7B00B6600A /* YIPopupTextView.m */; };
 		472EBBA01785BF7B00B6600A /* YISSTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 472EBB9E1785BF7B00B6600A /* YISSTextView.m */; };
+		472EBBA71785F5BC00B6600A /* DisclosureIndicator@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 472EBBA61785F5BC00B6600A /* DisclosureIndicator@2x.png */; };
 		47752C9C17818C08000B4F24 /* SongCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 47752C9417818C08000B4F24 /* SongCell.m */; };
 		47752C9D17818C08000B4F24 /* SongCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47752C9517818C08000B4F24 /* SongCell.xib */; };
 		47752CA517818C1E000B4F24 /* NearestSongMapListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47752CA417818C1E000B4F24 /* NearestSongMapListViewController.xib */; };
@@ -229,6 +230,7 @@
 		472EBB9C1785BF7B00B6600A /* YIPopupTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YIPopupTextView.m; path = ../YIPopupTextView/YIPopupTextView.m; sourceTree = "<group>"; };
 		472EBB9D1785BF7B00B6600A /* YISSTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YISSTextView.h; path = ../YIPopupTextView/YISSTextView.h; sourceTree = "<group>"; };
 		472EBB9E1785BF7B00B6600A /* YISSTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YISSTextView.m; path = ../YIPopupTextView/YISSTextView.m; sourceTree = "<group>"; };
+		472EBBA61785F5BC00B6600A /* DisclosureIndicator@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "DisclosureIndicator@2x.png"; sourceTree = "<group>"; };
 		47752C9317818C08000B4F24 /* SongCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SongCell.h; sourceTree = "<group>"; };
 		47752C9417818C08000B4F24 /* SongCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SongCell.m; sourceTree = "<group>"; };
 		47752C9517818C08000B4F24 /* SongCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SongCell.xib; sourceTree = "<group>"; };
@@ -421,6 +423,7 @@
 		47752CA617818C57000B4F24 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				472EBBA61785F5BC00B6600A /* DisclosureIndicator@2x.png */,
 				472EBB891785AE7A00B6600A /* point1sec.mp3 */,
 				472EBB7D1784573400B6600A /* stretchable_image_red.png */,
 				472EBB77178389E000B6600A /* heart32.png */,
@@ -708,6 +711,7 @@
 				472EBB8A1785AE7A00B6600A /* point1sec.mp3 in Resources */,
 				472EBB931785B0A200B6600A /* GenreFilterViewController.xib in Resources */,
 				472EBB951785B17800B6600A /* GoToLibraryCell.xib in Resources */,
+				472EBBA71785F5BC00B6600A /* DisclosureIndicator@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
