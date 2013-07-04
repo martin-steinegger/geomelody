@@ -23,7 +23,7 @@
 		<property name="targetMethod" value="initLogging" />
 		<property name="arguments">
 			<list>
-				<value>conf/log4j.properties</value>
+				<value>config/log4j.properties</value>
 			</list>
 		</property>
 	</bean>
