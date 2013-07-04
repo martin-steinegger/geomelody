@@ -21,7 +21,6 @@
 @property (strong, nonatomic) GenreFilterViewController *genreFilterViewController;
 @property (nonatomic, strong) NSArray *tracks;
 @property (nonatomic, strong) AVAudioPlayer *player;
-@property (strong,nonatomic) NSArray *tracks;
 @property (strong,nonatomic) CLLocation   *currentLocation;
 @property (strong,nonatomic) NSDictionary *activeUser;
 

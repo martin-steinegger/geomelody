@@ -39,12 +39,11 @@
 		472EBB7B178389E000B6600A /* play32.png in Resources */ = {isa = PBXBuildFile; fileRef = 472EBB78178389E000B6600A /* play32.png */; };
 		472EBB7C178389E000B6600A /* retweet32.png in Resources */ = {isa = PBXBuildFile; fileRef = 472EBB79178389E000B6600A /* retweet32.png */; };
 		472EBB7E1784573400B6600A /* stretchable_image_red.png in Resources */ = {isa = PBXBuildFile; fileRef = 472EBB7D1784573400B6600A /* stretchable_image_red.png */; };
-		47752C9917818C08000B4F24 /* GoToLibraryHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 47752C8F17818C08000B4F24 /* GoToLibraryHeaderView.m */; };
-		47752C9A17818C08000B4F24 /* GoToLibraryHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47752C9017818C08000B4F24 /* GoToLibraryHeaderView.xib */; };
+		472EBB8A1785AE7A00B6600A /* point1sec.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 472EBB891785AE7A00B6600A /* point1sec.mp3 */; };
+		472EBB921785B0A200B6600A /* GenreFilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 472EBB901785B0A100B6600A /* GenreFilterViewController.m */; };
+		472EBB931785B0A200B6600A /* GenreFilterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 472EBB911785B0A100B6600A /* GenreFilterViewController.xib */; };
 		47752C9C17818C08000B4F24 /* SongCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 47752C9417818C08000B4F24 /* SongCell.m */; };
 		47752C9D17818C08000B4F24 /* SongCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47752C9517818C08000B4F24 /* SongCell.xib */; };
-		47752C9E17818C08000B4F24 /* TagFilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 47752C9717818C08000B4F24 /* TagFilterViewController.m */; };
-		47752C9F17818C08000B4F24 /* TagFilterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47752C9817818C08000B4F24 /* TagFilterViewController.xib */; };
 		47752CA517818C1E000B4F24 /* NearestSongMapListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47752CA417818C1E000B4F24 /* NearestSongMapListViewController.xib */; };
 		47752CAC17818C57000B4F24 /* likes.png in Resources */ = {isa = PBXBuildFile; fileRef = 47752CA717818C57000B4F24 /* likes.png */; };
 		47752CAD17818C57000B4F24 /* play.png in Resources */ = {isa = PBXBuildFile; fileRef = 47752CA817818C57000B4F24 /* play.png */; };
@@ -215,15 +214,13 @@
 		472EBB78178389E000B6600A /* play32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = play32.png; sourceTree = "<group>"; };
 		472EBB79178389E000B6600A /* retweet32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = retweet32.png; sourceTree = "<group>"; };
 		472EBB7D1784573400B6600A /* stretchable_image_red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stretchable_image_red.png; sourceTree = "<group>"; };
-		47752C8E17818C08000B4F24 /* GoToLibraryHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoToLibraryHeaderView.h; sourceTree = "<group>"; };
-		47752C8F17818C08000B4F24 /* GoToLibraryHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoToLibraryHeaderView.m; sourceTree = "<group>"; };
-		47752C9017818C08000B4F24 /* GoToLibraryHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GoToLibraryHeaderView.xib; sourceTree = "<group>"; };
+		472EBB891785AE7A00B6600A /* point1sec.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = point1sec.mp3; sourceTree = "<group>"; };
+		472EBB8F1785B0A100B6600A /* GenreFilterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GenreFilterViewController.h; sourceTree = "<group>"; };
+		472EBB901785B0A100B6600A /* GenreFilterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GenreFilterViewController.m; sourceTree = "<group>"; };
+		472EBB911785B0A100B6600A /* GenreFilterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GenreFilterViewController.xib; sourceTree = "<group>"; };
 		47752C9317818C08000B4F24 /* SongCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SongCell.h; sourceTree = "<group>"; };
 		47752C9417818C08000B4F24 /* SongCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SongCell.m; sourceTree = "<group>"; };
 		47752C9517818C08000B4F24 /* SongCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SongCell.xib; sourceTree = "<group>"; };
-		47752C9617818C08000B4F24 /* TagFilterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TagFilterViewController.h; sourceTree = "<group>"; };
-		47752C9717818C08000B4F24 /* TagFilterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TagFilterViewController.m; sourceTree = "<group>"; };
-		47752C9817818C08000B4F24 /* TagFilterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TagFilterViewController.xib; sourceTree = "<group>"; };
 		47752CA417818C1E000B4F24 /* NearestSongMapListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NearestSongMapListViewController.xib; sourceTree = "<group>"; };
 		47752CA717818C57000B4F24 /* likes.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = likes.png; sourceTree = "<group>"; };
 		47752CA817818C57000B4F24 /* play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = play.png; sourceTree = "<group>"; };
@@ -346,18 +343,15 @@
 				84D1F2801781A9EE0031D50E /* tags.txt */,
 				47079968177C94400098B2F8 /* AppDelegate.h */,
 				47079969177C94400098B2F8 /* AppDelegate.m */,
-				47752C8E17818C08000B4F24 /* GoToLibraryHeaderView.h */,
-				47752C8F17818C08000B4F24 /* GoToLibraryHeaderView.m */,
-				47752C9017818C08000B4F24 /* GoToLibraryHeaderView.xib */,
 				47752C9317818C08000B4F24 /* SongCell.h */,
 				47752C9417818C08000B4F24 /* SongCell.m */,
 				47752C9517818C08000B4F24 /* SongCell.xib */,
-				47752C9617818C08000B4F24 /* TagFilterViewController.h */,
-				47752C9717818C08000B4F24 /* TagFilterViewController.m */,
-				47752C9817818C08000B4F24 /* TagFilterViewController.xib */,
 				47079971177C94400098B2F8 /* NearestSongMapListViewController.h */,
 				47079972177C94400098B2F8 /* NearestSongMapListViewController.m */,
 				47752CA417818C1E000B4F24 /* NearestSongMapListViewController.xib */,
+				472EBB8F1785B0A100B6600A /* GenreFilterViewController.h */,
+				472EBB901785B0A100B6600A /* GenreFilterViewController.m */,
+				472EBB911785B0A100B6600A /* GenreFilterViewController.xib */,
 				47079974177C94400098B2F8 /* PlayerViewController.h */,
 				47079975177C94400098B2F8 /* PlayerViewController.m */,
 				4707997A177C94400098B2F8 /* PlayerViewController.xib */,
@@ -394,6 +388,7 @@
 		47752CA617818C57000B4F24 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				472EBB891785AE7A00B6600A /* point1sec.mp3 */,
 				472EBB7D1784573400B6600A /* stretchable_image_red.png */,
 				472EBB77178389E000B6600A /* heart32.png */,
 				472EBB78178389E000B6600A /* play32.png */,
@@ -647,9 +642,7 @@
 				47079970177C94400098B2F8 /* Default-568h@2x.png in Resources */,
 				4707997C177C94400098B2F8 /* PlayerViewController.xib in Resources */,
 				47DF9B65177C9FA100FBC5C3 /* SoundCloud.bundle in Resources */,
-				47752C9A17818C08000B4F24 /* GoToLibraryHeaderView.xib in Resources */,
 				47752C9D17818C08000B4F24 /* SongCell.xib in Resources */,
-				47752C9F17818C08000B4F24 /* TagFilterViewController.xib in Resources */,
 				47752CA517818C1E000B4F24 /* NearestSongMapListViewController.xib in Resources */,
 				47752CAC17818C57000B4F24 /* likes.png in Resources */,
 				47752CAD17818C57000B4F24 /* play.png in Resources */,
@@ -669,6 +662,8 @@
 				472EBB7B178389E000B6600A /* play32.png in Resources */,
 				472EBB7C178389E000B6600A /* retweet32.png in Resources */,
 				472EBB7E1784573400B6600A /* stretchable_image_red.png in Resources */,
+				472EBB8A1785AE7A00B6600A /* point1sec.mp3 in Resources */,
+				472EBB931785B0A200B6600A /* GenreFilterViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -683,9 +678,7 @@
 				4707996A177C94400098B2F8 /* AppDelegate.m in Sources */,
 				47079973177C94400098B2F8 /* NearestSongMapListViewController.m in Sources */,
 				47079976177C94400098B2F8 /* PlayerViewController.m in Sources */,
-				47752C9917818C08000B4F24 /* GoToLibraryHeaderView.m in Sources */,
 				47752C9C17818C08000B4F24 /* SongCell.m in Sources */,
-				47752C9E17818C08000B4F24 /* TagFilterViewController.m in Sources */,
 				84CBE36C1782296000C4B1F2 /* BackendApi.m in Sources */,
 				84CBE3781782360000C4B1F2 /* GeoMelodyBackendSong.m in Sources */,
 				84CBE37B1782367C00C4B1F2 /* GeoMelodyBackendLocation.m in Sources */,
@@ -699,6 +692,7 @@
 				84504755178314A0004B9421 /* AFXMLRequestOperation.m in Sources */,
 				84504756178314A0004B9421 /* UIImageView+AFNetworking.m in Sources */,
 				472EBB52178337A300B6600A /* UICircularSlider.m in Sources */,
+				472EBB921785B0A200B6600A /* GenreFilterViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

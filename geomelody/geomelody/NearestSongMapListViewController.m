@@ -247,7 +247,7 @@
     GeoMelodyBackendLocation *backendLocation = [GeoMelodyBackendLocation alloc];
     backendLocation.latitude =  [NSNumber numberWithDouble:self.currentLocation.coordinate.latitude];
     backendLocation.longitude = [NSNumber numberWithDouble:self.currentLocation.coordinate.longitude];
-    [backendApi getkNearestSongsWithLocation:backendLocation andFilters:tagFilter k:4 onSuccess:^(NSArray * objects) {
+    [backendApi getkNearestSongsWithLocation:backendLocation andFilters:genreFilter k:4 onSuccess:^(NSArray * objects) {
         NSLog(@"getkNearestSongsWithLocation successful");
         NSMutableString *ids_string = [NSMutableString stringWithCapacity:1000];
         NSDictionary *songsDict = (NSDictionary* ) objects;
