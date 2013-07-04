@@ -149,8 +149,10 @@
         AVURLAsset * avAsset = [AVURLAsset URLAssetWithURL:url options:nil];
         AVPlayerItem * playerItem = [AVPlayerItem playerItemWithAsset:avAsset];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(songDidFinishPlaying) name:AVPlayerItemDidPlayToEndTimeNotification object:playerItem];
-        
-        self.audioPlayer = [AVPlayer playerWithPlayerItem:playerItem];
+        if(self.audioPlayer==NULL)
+            self.audioPlayer = [AVPlayer playerWithPlayerItem:playerItem];
+        else
+            [self.audioPlayer replaceCurrentItemWithPlayerItem:playerItem];
         self.songProgressTimer = [NSTimer scheduledTimerWithTimeInterval:0.23 target:self selector:@selector(updateProgressBar:) userInfo:nil repeats:YES];
         self.songProgressControl.maximumValue = [self durationInSeconds];
         self.songProgressControl.minimumValue = 0.0;
@@ -302,6 +304,9 @@
 
 
     // Controll
+    // Hack http://stackoverflow.com/questions/900461/slow-start-for-avaudioplayer-the-first-time-a-sound-is-played
+
+    
     UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
     
     [backButton setTitle:@"Back" forState:UIControlStateNormal];
