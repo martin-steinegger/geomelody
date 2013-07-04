@@ -9,8 +9,9 @@
 #import "NearestSongMapListViewController.h"
 
 #import "SCUI.h"
-#import "TagFilterViewController.h"
+#import "GenreFilterViewController.h"
 #import "PlayerViewController.h"
+
 
 
 @implementation NearestSongMapListViewController
@@ -23,13 +24,12 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.title = @"Music Near You";
-        self.goToLibraryHeaderView = [[[NSBundle mainBundle] loadNibNamed:@"GoToLibraryHeaderView" owner:self options:nil] objectAtIndex:0];
         
     }
     
     // initialize TagFilterViewController
-    if (!self.tagFilterViewController) {
-        self.tagFilterViewController = [[TagFilterViewController alloc] initWithNibName:@"TagFilterViewController" bundle:nil];
+    if (!self.genreFilterViewController) {
+        self.genreFilterViewController = [[GenreFilterViewController alloc] initWithNibName:@"GenreFilterViewController" bundle:nil];
     }
     
     [self updateNearestSongList];
@@ -186,7 +186,7 @@
 // change to TagFilterView
 - (void) showFilter {
 
-    [self.navigationController pushViewController:self.tagFilterViewController animated:YES];
+    [self.navigationController pushViewController:self.genreFilterViewController animated:YES];
 
 }
 
@@ -207,7 +207,9 @@
 
 - (void) updateNearestSongList {
     
-    NSArray *tagFilter = [self.tagFilterViewController getTagFilter];
+    NSLog(@"update nearest song list");
+    
+    NSArray *genreFilter = [self.genreFilterViewController getGenreFilter];
 
     // 1) todo: get nearest songs from database with filter
     // 2) ask soundcloud for information http://api.soundcloud.com/tracks?client_id=f0cfa9035abc5752e699580d5586d1e6&ids=41558714,13158665

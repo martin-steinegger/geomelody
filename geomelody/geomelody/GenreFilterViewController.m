@@ -1,22 +1,22 @@
 //
-//  TagFilterViewController.m
+//  GenreFilterViewController.m
 //  geomelody
 //
 //  Created by admin on 28.06.13.
 //  Copyright (c) 2013 Martin Steinegger. All rights reserved.
 //
 
-#import "TagFilterViewController.h"
+#import "GenreFilterViewController.h"
 
-@interface TagFilterViewController () {
-    NSArray *_tags; //static predefined
+@interface GenreFilterViewController () {
+    NSArray *_genres; //static predefined
     BOOL _filterEnabled; //user setting
-    NSMutableArray *_tagFilter; //user setting:only relevant when filterEnabled == TRUE
+    NSMutableArray *_genreFilter; //user setting:only relevant when filterEnabled == TRUE
 }
 
 @end
 
-@implementation TagFilterViewController
+@implementation GenreFilterViewController
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -35,10 +35,10 @@
     
     NSString *fileString = [NSString stringWithContentsOfFile:[[NSBundle mainBundle]pathForResource:@"tags" ofType:@"txt"] encoding:NSUTF8StringEncoding error:nil];
     NSMutableArray *stringsArray = [NSMutableArray arrayWithArray:[fileString componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]]];
-    _tags = [NSArray arrayWithArray:stringsArray];
+    _genres = [NSArray arrayWithArray:stringsArray];
     
     //load user settings
-    [self loadTagFilterData];
+    [self loadGenreFilterData];
 }
 
 - (void)viewDidLoad
@@ -66,7 +66,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _tags.count;
+    return _genres.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -80,8 +80,8 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     //section 1: for each filter tag add a selectable row
-        cell.textLabel.text = [_tags objectAtIndex:indexPath.row];
-        if([_tagFilter containsObject: [_tags objectAtIndex:indexPath.row]]) {
+        cell.textLabel.text = [_genres objectAtIndex:indexPath.row];
+        if([_genreFilter containsObject: [_genres objectAtIndex:indexPath.row]]) {
             [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
         }else {
             [cell setAccessoryType:UITableViewCellAccessoryNone];
@@ -181,12 +181,12 @@
 
         UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
         
-        NSString *selectedTag = [_tags objectAtIndex:indexPath.row];
-        if([_tagFilter containsObject:selectedTag]) {
-            [_tagFilter removeObject:selectedTag];
+        NSString *selectedTag = [_genres objectAtIndex:indexPath.row];
+        if([_genreFilter containsObject:selectedTag]) {
+            [_genreFilter removeObject:selectedTag];
             [cell setAccessoryType:UITableViewCellAccessoryNone];
         }else {
-            [_tagFilter addObject:selectedTag];
+            [_genreFilter addObject:selectedTag];
             [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
         }
 }
@@ -200,38 +200,38 @@
     return [directory stringByAppendingPathComponent:@"tagfilter.archive"];
 }
 
-- (void) saveTagFilterData {
+- (void) saveGenreFilterData {
     
     [[NSUserDefaults standardUserDefaults] setBool:_filterEnabled forKey:@"filterEnabled"];
-    NSLog(@"save succeeded: %@", [NSKeyedArchiver archiveRootObject:_tagFilter toFile:[self getStoragePath]] ? @"YES" : @"NO");
+    NSLog(@"save succeeded: %@", [NSKeyedArchiver archiveRootObject:_genreFilter toFile:[self getStoragePath]] ? @"YES" : @"NO");
     
 }
 
-- (void) loadTagFilterData {
+- (void) loadGenreFilterData {
     
     _filterEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:@"filterEnabled"];
-    _tagFilter = [NSKeyedUnarchiver unarchiveObjectWithFile:[self getStoragePath]];
-    if(_tagFilter == nil)
-        _tagFilter = [[NSMutableArray alloc] initWithArray:_tags];
+    _genreFilter = [NSKeyedUnarchiver unarchiveObjectWithFile:[self getStoragePath]];
+    if(_genreFilter == nil)
+        _genreFilter = [[NSMutableArray alloc] initWithArray:_genres];
     
 }
 
 //save changes when go back button is pressed
 - (void)viewWillDisappear:(BOOL)animated {
-    [self saveTagFilterData];
+    [self saveGenreFilterData];
     [self.delegate updateNearestSongList];
     //[self.nearestSongMapListViewController setFilter:_tagFilter];
 }
 
 //return NULL, if filter is disabled -> all tags accepted
 //return the list of accepted tags, if filter is enabled
-- (NSMutableArray *)getTagFilter {
+- (NSMutableArray *)getGenreFilter {
     // load settings from storage if not yet initialized
-    if(_tagFilter == nil){
-        [self loadTagFilterData];
+    if(_genreFilter == nil){
+        [self loadGenreFilterData];
     }
     if (_filterEnabled) {
-        return _tagFilter;
+        return _genreFilter;
     }else
         return NULL;
 }

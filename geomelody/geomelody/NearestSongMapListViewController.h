@@ -14,14 +14,12 @@
 
 
 @class PlayerViewController;
-@class TagFilterViewController;
-@class GoToLibraryHeaderView;
+@class GenreFilterViewController;
 
 @interface NearestSongMapListViewController : UITableViewController<CLLocationManagerDelegate,PlayerViewControllerProtocol>
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (strong, nonatomic) PlayerViewController *playerViewController;
-@property (strong, nonatomic) TagFilterViewController *tagFilterViewController;
-@property (strong, nonatomic) GoToLibraryHeaderView *goToLibraryHeaderView;
+@property (strong, nonatomic) GenreFilterViewController *genreFilterViewController;
 
 @property (nonatomic, strong) NSArray *tracks;
 @property (nonatomic, strong) AVAudioPlayer *player;
