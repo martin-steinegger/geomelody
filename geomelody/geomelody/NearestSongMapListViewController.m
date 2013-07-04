@@ -245,40 +245,76 @@
     GeoMelodyBackendLocation *backendLocation = [GeoMelodyBackendLocation alloc];
     backendLocation.latitude =  [NSNumber numberWithDouble:self.currentLocation.coordinate.latitude];
     backendLocation.longitude = [NSNumber numberWithDouble:self.currentLocation.coordinate.longitude];
-    [backendApi getkNearestSongsWithLocation:backendLocation andFilters:tagFilter k:4 onSuccess:^(NSArray * ids) {
+    [backendApi getkNearestSongsWithLocation:backendLocation andFilters:tagFilter k:4 onSuccess:^(NSArray * objects) {
         NSLog(@"getkNearestSongsWithLocation successful");
+        NSMutableString *ids_string = [NSMutableString stringWithCapacity:1000];
+        NSDictionary *songsDict = (NSDictionary* ) objects;
+        NSDictionary *songs = [songsDict objectForKey:@"Song"]; // Can be an array
+        NSMutableArray * backendSongArray = [[NSMutableArray alloc] initWithObjects:nil];
+        if([songs isKindOfClass:[NSArray class]]){ // if there is more than one element
+            for (id object in songs) {
+                if([object isKindOfClass:[NSDictionary class]]){
+                    NSDictionary *song = (NSDictionary *) object;
+                    if([song count] != 0){
+                        [backendSongArray addObject:song];
+                        NSString *current_id_number = [song objectForKey:@"SoundCloudSongId"];
+                        [ids_string appendString:current_id_number ];
+                        [ids_string appendString: @","];
+                    }
+                }
+            }
+            if(ids_string.length > 1 ) // remove last 
+                if([ids_string characterAtIndex:[ids_string length]-1]==',')
+                    [ids_string deleteCharactersInRange:NSMakeRange([ids_string length]-1, 1)];
+
+        }
+        
+        if([songs isKindOfClass:[NSDictionary class]]){ // if there is only one element
+            NSDictionary *song = (NSDictionary* ) songs;
+            if([song count] != 0){
+                [backendSongArray addObject:song];
+                NSString *current_id_number = [song objectForKey:@"SoundCloudSongId"];
+                [ids_string appendString:current_id_number ];
+            }
+        }
+        
+        // do request for SoundCloud
+        // like https://api.soundcloud.com/tracks.json?client_id=f0cfa9035abc5752e699580d5586d1e6&sharing=public&ids=41558714,13158665
+        NSMutableDictionary *requestParameter = [NSMutableDictionary dictionary];
+        [requestParameter setObject:@"public"  forKey:@"sharing"];
+        [requestParameter setObject:ids_string forKey:@"ids"];
+
+        SCAccount *account = [SCSoundCloud account];
+        SCRequestResponseHandler handler;
+        handler = ^(NSURLResponse *response, NSData *data, NSError *error) {
+            NSError *jsonError = nil;
+            NSJSONSerialization *jsonResponse = [NSJSONSerialization
+                                                 JSONObjectWithData:data
+                                                 options:0
+                                                 error:&jsonError];
+            if (!jsonError && [jsonResponse isKindOfClass:[NSArray class]]) {
+                tracks = (NSArray *)jsonResponse;
+                [self mergeData:tracks backEndTracks:backendSongArray];
+                [self.tableView reloadData];
+            }
+        };
+        NSString *resourceURL = @"https://api.soundcloud.com/tracks.json";
+        [SCRequest performMethod:SCRequestMethodGET
+                      onResource:[NSURL URLWithString:resourceURL]
+                 usingParameters:requestParameter
+                     withAccount:account
+          sendingProgressHandler:nil
+                 responseHandler:handler];
+        
+        
     } onFail:^(NSError * error) {
         NSLog(@"getkNearestSongsWithLocation Error with query");
     }];
-    
-    
-    
-    SCAccount *account = [SCSoundCloud account];
-    SCRequestResponseHandler handler;
-    handler = ^(NSURLResponse *response, NSData *data, NSError *error) {
-        NSError *jsonError = nil;
-        NSJSONSerialization *jsonResponse = [NSJSONSerialization
-                                             JSONObjectWithData:data
-                                             options:0
-                                             error:&jsonError];
-        if (!jsonError && [jsonResponse isKindOfClass:[NSArray class]]) {
-            tracks = (NSArray *)jsonResponse;
-            [self.tableView reloadData];
-        }
-    };
-    
-    NSString *resourceURL = @"https://api.soundcloud.com/me/tracks.json";
-    [SCRequest performMethod:SCRequestMethodGET
-                  onResource:[NSURL URLWithString:resourceURL]
-             usingParameters:nil
-                 withAccount:account
-      sendingProgressHandler:nil
-             responseHandler:handler];
-    
-    
 }
 
-
+-(void)mergeData:(NSArray *)soundCloudTracks  backEndTracks:(NSMutableArray *)backEndTracks {
+    
+}
 
 - (id)getPreviousEntry {
     self.currentSongPosition--;
