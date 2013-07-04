@@ -97,8 +97,8 @@ public class SongMappingServiceImpl implements SongMappingService {
 		.append("		ST_X(geom) as longitude, ")
 		.append("		ST_Y(geom) as latitude ")
 		.append("	FROM songs AS s ")
-		.append("		INNER JOIN songs_tags AS st ON s.id = st.song_id ")
-		.append("		INNER JOIN tags AS t ON t.id = st.tag_id ");
+		.append("		LEFT JOIN songs_tags AS st ON s.id = st.song_id ")
+		.append("		LEFT JOIN tags AS t ON t.id = st.tag_id ");
 		
 		if(filters != null && filters.getFilters() != null && filters.getFilters().size() > 0) {
 			params.addValue("filters", filters.getFilters());
