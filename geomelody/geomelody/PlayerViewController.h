@@ -14,6 +14,8 @@
 @protocol PlayerViewControllerProtocol <NSObject>
 - (id)getNextEntry;
 - (id)getPreviousEntry;
+- (id)getCurrentGeoPosition;
+- (id)getActiveUser;
 @end
 
 
@@ -36,6 +38,9 @@
 
 @property (nonatomic, retain) IBOutlet UIImageView  *artwork_picture;
 @property (nonatomic, retain) IBOutlet UIImageView  *user_picture;
+@property (nonatomic, retain) IBOutlet UITextView   *user_comment;
+@property (nonatomic, retain) IBOutlet UIButton     *post_button;
+
 @property (nonatomic, retain) IBOutlet UILabel *songTitle;
 @property (nonatomic, retain) IBOutlet UILabel *songInterpreter;
 @property (nonatomic, retain) IBOutlet UILabel *likes;

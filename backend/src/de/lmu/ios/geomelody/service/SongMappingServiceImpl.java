@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import javax.sql.DataSource;
 
@@ -33,21 +34,6 @@ public class SongMappingServiceImpl implements SongMappingService {
 	@Override
 	@Transactional
 	public void saveSong(final Song song) {
-		final Map<String, Integer> tagIdMap = jdbcTemplate.query(
-				"SELECT id, name FROM tags", emptyMap,
-				new ResultSetExtractor<Map<String, Integer>>() {
-					public Map<String, Integer> extractData(ResultSet rs)
-							throws SQLException {
-						Map<String, Integer> map = new LinkedHashMap<String, Integer>(30);
-						while (rs.next()) {
-							int col1 = rs.getInt("id");
-							String col2 = rs.getString("name");
-							map.put(col2, col1);
-						}
-						return map;
-					};
-				});
-
 		Map<String, Object> params = new HashMap<String, Object>(5);
 		params.put("soundcloud_song_id", song.getSoundCloudSongId());
 		params.put("soundcloud_user_id", song.getSoundCloudUserId());
@@ -65,15 +51,31 @@ public class SongMappingServiceImpl implements SongMappingService {
 				"SELECT CURRVAL('songs_id_seq')", emptyMap);
 		
 		final List<String> tags = song.getTags();
-
-		for(String tag : tags) {
-			Integer tagId;
-			if((tagId = tagIdMap.get(tag)) != null) {
-				Map<String, Object> insertMap = new HashMap<String, Object>(2);
-				insertMap.put("song_id", songId);
-				insertMap.put("tag_id", tagId);
-				jdbcTemplate.update(
-						"INSERT INTO songs_tags (song_id, tag_id) VALUES (:song_id, :tag_id)", insertMap);
+		if(tags != null) {
+			final Map<String, Integer> tagIdMap = jdbcTemplate.query(
+					"SELECT id, name FROM tags", emptyMap,
+					new ResultSetExtractor<Map<String, Integer>>() {
+						public Map<String, Integer> extractData(ResultSet rs)
+								throws SQLException {
+							Map<String, Integer> map = new TreeMap<String, Integer>(String.CASE_INSENSITIVE_ORDER);
+							while (rs.next()) {
+								int col1 = rs.getInt("id");
+								String col2 = rs.getString("name");
+								map.put(col2, col1);
+							}
+							return map;
+						};
+					});
+			
+			for(String tag : tags) {
+				Integer tagId;
+				if((tagId = tagIdMap.get(tag)) != null) {
+					Map<String, Object> insertMap = new HashMap<String, Object>(2);
+					insertMap.put("song_id", songId);
+					insertMap.put("tag_id", tagId);
+					jdbcTemplate.update(
+							"INSERT INTO songs_tags (song_id, tag_id) VALUES (:song_id, :tag_id)", insertMap);
+				}
 			}
 		}
 	}
@@ -95,10 +97,10 @@ public class SongMappingServiceImpl implements SongMappingService {
 		.append("		ST_X(geom) as longitude, ")
 		.append("		ST_Y(geom) as latitude ")
 		.append("	FROM songs AS s ")
-		.append("		INNER JOIN songs_tags AS st ON s.id = st.song_id ")
-		.append("		INNER JOIN tags AS t ON t.id = st.tag_id ");
+		.append("		LEFT JOIN songs_tags AS st ON s.id = st.song_id ")
+		.append("		LEFT JOIN tags AS t ON t.id = st.tag_id ");
 		
-		if(filters != null && filters.getFilters().size() > 0) {
+		if(filters != null && filters.getFilters() != null && filters.getFilters().size() > 0) {
 			params.addValue("filters", filters.getFilters());
 			sb.append("	WHERE ")
 			.append("		t.name IN (:filters) ");
