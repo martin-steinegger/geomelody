@@ -10,12 +10,13 @@
 #import <CoreLocation/CoreLocation.h>
 #import "SongCell.h"
 #import "PlayerViewController.h"
+#import "NearestSongMapViewController.h"
 
 
 @class PlayerViewController;
 @class GenreFilterViewController;
 
-@interface NearestSongMapListViewController : UITableViewController<CLLocationManagerDelegate,PlayerViewControllerProtocol>
+@interface NearestSongListViewController : UIViewController<CLLocationManagerDelegate,PlayerViewControllerProtocol, NearestSongMapViewControllerProtocol>
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (strong, nonatomic) PlayerViewController *playerViewController;
 @property (strong, nonatomic) GenreFilterViewController *genreFilterViewController;
@@ -26,5 +27,9 @@
 
 @property NSInteger currentSongPosition;
 
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UIButton *showMapButton;
+
+- (IBAction)showMap:(id)sender;
 
 @end

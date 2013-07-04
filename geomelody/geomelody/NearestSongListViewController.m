@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Martin Steinegger. All rights reserved.
 //
 
-#import "NearestSongMapListViewController.h"
+#import "NearestSongListViewController.h"
 
 #import "SCUI.h"
 #import "GenreFilterViewController.h"
@@ -15,7 +15,7 @@
 
 
 
-@implementation NearestSongMapListViewController
+@implementation NearestSongListViewController
 @synthesize tracks;
 @synthesize locationManager;
 
@@ -44,14 +44,13 @@
     
 	// Do any additional setup after loading the view, typically from a nib.
     //self.navigationItem.leftBarButtonItem = self.editButtonItem;
-
-    
-    
     UIBarButtonItem *filterButton = [[UIBarButtonItem alloc] initWithTitle:@"Filter" style:UIBarButtonItemStylePlain target:self action:@selector(showFilter)];
     self.navigationItem.rightBarButtonItem = filterButton;
 
     
-    
+    UISwipeGestureRecognizer* gestureSwipeUpRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipe:)];
+    gestureSwipeUpRecognizer.direction = UISwipeGestureRecognizerDirectionUp;
+    [self.showMapButton addGestureRecognizer:gestureSwipeUpRecognizer];
     
     UIBarButtonItem *logout = [[UIBarButtonItem alloc] initWithTitle:@"Logout" style:UIBarButtonItemStylePlain target:self action:@selector(logoutSoundCloud:)];
     self.navigationItem.leftBarButtonItem = logout;
@@ -148,6 +147,20 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(void) handleSwipe:(UISwipeGestureRecognizer*) recognizer {
+    [self showMapController];
+}
+
+- (IBAction)showMap:(id)sender {
+    [self showMapController];
+}
+
+-(void)showMapController {
+    NearestSongMapViewController* mapViewController = [[NearestSongMapViewController alloc] initWithNibName:@"NearestSongMapViewController" bundle:nil];
+    [mapViewController setDelegate:self];
+    [self.revealSideViewController pushViewController:mapViewController onDirection:PPRevealSideDirectionBottom animated:YES];
 }
 
 
@@ -295,8 +308,7 @@
                                                  options:0
                                                  error:&jsonError];
             if (!jsonError && [jsonResponse isKindOfClass:[NSArray class]]) {
-                tracks = (NSArray *)jsonResponse;
-                [self mergeData:tracks backEndTracks:backendSongArray];
+                tracks = [self mergeData:(NSArray *)jsonResponse backEndTracks:backendSongArray];
                 [self.tableView reloadData];
             }
         };
@@ -314,8 +326,20 @@
     }];
 }
 
--(void)mergeData:(NSArray *)soundCloudTracks  backEndTracks:(NSMutableArray *)backEndTracks {
-    
+-(NSArray*)mergeData:(NSArray *)soundCloudTracks  backEndTracks:(NSMutableArray *)backEndTracks {
+    NSMutableArray* result = [[NSMutableArray alloc] init];
+    for(NSDictionary* scTrack in soundCloudTracks) {
+        for (NSDictionary* beTrack in backEndTracks) {
+            NSInteger beSoundCloudSongId = [[beTrack objectForKey:@"SoundCloudSongId"] intValue];
+            NSInteger scSoundCloudSongId = [[scTrack objectForKey:@"id"] intValue];
+            if(beSoundCloudSongId == scSoundCloudSongId) {
+                NSMutableDictionary *dict = [scTrack mutableCopy];
+                [dict addEntriesFromDictionary:beTrack];
+                [result addObject:dict];
+            }
+        }
+    }
+    return result;
 }
 
 - (id)getPreviousEntry {
@@ -361,6 +385,14 @@
     return 100;
 }
 
+#pragma mark NearestSongMapViewControllerProtocoll
 
+- (NSArray*) getTracks {
+    return tracks;
+}
+
+-(NSInteger) getCurrentTrackIndex {
+    return self.currentSongPosition;
+}
 
 @end
