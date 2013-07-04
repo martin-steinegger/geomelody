@@ -43,6 +43,8 @@
 		472EBB921785B0A200B6600A /* GenreFilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 472EBB901785B0A100B6600A /* GenreFilterViewController.m */; };
 		472EBB931785B0A200B6600A /* GenreFilterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 472EBB911785B0A100B6600A /* GenreFilterViewController.xib */; };
 		472EBB951785B17800B6600A /* GoToLibraryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 472EBB941785B17700B6600A /* GoToLibraryCell.xib */; };
+		472EBB9F1785BF7B00B6600A /* YIPopupTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 472EBB9C1785BF7B00B6600A /* YIPopupTextView.m */; };
+		472EBBA01785BF7B00B6600A /* YISSTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 472EBB9E1785BF7B00B6600A /* YISSTextView.m */; };
 		47752C9C17818C08000B4F24 /* SongCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 47752C9417818C08000B4F24 /* SongCell.m */; };
 		47752C9D17818C08000B4F24 /* SongCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47752C9517818C08000B4F24 /* SongCell.xib */; };
 		47752CA517818C1E000B4F24 /* NearestSongMapListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47752CA417818C1E000B4F24 /* NearestSongMapListViewController.xib */; };
@@ -223,6 +225,10 @@
 		472EBB901785B0A100B6600A /* GenreFilterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GenreFilterViewController.m; sourceTree = "<group>"; };
 		472EBB911785B0A100B6600A /* GenreFilterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GenreFilterViewController.xib; sourceTree = "<group>"; };
 		472EBB941785B17700B6600A /* GoToLibraryCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GoToLibraryCell.xib; sourceTree = "<group>"; };
+		472EBB9B1785BF7B00B6600A /* YIPopupTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YIPopupTextView.h; path = ../YIPopupTextView/YIPopupTextView.h; sourceTree = "<group>"; };
+		472EBB9C1785BF7B00B6600A /* YIPopupTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YIPopupTextView.m; path = ../YIPopupTextView/YIPopupTextView.m; sourceTree = "<group>"; };
+		472EBB9D1785BF7B00B6600A /* YISSTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YISSTextView.h; path = ../YIPopupTextView/YISSTextView.h; sourceTree = "<group>"; };
+		472EBB9E1785BF7B00B6600A /* YISSTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YISSTextView.m; path = ../YIPopupTextView/YISSTextView.m; sourceTree = "<group>"; };
 		47752C9317818C08000B4F24 /* SongCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SongCell.h; sourceTree = "<group>"; };
 		47752C9417818C08000B4F24 /* SongCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SongCell.m; sourceTree = "<group>"; };
 		47752C9517818C08000B4F24 /* SongCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SongCell.xib; sourceTree = "<group>"; };
@@ -305,6 +311,7 @@
 		4707994D177C943F0098B2F8 = {
 			isa = PBXGroup;
 			children = (
+				472EBBA51785BF7F00B6600A /* YIPopupTextView */,
 				84BF06F21785B167002BB8D9 /* PPRevealSideviewController */,
 				84BF06371783891A002BB8D9 /* MobileCoreServices.framework */,
 				84BF063517838915002BB8D9 /* SystemConfiguration.framework */,
@@ -398,6 +405,17 @@
 				472EBB51178337A300B6600A /* UICircularSlider.m */,
 			);
 			name = UICircularSlider;
+			sourceTree = "<group>";
+		};
+		472EBBA51785BF7F00B6600A /* YIPopupTextView */ = {
+			isa = PBXGroup;
+			children = (
+				472EBB9B1785BF7B00B6600A /* YIPopupTextView.h */,
+				472EBB9C1785BF7B00B6600A /* YIPopupTextView.m */,
+				472EBB9D1785BF7B00B6600A /* YISSTextView.h */,
+				472EBB9E1785BF7B00B6600A /* YISSTextView.m */,
+			);
+			name = YIPopupTextView;
 			sourceTree = "<group>";
 		};
 		47752CA617818C57000B4F24 /* images */ = {
@@ -720,6 +738,8 @@
 				472EBB52178337A300B6600A /* UICircularSlider.m in Sources */,
 				472EBB921785B0A200B6600A /* GenreFilterViewController.m in Sources */,
 				84BF06F51785B167002BB8D9 /* PPRevealSideViewController.m in Sources */,
+				472EBB9F1785BF7B00B6600A /* YIPopupTextView.m in Sources */,
+				472EBBA01785BF7B00B6600A /* YISSTextView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
