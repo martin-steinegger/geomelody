@@ -81,16 +81,34 @@
 }
 
 -(void)zoomToPins {
-    MKMapPoint annotationPoint = MKMapPointForCoordinate(self.mapView.userLocation.coordinate);
-    MKMapRect zoomRect = MKMapRectMake(annotationPoint.x, annotationPoint.y, 0.1, 0.1);
+    if([_mapView.annotations count] == 0)
+        return;
     
-    for (id <MKAnnotation> annotation in self.mapView.annotations)
+    CLLocationCoordinate2D topLeftCoord;
+    topLeftCoord.latitude = -90;
+    topLeftCoord.longitude = 180;
+    
+    CLLocationCoordinate2D bottomRightCoord;
+    bottomRightCoord.latitude = 90;
+    bottomRightCoord.longitude = -180;
+    
+    for(MapAnnotation* annotation in _mapView.annotations)
     {
-        MKMapPoint annotationPoint = MKMapPointForCoordinate(annotation.coordinate);
-        MKMapRect pointRect = MKMapRectMake(annotationPoint.x, annotationPoint.y, 0.1, 0.1);
-        zoomRect = MKMapRectUnion(zoomRect, pointRect);
+        topLeftCoord.longitude = fmin(topLeftCoord.longitude, annotation.coordinate.longitude);
+        topLeftCoord.latitude = fmax(topLeftCoord.latitude, annotation.coordinate.latitude);
+        
+        bottomRightCoord.longitude = fmax(bottomRightCoord.longitude, annotation.coordinate.longitude);
+        bottomRightCoord.latitude = fmin(bottomRightCoord.latitude, annotation.coordinate.latitude);
     }
-    [self.mapView setVisibleMapRect:zoomRect animated:NO];
+    
+    MKCoordinateRegion region;
+    region.center.latitude = topLeftCoord.latitude - (topLeftCoord.latitude - bottomRightCoord.latitude) * 0.5;
+    region.center.longitude = topLeftCoord.longitude + (bottomRightCoord.longitude - topLeftCoord.longitude) * 0.5;
+    region.span.latitudeDelta = fabs(topLeftCoord.latitude - bottomRightCoord.latitude) * 1.1; // Add a little extra space on the sides
+    region.span.longitudeDelta = fabs(bottomRightCoord.longitude - topLeftCoord.longitude) * 1.1; // Add a little extra space on the sides
+    
+    region = [_mapView regionThatFits:region];
+    [_mapView setRegion:region animated:YES];
 }
 
 - (void)removeAllPinsButUserLocation {
@@ -134,6 +152,9 @@
 }
 
 - (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view {
+    if ([view.annotation isKindOfClass:[MKUserLocation class]])
+        return;
+    
     if (calloutView.window)
         [calloutView dismissCalloutAnimated:NO];
 
@@ -158,9 +179,10 @@
 
     disclosure.tag = [annotation.index intValue];
     
-    self.calloutView.rightAccessoryView = disclosure;
+    calloutView.rightAccessoryView = disclosure;
+    calloutView.calloutOffset = view.calloutOffset;
     
-    [self.calloutView presentCalloutFromRect:view.bounds
+    [calloutView presentCalloutFromRect:view.bounds
                                  inView:view
                       constrainedToView:_mapView
                permittedArrowDirections:SMCalloutArrowDirectionAny
