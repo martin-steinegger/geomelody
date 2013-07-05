@@ -19,6 +19,12 @@
 [submodule "PPRevealSideViewController"]
 	path = PPRevealSideViewController
 	url = git://github.com/ipup/PPRevealSideViewController.git
+<<<<<<< Updated upstream
 [submodule "calloutview"]
 	path = calloutview
 	url = https://github.com/nfarina/calloutview.git
+=======
+[submodule "Reachability"]
+	path = Reachability
+	url = https://github.com/tonymillion/Reachability.git
+>>>>>>> Stashed changes
