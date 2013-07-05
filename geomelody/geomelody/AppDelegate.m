@@ -81,7 +81,7 @@
     NSUInteger orientations = UIInterfaceOrientationMaskAll;
     
     if (self.window.rootViewController) {
-        UIViewController* presented = [[(UINavigationController *)self.window.rootViewController viewControllers] lastObject];
+        UIViewController* presented = [[[(UINavigationController *)self.window.rootViewController navigationController] viewControllers] lastObject];
         orientations = [presented supportedInterfaceOrientations];
     }
     return orientations;
