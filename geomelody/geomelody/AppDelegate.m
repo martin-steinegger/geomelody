@@ -33,7 +33,7 @@
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
-    NearestSongListViewController *masterViewController = [[NearestSongListViewController alloc] initWithNibName:@"NearestSongMapListViewController" bundle:nil];
+    NearestSongListViewController *masterViewController = [[NearestSongListViewController alloc] initWithNibName:@"NearestSongListViewController" bundle:nil];
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:masterViewController];
     _revealSideViewController = [[PPRevealSideViewController alloc] initWithRootViewController:nav];
     
@@ -81,7 +81,7 @@
     NSUInteger orientations = UIInterfaceOrientationMaskAll;
     
     if (self.window.rootViewController) {
-        UIViewController* presented = [[[(UINavigationController *)self.window.rootViewController navigationController] viewControllers] lastObject];
+        UIViewController* presented = [[[(UINavigationController *)self.window.rootViewController.revealSideViewController navigationController] viewControllers] lastObject];
         orientations = [presented supportedInterfaceOrientations];
     }
     return orientations;
