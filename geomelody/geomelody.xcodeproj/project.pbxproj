@@ -256,7 +256,7 @@
 		47DF9B3D177C9D8A00FBC5C3 /* SoundCloudAPI.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SoundCloudAPI.xcodeproj; path = ../CocoaSoundCloudAPI/SoundCloudAPI.xcodeproj; sourceTree = "<group>"; };
 		47DF9B46177C9D9300FBC5C3 /* OAuth2Client.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = OAuth2Client.xcodeproj; path = ../OAuth2Client/OAuth2Client.xcodeproj; sourceTree = "<group>"; };
 		47DF9B4F177C9D9D00FBC5C3 /* OHAttributedLabel.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = OHAttributedLabel.xcodeproj; path = ../OHAttributedLabel/OHAttributedLabel.xcodeproj; sourceTree = "<group>"; };
-		47DF9B64177C9FA100FBC5C3 /* SoundCloud.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SoundCloud.bundle; sourceTree = "<group>"; };
+		47DF9B64177C9FA100FBC5C3 /* SoundCloud.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SoundCloud.bundle; path = ../SoundCloud.bundle; sourceTree = "<group>"; };
 		84046A931785B91000168789 /* NearestSongMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NearestSongMapViewController.h; sourceTree = "<group>"; };
 		84046A941785B91000168789 /* NearestSongMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NearestSongMapViewController.m; sourceTree = "<group>"; };
 		84046A951785B91000168789 /* NearestSongMapViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NearestSongMapViewController.xib; sourceTree = "<group>"; };
@@ -333,21 +333,6 @@
 		4707994D177C943F0098B2F8 = {
 			isa = PBXGroup;
 			children = (
-				472EBBAB178609B000B6600A /* Reachability */,
-				472EBBA51785BF7F00B6600A /* YIPopupTextView */,
-				84046AA31785CD9F00168789 /* SMCalloutView */,
-				84046A981785B9FC00168789 /* MapKit.framework */,
-				84BF06F21785B167002BB8D9 /* PPRevealSideviewController */,
-				84BF06371783891A002BB8D9 /* MobileCoreServices.framework */,
-				84BF063517838915002BB8D9 /* SystemConfiguration.framework */,
-				8450473A178314A0004B9421 /* AFNetworking */,
-				47DF9B64177C9FA100FBC5C3 /* SoundCloud.bundle */,
-				47DF9B4F177C9D9D00FBC5C3 /* OHAttributedLabel.xcodeproj */,
-				47DF9B46177C9D9300FBC5C3 /* OAuth2Client.xcodeproj */,
-				47DF9B3D177C9D8A00FBC5C3 /* SoundCloudAPI.xcodeproj */,
-				47DF9B34177C9D8200FBC5C3 /* SoundCloudUI.xcodeproj */,
-				47DF9B2B177C9D7A00FBC5C3 /* JSONKit.xcodeproj */,
-				472EBB53178337A900B6600A /* UICircularSlider */,
 				4707995F177C943F0098B2F8 /* geomelody */,
 				47752CA617818C57000B4F24 /* images */,
 				47079958177C943F0098B2F8 /* Frameworks */,
@@ -366,6 +351,19 @@
 		47079958177C943F0098B2F8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				47DF9B4F177C9D9D00FBC5C3 /* OHAttributedLabel.xcodeproj */,
+				47DF9B46177C9D9300FBC5C3 /* OAuth2Client.xcodeproj */,
+				47DF9B3D177C9D8A00FBC5C3 /* SoundCloudAPI.xcodeproj */,
+				47DF9B34177C9D8200FBC5C3 /* SoundCloudUI.xcodeproj */,
+				47DF9B2B177C9D7A00FBC5C3 /* JSONKit.xcodeproj */,
+				472EBB53178337A900B6600A /* UICircularSlider */,
+				472EBBA51785BF7F00B6600A /* YIPopupTextView */,
+				84046AA31785CD9F00168789 /* SMCalloutView */,
+				84046A981785B9FC00168789 /* MapKit.framework */,
+				84BF06F21785B167002BB8D9 /* PPRevealSideviewController */,
+				84BF06371783891A002BB8D9 /* MobileCoreServices.framework */,
+				84BF063517838915002BB8D9 /* SystemConfiguration.framework */,
+				8450473A178314A0004B9421 /* AFNetworking */,
 				472EBB4E17831BC300B6600A /* CoreMedia.framework */,
 				47752CCF1782CFA2000B4F24 /* MediaPlayer.framework */,
 				47752CB61781B521000B4F24 /* AVFoundation.framework */,
@@ -403,12 +401,10 @@
 				47079974177C94400098B2F8 /* PlayerViewController.h */,
 				47079975177C94400098B2F8 /* PlayerViewController.m */,
 				4707997A177C94400098B2F8 /* PlayerViewController.xib */,
-				47079960177C943F0098B2F8 /* Supporting Files */,
-				84CBE36A1782296000C4B1F2 /* BackendApi.h */,
-				84CBE36B1782296000C4B1F2 /* BackendApi.m */,
 				84046A931785B91000168789 /* NearestSongMapViewController.h */,
 				84046A941785B91000168789 /* NearestSongMapViewController.m */,
 				84046A951785B91000168789 /* NearestSongMapViewController.xib */,
+				47079960177C943F0098B2F8 /* Supporting Files */,
 			);
 			path = geomelody;
 			sourceTree = "<group>";
@@ -459,6 +455,7 @@
 		47752CA617818C57000B4F24 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				47DF9B64177C9FA100FBC5C3 /* SoundCloud.bundle */,
 				472EBBA61785F5BC00B6600A /* DisclosureIndicator@2x.png */,
 				472EBB891785AE7A00B6600A /* point1sec.mp3 */,
 				472EBB7D1784573400B6600A /* stretchable_image_red.png */,
@@ -586,6 +583,8 @@
 		84CBE375178235E800C4B1F2 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				84CBE36A1782296000C4B1F2 /* BackendApi.h */,
+				84CBE36B1782296000C4B1F2 /* BackendApi.m */,
 				84CBE3761782360000C4B1F2 /* GeoMelodyBackendSong.h */,
 				84CBE3771782360000C4B1F2 /* GeoMelodyBackendSong.m */,
 				84CBE3791782367C00C4B1F2 /* GeoMelodyBackendLocation.h */,
