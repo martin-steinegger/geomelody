@@ -24,7 +24,6 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.title = @"Music Near You";
         
     }
     
@@ -43,14 +42,9 @@
     [super viewDidLoad];
     
 	// Do any additional setup after loading the view, typically from a nib.
-    //self.navigationItem.leftBarButtonItem = self.editButtonItem;
-    UIBarButtonItem *filterButton = [[UIBarButtonItem alloc] initWithTitle:@"Filter" style:UIBarButtonItemStylePlain target:self action:@selector(showFilter)];
-    self.navigationItem.rightBarButtonItem = filterButton;
-
-    
     UISwipeGestureRecognizer* gestureSwipeUpRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipe:)];
     gestureSwipeUpRecognizer.direction = UISwipeGestureRecognizerDirectionUp;
-    [self.showMapButton addGestureRecognizer:gestureSwipeUpRecognizer];
+    [self.view addGestureRecognizer:gestureSwipeUpRecognizer];
     
     UIBarButtonItem *logout = [[UIBarButtonItem alloc] initWithTitle:@"Logout" style:UIBarButtonItemStylePlain target:self action:@selector(logoutSoundCloud:)];
     self.navigationItem.leftBarButtonItem = logout;
@@ -66,7 +60,25 @@
     [locationManager setDelegate:self];
     [locationManager setDistanceFilter:10]; //only every ten meters
     [locationManager startUpdatingLocation];
+    
+    NSArray *segments = [NSArray arrayWithObjects: @"Map", @"List", @"Filters", nil];
+    UISegmentedControl *navigationControls = [[UISegmentedControl alloc] initWithItems:segments];
+    [navigationControls setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
+    [navigationControls setSegmentedControlStyle:UISegmentedControlStyleBar];
+    [navigationControls setSelectedSegmentIndex:1];
+    [navigationControls addTarget:self action:@selector(navigationSegmentAction:) forControlEvents:UIControlEventValueChanged];
+
+    self.navigationItem.titleView = navigationControls;
   
+}
+
+-(void)setPlayerButtonVisible:(bool)visible {
+    if(visible == YES) {
+        UIBarButtonItem *playerButton = [[UIBarButtonItem alloc] initWithTitle:@"Player" style:UIBarButtonItemStylePlain target:self action:@selector(showPlayerWithCurrentSong)];
+        self.navigationItem.rightBarButtonItem = playerButton;
+    } else {
+        self.navigationItem.rightBarButtonItem = nil;
+    }
 }
 
 - (IBAction) logoutSoundCloud:(id) sender
@@ -153,8 +165,18 @@
     [self showMapController];
 }
 
-- (IBAction)showMap:(id)sender {
-    [self showMapController];
+-(void)navigationSegmentAction:(id)sender {
+    UISegmentedControl *segmentedControl = (UISegmentedControl *) sender;
+    NSInteger selectedSegment = segmentedControl.selectedSegmentIndex;
+    if (selectedSegment == 0) { /* Map */
+        [self showMapController];
+    } else {
+         [self.revealSideViewController popViewControllerAnimated:YES];
+    }
+    
+    if (selectedSegment == 2) { /* Filter */
+        [self showFilter];
+    }
 }
 
 -(void)showMapController {
@@ -218,6 +240,7 @@
         NSDictionary *song = [self.tracks objectAtIndex:indexPath.row];
         
         //NSLog(@"selected song: %@",selectedSong.soundcloud_id);
+        [self setPlayerButtonVisible:YES];
         [self showPlayer:song];
     }
 }
@@ -227,6 +250,11 @@
 
     [self.navigationController pushViewController:self.genreFilterViewController animated:YES];
 
+}
+
+-(void) showPlayerWithCurrentSong {
+    NSDictionary* song = [tracks objectAtIndex:[self getCurrentTrackIndex]];
+    [self showPlayer:song];
 }
 
 // change to PlayerView, which is initialised with the defined song object

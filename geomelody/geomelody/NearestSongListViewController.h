@@ -16,7 +16,7 @@
 @class PlayerViewController;
 @class GenreFilterViewController;
 
-@interface NearestSongListViewController : UIViewController<CLLocationManagerDelegate,PlayerViewControllerProtocol, NearestSongMapViewControllerProtocol>
+@interface NearestSongListViewController : UITableViewController<CLLocationManagerDelegate,PlayerViewControllerProtocol, NearestSongMapViewControllerProtocol>
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (strong, nonatomic) PlayerViewController *playerViewController;
 @property (strong, nonatomic) GenreFilterViewController *genreFilterViewController;
@@ -26,9 +26,6 @@
 @property (strong,nonatomic) NSDictionary *activeUser;
 
 @property NSInteger currentSongPosition;
-
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (weak, nonatomic) IBOutlet UIButton *showMapButton;
 
 - (IBAction)showMap:(id)sender;
 
