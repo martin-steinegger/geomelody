@@ -12,6 +12,7 @@
 #import "GenreFilterViewController.h"
 #import "PlayerViewController.h"
 #import "BackendApi.h"
+#import "GMSegmentedButtonBar.h"
 
 
 
@@ -61,12 +62,11 @@
     [locationManager setDistanceFilter:10]; //only every ten meters
     [locationManager startUpdatingLocation];
     
-    NSArray *segments = [NSArray arrayWithObjects: @"Map", @"List", @"Filters", nil];
-    UISegmentedControl *navigationControls = [[UISegmentedControl alloc] initWithItems:segments];
+    NSArray *segments = [NSArray arrayWithObjects: @"Map", @"Filters", nil];
+    GMSegmentedButtonBar *navigationControls = [[GMSegmentedButtonBar alloc] initWithItems:segments];
     [navigationControls setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
     [navigationControls setSegmentedControlStyle:UISegmentedControlStyleBar];
-    [navigationControls setSelectedSegmentIndex:1];
-    [navigationControls addTarget:self action:@selector(navigationSegmentAction:) forControlEvents:UIControlEventValueChanged];
+    [navigationControls addTarget:self action:@selector(navigationSegmentAction:) forControlEvents:UIControlEventTouchUpInside];
 
     self.navigationItem.titleView = navigationControls;
   
@@ -170,11 +170,9 @@
     NSInteger selectedSegment = segmentedControl.selectedSegmentIndex;
     if (selectedSegment == 0) { /* Map */
         [self showMapController];
-    } else {
-         [self.revealSideViewController popViewControllerAnimated:YES];
     }
     
-    if (selectedSegment == 2) { /* Filter */
+    if (selectedSegment == 1) { /* Filter */
         [self showFilter];
     }
 }

@@ -68,6 +68,7 @@
 		84046A991785B9FC00168789 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84046A981785B9FC00168789 /* MapKit.framework */; };
 		84046AA21785CD9B00168789 /* SMCalloutView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84046AA11785CD9B00168789 /* SMCalloutView.m */; };
 		84046AA71785D84500168789 /* CalloutMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84046AA61785D84500168789 /* CalloutMapView.m */; };
+		844EAF391788CC76006A1131 /* GMSegmentedButtonBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 844EAF381788CC76006A1131 /* GMSegmentedButtonBar.m */; };
 		8450474E178314A0004B9421 /* AFHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 8450473C178314A0004B9421 /* AFHTTPClient.m */; };
 		8450474F178314A0004B9421 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8450473E178314A0004B9421 /* AFHTTPRequestOperation.m */; };
 		84504750178314A0004B9421 /* AFImageRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 84504740178314A0004B9421 /* AFImageRequestOperation.m */; };
@@ -266,6 +267,8 @@
 		84046AA11785CD9B00168789 /* SMCalloutView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SMCalloutView.m; path = ../calloutview/SMCalloutView.m; sourceTree = "<group>"; };
 		84046AA51785D84500168789 /* CalloutMapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalloutMapView.h; sourceTree = "<group>"; };
 		84046AA61785D84500168789 /* CalloutMapView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalloutMapView.m; sourceTree = "<group>"; };
+		844EAF371788CC76006A1131 /* GMSegmentedButtonBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GMSegmentedButtonBar.h; sourceTree = "<group>"; };
+		844EAF381788CC76006A1131 /* GMSegmentedButtonBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GMSegmentedButtonBar.m; sourceTree = "<group>"; };
 		8450473B178314A0004B9421 /* AFHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPClient.h; sourceTree = "<group>"; };
 		8450473C178314A0004B9421 /* AFHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPClient.m; sourceTree = "<group>"; };
 		8450473D178314A0004B9421 /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
@@ -382,6 +385,7 @@
 		4707995F177C943F0098B2F8 /* geomelody */ = {
 			isa = PBXGroup;
 			children = (
+				844EAF361788CC4D006A1131 /* Controls */,
 				84046AA41785D82A00168789 /* Map */,
 				84CBE375178235E800C4B1F2 /* Domain */,
 				84D1F2801781A9EE0031D50E /* tags.txt */,
@@ -531,6 +535,15 @@
 				84046AA61785D84500168789 /* CalloutMapView.m */,
 			);
 			name = Map;
+			sourceTree = "<group>";
+		};
+		844EAF361788CC4D006A1131 /* Controls */ = {
+			isa = PBXGroup;
+			children = (
+				844EAF371788CC76006A1131 /* GMSegmentedButtonBar.h */,
+				844EAF381788CC76006A1131 /* GMSegmentedButtonBar.m */,
+			);
+			name = Controls;
 			sourceTree = "<group>";
 		};
 		8450473A178314A0004B9421 /* AFNetworking */ = {
@@ -795,6 +808,7 @@
 				84046AA21785CD9B00168789 /* SMCalloutView.m in Sources */,
 				84046AA71785D84500168789 /* CalloutMapView.m in Sources */,
 				472EBBAA178609AC00B6600A /* Reachability.m in Sources */,
+				844EAF391788CC76006A1131 /* GMSegmentedButtonBar.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
