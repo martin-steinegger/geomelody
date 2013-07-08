@@ -7,12 +7,15 @@
 //
 
 #import "AppDelegate.h"
+#import <PPRevealSideViewController.h>
 
-#import "NearestSongMapListViewController.h"
+#import "NearestSongListViewController.h"
 #import "SCUI.h"
 
 @implementation AppDelegate
 
+@synthesize window = _window;
+@synthesize revealSideViewController = _revealSideViewController;
 
 + (void)initialize;
 {
@@ -25,19 +28,25 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     //no shadows for navigationbar
     [[UINavigationBar appearance]setShadowImage:[[UIImage alloc] init]];
-
     
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
-    // Override point for customization after application launch.
-    NearestSongMapListViewController *masterViewController = [[NearestSongMapListViewController alloc] initWithNibName:@"NearestSongMapListViewController" bundle:nil];
-    self.navigationController = [[UINavigationController alloc] initWithRootViewController:masterViewController];
-    self.window.rootViewController = self.navigationController;
-    //call window
+    NearestSongListViewController *masterViewController = [[NearestSongListViewController alloc] initWithNibName:@"NearestSongListViewController" bundle:nil];
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:masterViewController];
+    _revealSideViewController = [[PPRevealSideViewController alloc] initWithRootViewController:nav];
+    
+    _revealSideViewController.delegate = self;
+    
+    self.window.rootViewController = _revealSideViewController;
+    
+    self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     return YES;
+    
+    
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
@@ -65,6 +74,17 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+- (NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
+{
+    NSUInteger orientations = UIInterfaceOrientationMaskAll;
+    
+    if (self.window.rootViewController) {
+        UIViewController* presented = [[[(UINavigationController *)self.window.rootViewController.revealSideViewController navigationController] viewControllers] lastObject];
+        orientations = [presented supportedInterfaceOrientations];
+    }
+    return orientations;
 }
 
 @end
