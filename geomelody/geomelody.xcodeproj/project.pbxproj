@@ -42,7 +42,6 @@
 		472EBB8A1785AE7A00B6600A /* point1sec.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 472EBB891785AE7A00B6600A /* point1sec.mp3 */; };
 		472EBB921785B0A200B6600A /* GenreFilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 472EBB901785B0A100B6600A /* GenreFilterViewController.m */; };
 		472EBB931785B0A200B6600A /* GenreFilterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 472EBB911785B0A100B6600A /* GenreFilterViewController.xib */; };
-		472EBB951785B17800B6600A /* GoToLibraryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 472EBB941785B17700B6600A /* GoToLibraryCell.xib */; };
 		472EBB9F1785BF7B00B6600A /* YIPopupTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 472EBB9C1785BF7B00B6600A /* YIPopupTextView.m */; };
 		472EBBA01785BF7B00B6600A /* YISSTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 472EBB9E1785BF7B00B6600A /* YISSTextView.m */; };
 		472EBBA71785F5BC00B6600A /* DisclosureIndicator@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 472EBBA61785F5BC00B6600A /* DisclosureIndicator@2x.png */; };
@@ -69,6 +68,7 @@
 		84046AA21785CD9B00168789 /* SMCalloutView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84046AA11785CD9B00168789 /* SMCalloutView.m */; };
 		84046AA71785D84500168789 /* CalloutMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84046AA61785D84500168789 /* CalloutMapView.m */; };
 		844EAF391788CC76006A1131 /* GMSegmentedButtonBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 844EAF381788CC76006A1131 /* GMSegmentedButtonBar.m */; };
+		844EAF58178B6892006A1131 /* songcell_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 844EAF57178B6892006A1131 /* songcell_background.png */; };
 		8450474E178314A0004B9421 /* AFHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 8450473C178314A0004B9421 /* AFHTTPClient.m */; };
 		8450474F178314A0004B9421 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8450473E178314A0004B9421 /* AFHTTPRequestOperation.m */; };
 		84504750178314A0004B9421 /* AFImageRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 84504740178314A0004B9421 /* AFImageRequestOperation.m */; };
@@ -237,7 +237,6 @@
 		472EBB8F1785B0A100B6600A /* GenreFilterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GenreFilterViewController.h; sourceTree = "<group>"; };
 		472EBB901785B0A100B6600A /* GenreFilterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GenreFilterViewController.m; sourceTree = "<group>"; };
 		472EBB911785B0A100B6600A /* GenreFilterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GenreFilterViewController.xib; sourceTree = "<group>"; };
-		472EBB941785B17700B6600A /* GoToLibraryCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GoToLibraryCell.xib; sourceTree = "<group>"; };
 		472EBB9B1785BF7B00B6600A /* YIPopupTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YIPopupTextView.h; path = ../YIPopupTextView/YIPopupTextView.h; sourceTree = "<group>"; };
 		472EBB9C1785BF7B00B6600A /* YIPopupTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YIPopupTextView.m; path = ../YIPopupTextView/YIPopupTextView.m; sourceTree = "<group>"; };
 		472EBB9D1785BF7B00B6600A /* YISSTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YISSTextView.h; path = ../YIPopupTextView/YISSTextView.h; sourceTree = "<group>"; };
@@ -273,6 +272,7 @@
 		84046AA61785D84500168789 /* CalloutMapView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalloutMapView.m; sourceTree = "<group>"; };
 		844EAF371788CC76006A1131 /* GMSegmentedButtonBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GMSegmentedButtonBar.h; sourceTree = "<group>"; };
 		844EAF381788CC76006A1131 /* GMSegmentedButtonBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GMSegmentedButtonBar.m; sourceTree = "<group>"; };
+		844EAF57178B6892006A1131 /* songcell_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = songcell_background.png; sourceTree = "<group>"; };
 		8450473B178314A0004B9421 /* AFHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPClient.h; sourceTree = "<group>"; };
 		8450473C178314A0004B9421 /* AFHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPClient.m; sourceTree = "<group>"; };
 		8450473D178314A0004B9421 /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
@@ -403,7 +403,6 @@
 				47752C9317818C08000B4F24 /* SongCell.h */,
 				47752C9417818C08000B4F24 /* SongCell.m */,
 				47752C9517818C08000B4F24 /* SongCell.xib */,
-				472EBB941785B17700B6600A /* GoToLibraryCell.xib */,
 				47079971177C94400098B2F8 /* NearestSongListViewController.h */,
 				47079972177C94400098B2F8 /* NearestSongListViewController.m */,
 				47752CA417818C1E000B4F24 /* NearestSongListViewController.xib */,
@@ -458,6 +457,7 @@
 		47752CA617818C57000B4F24 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				844EAF57178B6892006A1131 /* songcell_background.png */,
 				84D1F31D178AA5E60031D50E /* expanded.png */,
 				84D1F31E178AA5E60031D50E /* nonexpanded.png */,
 				84D1F316178997AC0031D50E /* checkmark.png */,
@@ -780,13 +780,13 @@
 				472EBB7E1784573400B6600A /* stretchable_image_red.png in Resources */,
 				472EBB8A1785AE7A00B6600A /* point1sec.mp3 in Resources */,
 				472EBB931785B0A200B6600A /* GenreFilterViewController.xib in Resources */,
-				472EBB951785B17800B6600A /* GoToLibraryCell.xib in Resources */,
 				84D1F3071785CB2D0031D50E /* genres.txt in Resources */,
 				84D1F317178997AC0031D50E /* checkmark.png in Resources */,
 				84D1F31F178AA5E60031D50E /* expanded.png in Resources */,
 				84D1F320178AA5E60031D50E /* nonexpanded.png in Resources */,
 				472EBBA71785F5BC00B6600A /* DisclosureIndicator@2x.png in Resources */,
 				84046A971785B91000168789 /* NearestSongMapViewController.xib in Resources */,
+				844EAF58178B6892006A1131 /* songcell_background.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

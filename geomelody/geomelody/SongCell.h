@@ -17,4 +17,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *shares;
 
 
+-(void) setImageUrl:(NSString*) url;
+
 @end

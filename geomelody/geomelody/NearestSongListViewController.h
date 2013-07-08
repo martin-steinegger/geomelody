@@ -27,6 +27,8 @@
 
 @property NSInteger currentSongPosition;
 
+@property (strong, nonatomic) IBOutlet UITableView *tableView;
+
 - (IBAction)showMap:(id)sender;
 
 @end
