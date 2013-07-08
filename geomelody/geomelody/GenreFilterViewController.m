@@ -66,9 +66,9 @@
         i++;
     }
     
-    NSLog(@"_genre: %i, _genreTitles: %i, _expandedGenres: %i", _genres.count, _genreTitles.count, _expandedGenres.count);
     //load user settings
     [self loadGenreFilterData];
+    NSLog(@"_genreFilter: %@", _genreFilter);
 }
 
 - (void)viewDidLoad
@@ -164,30 +164,15 @@
         return header;
         
     }else {
+        
         int genreIndex = section-1;
         
         UIView *header = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 40)];
         
-        UIButton *expand = [self getExpandable: [[_expandedGenres objectAtIndex:genreIndex] boolValue]];
-        expand.frame = CGRectMake(15, 15, 10, 10);
-        expand.tag = genreIndex;
-        if(_filterEnabled){
-            [expand addTarget:self action:@selector(toggleExpandable:) forControlEvents:UIControlEventTouchDown];
-        }
+        UIButton *expand = [self getExpandable: [[_expandedGenres objectAtIndex:genreIndex] boolValue] forGenreIndex:genreIndex];
         [header addSubview:expand];
         
-        UILabel *headerText = [[UILabel alloc] initWithFrame:CGRectMake(35, 10, 200, 20)];
-        headerText.text = [_genreTitles objectAtIndex:genreIndex];
-        headerText.textColor = [UIColor blackColor];
-        headerText.backgroundColor = [UIColor groupTableViewBackgroundColor];
-        [header addSubview:headerText];
-        
         UIButton *checkmark = [self getAccessoryCheckmarkForGenreSection:genreIndex];
-        checkmark.frame = CGRectMake(280, 10, 20, 20);
-        checkmark.tag = genreIndex;
-        if(_filterEnabled){
-            [checkmark addTarget:self action:@selector(toggleGenreChecked:) forControlEvents:UIControlEventTouchDown];
-        }
         [header addSubview:checkmark];
         
         return header;
@@ -306,35 +291,36 @@
 
 - (UIButton *)getAccessoryCheckmarkForGenreSection: (int)genreIndex {
     
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    button.frame = CGRectMake(0,0,20,20);
+    UIButton *button; 
 
     NSString *genre = [_genreTitles objectAtIndex:genreIndex];
     
     // genre (and all subgenres) are selected -> return button with checkmark
     if ([_genreFilter containsObject:genre]) {
+        button = [UIButton buttonWithType:UIButtonTypeCustom];
+        button.frame = CGRectMake(280, 10, 20, 20);
         UIImage *image = [UIImage imageNamed:@"checkmark.png"];
         [button setBackgroundImage:image forState:UIControlStateNormal];
-        return button;
     } else {
-        
-        //check if subgenres are selected
-        NSArray *subgenres = [_genres objectForKey:genre];
-        int i=0;
-        for (NSString *subgenre in subgenres) {
-            if([_genreFilter containsObject:subgenre]) {
-                i++;
-            }
-        }
-    
-        // subselection -> return button with number of selected subgenres
-        if (i>0) {
-            [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-            [button setTitle:[NSString stringWithFormat:@"%i",i] forState:UIControlStateNormal];
-        }
-        //no subselection -> return empty button
-        return button;
+        button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        button.frame = CGRectMake(225, 10, 80, 20);
+        [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [button setTitle:@"Select All" forState:UIControlStateNormal];
     }
+
+    button.tag = genreIndex;
+    if(_filterEnabled){
+        [button addTarget:self action:@selector(toggleGenreChecked:) forControlEvents:UIControlEventTouchDown];
+    }
+    
+    // set button transparent if filter is disabled
+    if (_filterEnabled) {
+        [button setAlpha:1.0];
+    } else {
+        [button setAlpha:0.4];
+    }
+    
+    return button;
 }
 
 
@@ -362,11 +348,56 @@
 }
 
 // expanded==YES: return minus-icon ELSE: return plus-icon
-- (UIButton *)getExpandable: (BOOL)expanded {
-    UIImage *image = expanded? [UIImage imageNamed:@"expanded.png"] : [UIImage imageNamed:@"nonexpanded.png"];
+- (UIButton *)getExpandable: (BOOL)expanded forGenreIndex:(int)genreIndex {
+    
+    NSString *genre = [_genreTitles objectAtIndex:genreIndex];
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    button.frame = CGRectMake(0,0,10,10);
-    [button setBackgroundImage:image forState:UIControlStateNormal];
+    
+    UIImage *image = expanded? [UIImage imageNamed:@"expanded.png"] : [UIImage imageNamed:@"nonexpanded.png"];
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(15, 15, 10, 10)];
+    imageView.image = image;
+    [button addSubview:imageView];
+    
+    UIView *textView = [[UIView alloc] init];
+    UILabel *headerText = [[UILabel alloc] initWithFrame:CGRectMake(35, 10, 100, 20)];
+    headerText.text = genre;
+    headerText.textColor = [UIColor blackColor];
+    headerText.backgroundColor = [UIColor groupTableViewBackgroundColor];
+    [textView addSubview:headerText];
+    
+    //check if subgenres are selected
+    NSArray *subgenres = [_genres objectForKey:genre];
+    int i=0;
+    for (NSString *subgenre in subgenres) {
+        if([_genreFilter containsObject:subgenre]) {
+            i++;
+        }
+    }
+    // subselection -> show number of selected subgenres
+    if (i>0 && i< subgenres.count) {
+        UILabel *headerTextSmall = [[UILabel alloc] initWithFrame:CGRectMake(160, 10, 150, 20)];
+        headerTextSmall.text = [[NSString stringWithFormat:@"%i", i] stringByAppendingString:@" selected"];
+        headerTextSmall.textColor = [UIColor blackColor];
+        headerTextSmall.font = [UIFont systemFontOfSize:10.0];
+        headerTextSmall.backgroundColor = [UIColor groupTableViewBackgroundColor];
+        [textView addSubview:headerTextSmall];
+    }
+    
+    [button addSubview:textView];
+
+    button.frame = CGRectMake(0,0,200,30);
+    button.tag = genreIndex;
+    if(_filterEnabled){
+        [button addTarget:self action:@selector(toggleExpandable:) forControlEvents:UIControlEventTouchDown];
+    }
+    
+    // set button transparent if filter is disabled
+    if (_filterEnabled) {
+        [button setAlpha:1.0];
+    } else {
+        [button setAlpha:0.4];
+    }
+    
     return button;
 }
 
@@ -398,7 +429,6 @@
         [self loadGenreFilterData];
     }
     if (_filterEnabled) {
-        NSLog(@"filter: %@", _genreFilter);
         return _genreFilter;
     }else
         return NULL;
