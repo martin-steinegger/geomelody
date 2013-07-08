@@ -75,6 +75,10 @@
 		84CBE3781782360000C4B1F2 /* GeoMelodyBackendSong.m in Sources */ = {isa = PBXBuildFile; fileRef = 84CBE3771782360000C4B1F2 /* GeoMelodyBackendSong.m */; };
 		84CBE37B1782367C00C4B1F2 /* GeoMelodyBackendLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 84CBE37A1782367C00C4B1F2 /* GeoMelodyBackendLocation.m */; };
 		84D1F2811781A9EE0031D50E /* tags.txt in Resources */ = {isa = PBXBuildFile; fileRef = 84D1F2801781A9EE0031D50E /* tags.txt */; };
+		84D1F3071785CB2D0031D50E /* genres.txt in Resources */ = {isa = PBXBuildFile; fileRef = 84D1F3061785CB2D0031D50E /* genres.txt */; };
+		84D1F317178997AC0031D50E /* checkmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 84D1F316178997AC0031D50E /* checkmark.png */; };
+		84D1F31F178AA5E60031D50E /* expanded.png in Resources */ = {isa = PBXBuildFile; fileRef = 84D1F31D178AA5E60031D50E /* expanded.png */; };
+		84D1F320178AA5E60031D50E /* nonexpanded.png in Resources */ = {isa = PBXBuildFile; fileRef = 84D1F31E178AA5E60031D50E /* nonexpanded.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -270,6 +274,10 @@
 		84CBE3791782367C00C4B1F2 /* GeoMelodyBackendLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeoMelodyBackendLocation.h; sourceTree = "<group>"; };
 		84CBE37A1782367C00C4B1F2 /* GeoMelodyBackendLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeoMelodyBackendLocation.m; sourceTree = "<group>"; };
 		84D1F2801781A9EE0031D50E /* tags.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tags.txt; sourceTree = "<group>"; };
+		84D1F3061785CB2D0031D50E /* genres.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = genres.txt; sourceTree = "<group>"; };
+		84D1F316178997AC0031D50E /* checkmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkmark.png; sourceTree = "<group>"; };
+		84D1F31D178AA5E60031D50E /* expanded.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = expanded.png; sourceTree = "<group>"; };
+		84D1F31E178AA5E60031D50E /* nonexpanded.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nonexpanded.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -353,6 +361,7 @@
 		4707995F177C943F0098B2F8 /* geomelody */ = {
 			isa = PBXGroup;
 			children = (
+				84D1F3061785CB2D0031D50E /* genres.txt */,
 				84CBE375178235E800C4B1F2 /* Domain */,
 				84D1F2801781A9EE0031D50E /* tags.txt */,
 				47079968177C94400098B2F8 /* AppDelegate.h */,
@@ -403,6 +412,9 @@
 		47752CA617818C57000B4F24 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				84D1F31D178AA5E60031D50E /* expanded.png */,
+				84D1F31E178AA5E60031D50E /* nonexpanded.png */,
+				84D1F316178997AC0031D50E /* checkmark.png */,
 				472EBB891785AE7A00B6600A /* point1sec.mp3 */,
 				472EBB7D1784573400B6600A /* stretchable_image_red.png */,
 				472EBB77178389E000B6600A /* heart32.png */,
@@ -690,6 +702,10 @@
 				472EBB8A1785AE7A00B6600A /* point1sec.mp3 in Resources */,
 				472EBB931785B0A200B6600A /* GenreFilterViewController.xib in Resources */,
 				472EBB951785B17800B6600A /* GoToLibraryCell.xib in Resources */,
+				84D1F3071785CB2D0031D50E /* genres.txt in Resources */,
+				84D1F317178997AC0031D50E /* checkmark.png in Resources */,
+				84D1F31F178AA5E60031D50E /* expanded.png in Resources */,
+				84D1F320178AA5E60031D50E /* nonexpanded.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -9,9 +9,11 @@
 #import "GenreFilterViewController.h"
 
 @interface GenreFilterViewController () {
-    NSArray *_genres; //static predefined
-    BOOL _filterEnabled; //user setting
+    NSMutableDictionary *_genres;
+    NSMutableArray *_genreTitles;
+    BOOL _filterEnabled; //user settings for genre filtering
     NSMutableArray *_genreFilter; //user setting:only relevant when filterEnabled == TRUE
+    NSMutableArray *_expandedGenres;
 }
 
 @end
@@ -33,10 +35,38 @@
     NSLog(@"Load settings");
     // load static array of available genres
     
-    NSString *fileString = [NSString stringWithContentsOfFile:[[NSBundle mainBundle]pathForResource:@"tags" ofType:@"txt"] encoding:NSUTF8StringEncoding error:nil];
+    NSString *fileString = [NSString stringWithContentsOfFile:[[NSBundle mainBundle]pathForResource:@"genres" ofType:@"txt"] encoding:NSUTF8StringEncoding error:nil];
     NSMutableArray *stringsArray = [NSMutableArray arrayWithArray:[fileString componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]]];
-    _genres = [NSArray arrayWithArray:stringsArray];
+    _genres = [[NSMutableDictionary alloc] init];
+    _genreTitles = [[NSMutableArray alloc] init];
+    _expandedGenres = [[NSMutableArray alloc] init];
+    NSString *genre;
+    NSMutableArray *subGenres= [[NSMutableArray alloc] init];
     
+    int i=0;
+    while (i<stringsArray.count) {
+        NSString *currentGenre = [stringsArray objectAtIndex:i];
+        if([currentGenre hasPrefix:@"="] || i == stringsArray.count-1){
+            //all subgenres have been added to subGenres -> save in _genres
+            if(i>0){
+                [_genres setObject:[subGenres copy] forKey:genre];
+                [_genreTitles addObject:genre];
+                [_expandedGenres addObject: [NSNumber numberWithBool:NO]];
+            }
+            //check if i is not the last item in the array ("")
+            if(i!=stringsArray.count-1){
+                genre = [currentGenre substringFromIndex:1];
+                [subGenres removeAllObjects];
+            }
+        }else {
+            if (![currentGenre isEqualToString:genre]){
+                [subGenres addObject:currentGenre];
+            }
+        }
+        i++;
+    }
+    
+    NSLog(@"_genre: %i, _genreTitles: %i, _expandedGenres: %i", _genres.count, _genreTitles.count, _expandedGenres.count);
     //load user settings
     [self loadGenreFilterData];
 }
@@ -46,6 +76,7 @@
     [super viewDidLoad];
     
     [self loadSettings];
+
 
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -61,31 +92,46 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+    return _genres.count+1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _genres.count;
+    if(section==0)
+        return 0;
+    else{
+        if ([[_expandedGenres objectAtIndex:section-1] boolValue] == NO) {
+            return 0;
+        } else {
+            NSString *genre = [_genreTitles objectAtIndex:section-1];
+            NSArray *subgenres = [_genres objectForKey:genre];
+            return subgenres.count;
+        }
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-    }
-    cell.detailTextLabel.enabled = YES;
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    
-    //section 1: for each filter tag add a selectable row
-        cell.textLabel.text = [_genres objectAtIndex:indexPath.row];
-        if([_genreFilter containsObject: [_genres objectAtIndex:indexPath.row]]) {
-            [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
-        }else {
-            [cell setAccessoryType:UITableViewCellAccessoryNone];
+    //for sections >0 : set subgenre and accessory checkmark if selected in filter
+    if(indexPath.section > 0) {
+        
+        static NSString *CellIdentifier = @"Cell";
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        if (cell == nil) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         }
+        cell.detailTextLabel.enabled = YES;
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
+        //section 1..n: for each subgenre add a selectable row to the genre's section
+        NSString *genre = [_genreTitles objectAtIndex:indexPath.section-1];
+        NSString *subgenre = [[_genres objectForKey:genre] objectAtIndex:indexPath.row];
+
+        cell.textLabel.text = subgenre;
+        cell.textLabel.font = [UIFont systemFontOfSize:16.0];
+        BOOL check = [_genreFilter containsObject: subgenre] || [_genreFilter containsObject: genre];
+        [cell setAccessoryView:[self getAccessoryCheckmark:check]];
+        
         if(_filterEnabled){
             cell.userInteractionEnabled = YES;
             cell.backgroundColor = [UIColor whiteColor];
@@ -95,43 +141,77 @@
             cell.backgroundColor = [UIColor lightGrayColor];
             cell.textLabel.textColor = [UIColor grayColor];
         }
-    
-    // Configure the cell...
-    
-    return cell;
+        return cell;
+    }else
+        return nil;
 }
 
 // set header of table as GoToLibraryHeaderView
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    
-    UIView *header = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 70)];
-    UISwitch *filterSwitch = [[UISwitch alloc] initWithFrame: CGRectMake(220, 30, 100, 30)];
-    [filterSwitch setOn:_filterEnabled animated:YES];
-    [filterSwitch addTarget:self action:@selector(toggleFilter:) forControlEvents:UIControlEventValueChanged];
-    UILabel *headerText = [[UILabel alloc] initWithFrame:CGRectMake(15, 30, 150, 30)];
-    headerText.text = @"Genre Filter";
-    headerText.textColor = [UIColor darkGrayColor];
-    headerText.backgroundColor = [UIColor groupTableViewBackgroundColor];
-    [header addSubview:headerText];
-    [header addSubview:filterSwitch];
-    return header;
-    
+
+    // add header for each genre
+    if (section == 0) {
+        UIView *header = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 50)];
+        UISwitch *filterSwitch = [[UISwitch alloc] initWithFrame: CGRectMake(230, 22, 100, 30)];
+        [filterSwitch setOn:_filterEnabled animated:YES];
+        [filterSwitch addTarget:self action:@selector(toggleFilter:) forControlEvents:UIControlEventValueChanged];
+        UILabel *headerText = [[UILabel alloc] initWithFrame:CGRectMake(16, 20, 150, 30)];
+        headerText.text = @"Genre Filter";
+        headerText.textColor = [UIColor blackColor];
+        headerText.backgroundColor = [UIColor groupTableViewBackgroundColor];
+        [header addSubview:headerText];
+        [header addSubview:filterSwitch];
+        return header;
+        
+    }else {
+        int genreIndex = section-1;
+        
+        UIView *header = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 40)];
+        
+        UIButton *expand = [self getExpandable: [[_expandedGenres objectAtIndex:genreIndex] boolValue]];
+        expand.frame = CGRectMake(15, 15, 10, 10);
+        expand.tag = genreIndex;
+        if(_filterEnabled){
+            [expand addTarget:self action:@selector(toggleExpandable:) forControlEvents:UIControlEventTouchDown];
+        }
+        [header addSubview:expand];
+        
+        UILabel *headerText = [[UILabel alloc] initWithFrame:CGRectMake(35, 10, 200, 20)];
+        headerText.text = [_genreTitles objectAtIndex:genreIndex];
+        headerText.textColor = [UIColor blackColor];
+        headerText.backgroundColor = [UIColor groupTableViewBackgroundColor];
+        [header addSubview:headerText];
+        
+        UIButton *checkmark = [self getAccessoryCheckmarkForGenreSection:genreIndex];
+        checkmark.frame = CGRectMake(280, 10, 20, 20);
+        checkmark.tag = genreIndex;
+        if(_filterEnabled){
+            [checkmark addTarget:self action:@selector(toggleGenreChecked:) forControlEvents:UIControlEventTouchDown];
+        }
+        [header addSubview:checkmark];
+        
+        return header;
+    }
+
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    return @"Genre Filter";
-}
+
 - (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 70;
+    if(section>0)
+        return 40;
+    else
+        return 50;
 }
 
+//regulates on off switch; when filter is switched off all subgenre lists are folded
 - (void) toggleFilter:(id)sender {
     _filterEnabled = !_filterEnabled;
-    // todo: update view -> cells with genres need to be disabled/enabled
-    
-    NSRange range = NSMakeRange(0, [self numberOfSectionsInTableView:self.tableView]);
-    NSIndexSet *sections = [NSIndexSet indexSetWithIndexesInRange:range];
-    [self.tableView reloadSections:sections withRowAnimation:UITableViewRowAnimationFade];
+    for (int i=0; i< _expandedGenres.count; i++) {
+        [_expandedGenres replaceObjectAtIndex:i withObject:[NSNumber numberWithBool:NO]];
+    }
+
+    NSIndexSet *indexes = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(1, _genres.count)];
+    [self.tableView reloadSections:indexes withRowAnimation:UITableViewRowAnimationFade];
 }
 
 /*
@@ -177,44 +257,131 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    //only if a genre was selected/deselected
+    //only if a subgenre was selected/deselected
+    
+    NSString *genre = [_genreTitles objectAtIndex:indexPath.section-1];
+    NSString *subgenre = [[_genres objectForKey:genre] objectAtIndex:indexPath.row];
 
-        UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-        
-        NSString *selectedTag = [_genres objectAtIndex:indexPath.row];
-        if([_genreFilter containsObject:selectedTag]) {
-            [_genreFilter removeObject:selectedTag];
-            [cell setAccessoryType:UITableViewCellAccessoryNone];
-        }else {
-            [_genreFilter addObject:selectedTag];
-            [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
+    // if this is the first subgenre deselected from the group remove the parent genre and add all subgenres
+    if([_genreFilter containsObject:genre]) {
+        [_genreFilter removeObject:genre];
+        for (NSString *currentsubgenre in [_genres objectForKey:genre]){
+            [_genreFilter addObject:currentsubgenre];
         }
+    }
+    
+    //remove or add subgenre to filterlist
+    if([_genreFilter containsObject:subgenre]) {
+        [_genreFilter removeObject:subgenre];
+    }else {
+        [_genreFilter addObject:subgenre];
+        
+        // if all subgenres from one group are selected, remove all subgenres and add the parent genre
+        NSArray *subgenres = [_genres objectForKey:genre];
+        int i=0;
+        while (i<subgenres.count && [_genreFilter containsObject:[subgenres objectAtIndex:i]]) {
+            i++;
+        }
+        if(i == subgenres.count){
+            for (NSString *currentsubgenre in [_genres objectForKey:genre]){
+                [_genreFilter removeObject:currentsubgenre];
+            }
+            [_genreFilter addObject:genre];
+        }
+    }
+    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationFade];
+        
+}
+
+// checked == YES: return button with checkmark ELSE: return empty button
+- (UIButton *)getAccessoryCheckmark: (BOOL)checked {
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    button.frame = CGRectMake(0,0,20,20);
+    if(checked) {
+        UIImage *image = [UIImage imageNamed:@"checkmark.png"];
+        [button setBackgroundImage:image forState:UIControlStateNormal];
+    } 
+    return button;
+}
+
+- (UIButton *)getAccessoryCheckmarkForGenreSection: (int)genreIndex {
+    
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    button.frame = CGRectMake(0,0,20,20);
+
+    NSString *genre = [_genreTitles objectAtIndex:genreIndex];
+    
+    // genre (and all subgenres) are selected -> return button with checkmark
+    if ([_genreFilter containsObject:genre]) {
+        UIImage *image = [UIImage imageNamed:@"checkmark.png"];
+        [button setBackgroundImage:image forState:UIControlStateNormal];
+        return button;
+    } else {
+        
+        //check if subgenres are selected
+        NSArray *subgenres = [_genres objectForKey:genre];
+        int i=0;
+        for (NSString *subgenre in subgenres) {
+            if([_genreFilter containsObject:subgenre]) {
+                i++;
+            }
+        }
+    
+        // subselection -> return button with number of selected subgenres
+        if (i>0) {
+            [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            [button setTitle:[NSString stringWithFormat:@"%i",i] forState:UIControlStateNormal];
+        }
+        //no subselection -> return empty button
+        return button;
+    }
 }
 
 
--(NSString *)getStoragePath
-{
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *directory = [paths objectAtIndex:0];
-    NSLog(@"storage: %@", directory);
-    return [directory stringByAppendingPathComponent:@"tagfilter.archive"];
+// change checked state of specifc genre/section
+// sender.tag contains index of treated genre (no the section!)
+- (void) toggleGenreChecked:(id)sender {
+    int genreIndex = ((UIButton *)sender).tag ;
+    NSString *genre = [_genreTitles objectAtIndex:genreIndex];
+    if([_genreFilter containsObject:genre]) {
+        //remove genre
+        [_genreFilter removeObject:genre];
+        //remove all subgenres of the genre
+        for (NSString *subgenre in [_genres objectForKey:genre]) {
+            [_genreFilter removeObject:subgenre];
+        }
+    }else {
+        // add genre
+        [_genreFilter addObject:genre];
+        // remove all subgenres of the genre
+        for (NSString *subgenre in [_genres objectForKey:genre]) {
+            [_genreFilter removeObject:subgenre];
+        }
+    }
+    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:genreIndex+1] withRowAnimation:UITableViewRowAnimationFade];
 }
 
-- (void) saveGenreFilterData {
-    
-    [[NSUserDefaults standardUserDefaults] setBool:_filterEnabled forKey:@"filterEnabled"];
-    NSLog(@"save succeeded: %@", [NSKeyedArchiver archiveRootObject:_genreFilter toFile:[self getStoragePath]] ? @"YES" : @"NO");
-    
+// expanded==YES: return minus-icon ELSE: return plus-icon
+- (UIButton *)getExpandable: (BOOL)expanded {
+    UIImage *image = expanded? [UIImage imageNamed:@"expanded.png"] : [UIImage imageNamed:@"nonexpanded.png"];
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    button.frame = CGRectMake(0,0,10,10);
+    [button setBackgroundImage:image forState:UIControlStateNormal];
+    return button;
 }
 
-- (void) loadGenreFilterData {
-    
-    _filterEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:@"filterEnabled"];
-    _genreFilter = [NSKeyedUnarchiver unarchiveObjectWithFile:[self getStoragePath]];
-    if(_genreFilter == nil)
-        _genreFilter = [[NSMutableArray alloc] initWithArray:_genres];
-    
+// change expand-state of specific genre/section
+// sender.tag contains index of treated genre (no the section!)
+- (void) toggleExpandable:(id)sender {
+    int genreIndex = ((UIButton *)sender).tag;
+    if([[_expandedGenres objectAtIndex:genreIndex] boolValue] == YES) {
+        [_expandedGenres replaceObjectAtIndex:genreIndex withObject:[NSNumber numberWithBool:NO]];
+    } else {
+        [_expandedGenres replaceObjectAtIndex:genreIndex withObject:[NSNumber numberWithBool:YES]];
+    }
+    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:genreIndex+1] withRowAnimation:UITableViewRowAnimationFade];
 }
+
 
 //save changes when go back button is pressed
 - (void)viewWillDisappear:(BOOL)animated {
@@ -231,9 +398,40 @@
         [self loadGenreFilterData];
     }
     if (_filterEnabled) {
+        NSLog(@"filter: %@", _genreFilter);
         return _genreFilter;
     }else
         return NULL;
+}
+
+-(NSString *)getStoragePath
+{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *directory = [paths objectAtIndex:0];
+    NSLog(@"storage: %@", directory);
+    return [directory stringByAppendingPathComponent:@"tagfilter.archive"];
+}
+
+// save user's filter settings to memory
+- (void) saveGenreFilterData {
+    
+    [[NSUserDefaults standardUserDefaults] setBool:_filterEnabled forKey:@"filterEnabled"];
+    NSLog(@"save succeeded: %@", [NSKeyedArchiver archiveRootObject:_genreFilter toFile:[self getStoragePath]] ? @"YES" : @"NO");
+    
+}
+
+// load user's filter settings from memory
+- (void) loadGenreFilterData {
+    
+    _filterEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:@"filterEnabled"];
+    _genreFilter = [NSKeyedUnarchiver unarchiveObjectWithFile:[self getStoragePath]];
+    if(_genreFilter == nil){
+        _genreFilter = [[NSMutableArray alloc] initWithArray:_genreTitles];
+        //for (NSString *genreTitle in _genreTitles) {
+         //   [_genreFilter addObjectsFromArray: [_genres objectForKey:genreTitle]];
+        //}
+    }
+    
 }
 
 @end
