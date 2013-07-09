@@ -13,9 +13,11 @@
 #import "PlayerViewController.h"
 #import "BackendApi.h"
 #import "GMSegmentedButtonBar.h"
-
+#import "Reachability.h"
 
 @implementation NearestSongListViewController
+Reachability *internetReachableFoo;
+
 @synthesize tracks;
 @synthesize locationManager;
 @synthesize tableView;
