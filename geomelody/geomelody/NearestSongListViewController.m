@@ -120,7 +120,7 @@
     
     
     [self.tableView registerNib:[UINib nibWithNibName:@"SongCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"SongCellId"];
-    
+
     
     UIBarButtonItem* backButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:nil];
     self.navigationItem.backBarButtonItem = backButton;
@@ -284,6 +284,7 @@
         [self.playerViewController setSongItem:song];
     [self.tabBarController setSelectedIndex:2];
 }
+
 
 // change to user's soundcloud library
 - (void) showLibrary {

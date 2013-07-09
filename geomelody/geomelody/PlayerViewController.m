@@ -305,9 +305,39 @@
             [MPNowPlayingInfoCenter defaultCenter].nowPlayingInfo = songInfo;
         }
         
-        NSObject * userImageUrlObject;
-        if(( userImageUrlObject =[user objectForKey:@"avatar_url"])!=[NSNull null]){            
-            [self.user_picture setImageWithURL:[NSURL URLWithString:(NSString* )userImageUrlObject]];
+        NSObject * soundCloudUserIdObject=[songItem objectForKey:@"SoundCloudUserId"];
+        if(soundCloudUserIdObject!=NULL){
+            SCAccount *account = [SCSoundCloud account];
+            SCRequestResponseHandler handler;
+            handler = ^(NSURLResponse *response, NSData *data, NSError *error) {
+                NSError *jsonError = nil;
+                NSJSONSerialization *jsonResponse = [NSJSONSerialization
+                                                     JSONObjectWithData:data
+                                                     options:0
+                                                     error:&jsonError];
+                if (!jsonError && [jsonResponse isKindOfClass:[NSDictionary class]]) {
+                    NSObject * userImageUrlObject;
+                    NSDictionary * response =(NSDictionary *) jsonResponse;
+                    if(( userImageUrlObject =[response objectForKey:@"avatar_url"])!=[NSNull null]){
+                        [self.user_picture setImageWithURL:[NSURL URLWithString:(NSString* )userImageUrlObject]];
+                    }
+
+                }
+            };
+            
+            NSString *resourceURL = @"https://api.soundcloud.com/users/";
+            resourceURL=[resourceURL stringByAppendingString:(NSString *)soundCloudUserIdObject];
+            [SCRequest performMethod:SCRequestMethodGET
+                          onResource:[NSURL URLWithString:resourceURL]
+                     usingParameters:nil
+                         withAccount:account
+              sendingProgressHandler:nil
+                     responseHandler:handler];
+        }else{
+            NSObject * userImageUrlObject;
+            if(( userImageUrlObject =[user objectForKey:@"avatar_url"])!=[NSNull null]){
+                [self.user_picture setImageWithURL:[NSURL URLWithString:(NSString* )userImageUrlObject]];
+            }
         }
     }
 }
