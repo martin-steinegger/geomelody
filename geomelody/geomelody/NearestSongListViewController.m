@@ -14,9 +14,7 @@
 #import "BackendApi.h"
 #import "GMSegmentedButtonBar.h"
 #import "Reachability.h"
-
 @implementation NearestSongListViewController
-Reachability *internetReachableFoo;
 
 @synthesize tracks;
 @synthesize locationManager;
@@ -38,6 +36,35 @@ Reachability *internetReachableFoo;
     
     return self;
 }
+
+
+#pragma mark - Reachability
+
+- (void)reachabilityHasChanged:(NSNotification *)note {
+    
+    NetworkStatus ns = [(Reachability *)[note object] currentReachabilityStatus];
+    
+    if (ns == NotReachable) {
+        
+        if (![self.networkAlert isVisible]) {
+            
+            if ([self networkAlert] == nil) {
+                
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Someone broke the internet :(" message:@"You require an internet connection to communicate with the server." delegate:nil cancelButtonTitle:nil otherButtonTitles:nil];
+                [self setNetworkAlert:alert];
+            }
+            
+            [self.networkAlert show];
+        }
+    } else {
+        
+        if ([self networkAlert] != nil) {
+            
+            [self.networkAlert dismissWithClickedButtonIndex:0 animated:YES];
+        }
+    }
+}
+
 							
 - (void)viewDidLoad
 {

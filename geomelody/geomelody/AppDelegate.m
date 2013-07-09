@@ -11,8 +11,10 @@
 
 #import "NearestSongListViewController.h"
 #import "SCUI.h"
+#import "Reachability.h"
 
 @implementation AppDelegate
+Reachability *internetReachable;
 
 @synthesize window = _window;
 @synthesize revealSideViewController = _revealSideViewController;
@@ -26,20 +28,27 @@
 }
 
 
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
 
 
     //no shadows for navigationbar
     [[UINavigationBar appearance]setShadowImage:[[UIImage alloc] init]];
-    
+
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
     NearestSongListViewController *masterViewController = [[NearestSongListViewController alloc] initWithNibName:@"NearestSongListViewController" bundle:nil];
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:masterViewController];
     _revealSideViewController = [[PPRevealSideViewController alloc] initWithRootViewController:nav];
-    
     _revealSideViewController.delegate = self;
+    
+    //Internet check
+    [[NSNotificationCenter defaultCenter] addObserver:masterViewController selector:@selector(reachabilityHasChanged:) name:kReachabilityChangedNotification object:nil];
+    internetReachable = [Reachability reachabilityForInternetConnection];
+    [internetReachable startNotifier];
+
+
     
     self.window.rootViewController = _revealSideViewController;
     

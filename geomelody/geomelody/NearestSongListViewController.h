@@ -24,6 +24,7 @@
 @property (nonatomic, strong) AVAudioPlayer *player;
 @property (strong,nonatomic) CLLocation   *currentLocation;
 @property (strong,nonatomic) NSDictionary *activeUser;
+@property (strong,nonatomic) UIAlertView *networkAlert;
 
 @property NSInteger currentSongPosition;
 
