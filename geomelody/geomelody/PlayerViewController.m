@@ -145,17 +145,6 @@
 }
 
 - (IBAction)playNextSong:(id)button{
-    id song = [self.delegate getNextEntry];
-    [self setSongItem:song];
-}
-
-- (IBAction)playPreviousSong:(id)button{
-    id song = [self.delegate getPreviousEntry];
-    [self setSongItem:song];
-}
-
--(void) handleSwipe:(UISwipeGestureRecognizer*) recognizer {
-    id song;
     [UIView animateWithDuration:0.55 animations:^{
         [UIView setAnimationDelay:0.2];
     }];
@@ -164,17 +153,38 @@
     [animation setTimingFunction:[CAMediaTimingFunction
                                   functionWithName:kCAMediaTimingFunctionDefault]];
     [animation setSpeed:0.4];
-    if(recognizer.direction == UISwipeGestureRecognizerDirectionLeft){
-        song = [self.delegate getNextEntry];
-        [animation setSubtype:kCATransitionFromRight];
-    }else if(recognizer.direction == UISwipeGestureRecognizerDirectionRight){
-        song = [self.delegate getPreviousEntry];
-        [animation setSubtype:kCATransitionFromLeft];
-    }
-    if(!song)
-        return;
+    [animation setSubtype:kCATransitionFromRight];
+
+    id song = [self.delegate getNextEntry];
     [self setSongItem:song];
     [[self.view layer] addAnimation:animation forKey:nil];
+
+}
+
+- (IBAction)playPreviousSong:(id)button{
+    [UIView animateWithDuration:0.55 animations:^{
+        [UIView setAnimationDelay:0.2];
+    }];
+    CATransition *animation = [CATransition animation];
+    [animation setType:kCATransitionPush];
+    [animation setTimingFunction:[CAMediaTimingFunction
+                                  functionWithName:kCAMediaTimingFunctionDefault]];
+    [animation setSpeed:0.4];
+    [animation setSubtype:kCATransitionFromLeft];
+    id song = [self.delegate getPreviousEntry];
+    [self setSongItem:song];
+    [[self.view layer] addAnimation:animation forKey:nil];
+
+}
+
+-(void) handleSwipe:(UISwipeGestureRecognizer*) recognizer {
+
+    if(recognizer.direction == UISwipeGestureRecognizerDirectionLeft){
+        [self playNextSong:NULL];
+    }else if(recognizer.direction == UISwipeGestureRecognizerDirectionRight){
+        [self playPreviousSong:NULL];
+    }
+
 }
 
 
