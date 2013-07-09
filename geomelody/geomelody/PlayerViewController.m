@@ -222,6 +222,9 @@
         self.songProgressControl.maximumValue = [self durationInSeconds];
         self.songProgressControl.minimumValue = 0.0;
         self.songProgressControl.continuous = YES;
+        
+        [self.post_button setEnabled:TRUE];
+        [self.post_button setTitle:@"Post" forState:0 ];
     }
 }
 
@@ -327,15 +330,7 @@
     [self.playPauseButton setImage:[UIImage imageNamed:@"pause64.png"] forState:UIControlStateNormal];
     [self.nextButton setBackgroundColor:[UIColor clearColor]];
     [self.previousButton setBackgroundColor:[UIColor clearColor]];
-    
-    UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:self.artwork_picture.bounds];
-    self.artwork_picture.layer.masksToBounds = NO;
-    self.artwork_picture.layer.shadowColor = [UIColor blackColor].CGColor;
-    self.artwork_picture.layer.shadowOffset = CGSizeMake(0.0f, 5.0f);
-    self.artwork_picture.layer.shadowOpacity = 0.5f;
-    self.artwork_picture.layer.shadowPath = shadowPath.CGPath;
-    
-    
+        
     [self.user_comment.layer setBackgroundColor: [[UIColor whiteColor] CGColor]];
     [self.user_comment.layer setBorderColor: [[UIColor whiteColor] CGColor]];
     [self.user_comment.layer setBorderWidth: 1.0];
@@ -498,7 +493,6 @@
     [backendApi saveSong:song onSuccess:^{
         NSLog(@"Post Song successful");
         [self.post_button setEnabled:FALSE];
-        [self.post_button setTitle:@"Post Done" forState:0 ];
     } onFail:^(NSError * error)  {
         NSLog(@"Post Song error");
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Post was not successful"
