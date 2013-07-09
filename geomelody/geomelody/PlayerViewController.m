@@ -24,6 +24,16 @@
 @synthesize artwork_picture;
 @synthesize audioPlayer;
 
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if(self) {
+        self.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Now Playing" image:nil tag:0];
+        self.title = @"Now Playing";
+        [self.tabBarItem setEnabled:NO];
+    }
+    return self;
+}
 
 - (IBAction)songProgressTouchStart:(UISlider *)slider {
     NSLog(@"songProgressTouchStart");
@@ -194,6 +204,8 @@
         [self playAudio];
         [self setUpView];
     }
+    
+    [self.tabBarItem setEnabled:YES];
 }
 
 - (void)setUpSong{
@@ -514,13 +526,6 @@
 {
     [super didReceiveMemoryWarning];
 }
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    return self;
-}
-
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {

@@ -20,6 +20,7 @@
 @synthesize locationManager;
 @synthesize tableView;
 @synthesize reachability;
+@synthesize playerViewController;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -72,7 +73,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
     //Layout
     //transparent navigationbar
     self.navigationController.navigationBar.translucent = YES; // Setting this slides the view up, underneath the nav bar (otherwise it'll appear black)
@@ -122,32 +122,11 @@
     [self.tableView registerNib:[UINib nibWithNibName:@"SongCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"SongCellId"];
     
     
+    UIBarButtonItem* backButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:nil];
+    self.navigationItem.backBarButtonItem = backButton;
+    
+    
   
-}
-
--(void)setPlayerButtonVisible:(bool)visible {
-    if(visible == YES) {
-        UIButton *playButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [playButton setTitle:@"Song" forState:UIControlStateNormal];
-        UIImage* btnImage = [UIImage imageNamed:@"FrontArrow.png"];
-        [playButton setImage:btnImage forState:UIControlStateNormal];
-        [playButton sizeToFit];
-        playButton.titleEdgeInsets = UIEdgeInsetsMake(0, -playButton.imageView.frame.size.width, 0, playButton.imageView.frame.size.width);
-        playButton.imageEdgeInsets = UIEdgeInsetsMake(0, playButton.titleLabel.frame.size.width, 0, -playButton.titleLabel.frame.size.width);
-        [playButton addTarget:self action:@selector(showPlayerWithCurrentSong) forControlEvents:UIControlEventTouchUpInside];
-        playButton.frame = CGRectMake(0.0f, 0.0f, 72.0f, 33.0f);
-        [[playButton layer] setCornerRadius:8.0f];
-        [[playButton layer] setMasksToBounds:YES];
-        [[playButton layer] setShadowOffset:CGSizeMake(5, 5)];
-        [[playButton layer] setShadowColor:[[UIColor blackColor] CGColor]];
-        [[playButton layer] setShadowOpacity:0.5];
-        playButton.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.4];
-        UIBarButtonItem *playerButton = [[UIBarButtonItem alloc] initWithCustomView:playButton];
-        
-        self.navigationItem.rightBarButtonItem = playerButton;
-    } else {
-        self.navigationItem.rightBarButtonItem = nil;
-    }
 }
 
 - (IBAction) logoutSoundCloud:(id) sender
@@ -286,15 +265,12 @@
     NSDictionary *song = [self.tracks objectAtIndex:indexPath.row];
         
     //NSLog(@"selected song: %@",selectedSong.soundcloud_id);
-    [self setPlayerButtonVisible:YES];
     [self showPlayer:song];
 }
 
 // change to TagFilterView
 - (void) showFilter {
-
     [self.navigationController pushViewController:self.genreFilterViewController animated:YES];
-
 }
 
 -(void) showPlayerWithCurrentSong {
@@ -303,13 +279,10 @@
 
 // change to PlayerView, which is initialised with the defined song object
 - (void) showPlayer:(NSDictionary*)song {
-    if (!self.playerViewController) {
-        self.playerViewController = [[PlayerViewController alloc] initWithNibName:@"PlayerViewController" bundle:nil];
-        self.playerViewController.delegate = self;
-    }
+
     if(song != NULL)
         [self.playerViewController setSongItem:song];
-    [self.navigationController pushViewController:self.playerViewController animated:YES];
+    [self.tabBarController setSelectedIndex:2];
 }
 
 // change to user's soundcloud library

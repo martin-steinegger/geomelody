@@ -17,25 +17,35 @@ Reachability *internetReachable;
 @synthesize window = _window;
 @synthesize tabBarController = _tabBarController;
 
+
+
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     //no shadows for navigationbar
     [[UINavigationBar appearance]setShadowImage:[[UIImage alloc] init]];
-    
+
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
     NearestSongListViewController *masterViewController = [[NearestSongListViewController alloc] initWithNibName:@"NearestSongListViewController" bundle:nil];
+<<<<<<< HEAD
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:masterViewController];
     
     NearestSongMapViewController *songMapViewController = [[NearestSongMapViewController alloc] initWithNibName:@"NearestSongMapViewController" bundle:nil];
     [songMapViewController setDelegate:masterViewController];
     
-    PlayerViewController *playerViewController = [[PlayerViewController alloc] initWithNibName:@"PlayerViewController" bundle:nil];
-    [playerViewController setDelegate:masterViewController];
-    [masterViewController setPlayerViewController:playerViewController];
-    
     _tabBarController = [[UITabBarController alloc] init];
-    _tabBarController.viewControllers = [NSArray arrayWithObjects:navigationController, songMapViewController, playerViewController, nil];
+    _tabBarController.viewControllers = [NSArray arrayWithObjects: navigationController, songMapViewController, nil];
+=======
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:masterViewController];
+    _revealSideViewController = [[PPRevealSideViewController alloc] initWithRootViewController:nav];
+    _revealSideViewController.delegate = self;
+    
+
+
+    
+    self.window.rootViewController = _revealSideViewController;
+>>>>>>> 036e0e0c235c0812a03e70c806ba5cd37991e040
     
     self.window.rootViewController = _tabBarController;
     self.window.backgroundColor = [UIColor whiteColor];
@@ -48,6 +58,8 @@ Reachability *internetReachable;
     [masterViewController setReachability:remoteHostStatus];
 
     [self.window makeKeyAndVisible];
+ 
+    
     return YES;
 }
 
