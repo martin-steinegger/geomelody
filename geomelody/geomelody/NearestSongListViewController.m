@@ -24,7 +24,9 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        
+        self.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"List" image:nil tag:0];
+        self.title = @"List";
+        self.navigationItem.title = @"";
     }
     
     // initialize TagFilterViewController
@@ -49,10 +51,7 @@
     [self.navigationController.navigationBar setBackgroundImage:maskedImage forBarMetrics:UIBarMetricsDefault];
     [[UINavigationBar appearance] setShadowImage: [[UIImage alloc] init]];
     [tableView setContentInset:UIEdgeInsetsMake(0,0,0,0)];
-    // Do any additional setup after loading the view, typically from a nib.
-    UISwipeGestureRecognizer* gestureSwipeUpRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipe:)];
-    gestureSwipeUpRecognizer.direction = UISwipeGestureRecognizerDirectionUp;
-    [self.view addGestureRecognizer:gestureSwipeUpRecognizer];
+
     // setup filter button
     UIButton *filterButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [filterButton setTitle:@"Filter" forState:UIControlStateNormal];
@@ -189,29 +188,6 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
--(void) handleSwipe:(UISwipeGestureRecognizer*) recognizer {
-    [self showMapController];
-}
-
--(void)navigationSegmentAction:(id)sender {
-    UISegmentedControl *segmentedControl = (UISegmentedControl *) sender;
-    NSInteger selectedSegment = segmentedControl.selectedSegmentIndex;
-    if (selectedSegment == 0) { /* Map */
-        [self showMapController];
-    }
-    
-    if (selectedSegment == 1) { /* Filter */
-        [self showFilter];
-    }
-}
-
--(void)showMapController {
-    NearestSongMapViewController* mapViewController = [[NearestSongMapViewController alloc] initWithNibName:@"NearestSongMapViewController" bundle:nil];
-    [mapViewController setDelegate:self];
-    [self.revealSideViewController pushViewController:mapViewController onDirection:PPRevealSideDirectionBottom animated:YES];
-}
-
 
 #pragma mark - Table View
 

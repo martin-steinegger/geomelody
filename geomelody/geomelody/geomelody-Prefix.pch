@@ -13,6 +13,4 @@
     #import <Foundation/Foundation.h>
     #import <MobileCoreServices/MobileCoreServices.h>
     #import <SystemConfiguration/SystemConfiguration.h>
-
-    #import "PPRevealSideViewController.h"
 #endif

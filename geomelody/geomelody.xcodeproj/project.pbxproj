@@ -79,10 +79,9 @@
 		84504754178314A0004B9421 /* AFURLConnectionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 84504749178314A0004B9421 /* AFURLConnectionOperation.m */; };
 		84504755178314A0004B9421 /* AFXMLRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8450474B178314A0004B9421 /* AFXMLRequestOperation.m */; };
 		84504756178314A0004B9421 /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 8450474D178314A0004B9421 /* UIImageView+AFNetworking.m */; };
+		845164DA178C459400342C8A /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 845164D9178C459400342C8A /* MobileCoreServices.framework */; };
+		845164DC178C459900342C8A /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 845164DB178C459900342C8A /* SystemConfiguration.framework */; };
 		846F4BE81785EA3E00927A07 /* MapAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 84046A9F1785CA3000168789 /* MapAnnotation.m */; };
-		84BF063617838915002BB8D9 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84BF063517838915002BB8D9 /* SystemConfiguration.framework */; };
-		84BF06381783891A002BB8D9 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84BF06371783891A002BB8D9 /* MobileCoreServices.framework */; };
-		84BF06F51785B167002BB8D9 /* PPRevealSideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84BF06F41785B167002BB8D9 /* PPRevealSideViewController.m */; };
 		84CBE36C1782296000C4B1F2 /* BackendApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 84CBE36B1782296000C4B1F2 /* BackendApi.m */; };
 		84CBE3781782360000C4B1F2 /* GeoMelodyBackendSong.m in Sources */ = {isa = PBXBuildFile; fileRef = 84CBE3771782360000C4B1F2 /* GeoMelodyBackendSong.m */; };
 		84CBE37B1782367C00C4B1F2 /* GeoMelodyBackendLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 84CBE37A1782367C00C4B1F2 /* GeoMelodyBackendLocation.m */; };
@@ -296,10 +295,8 @@
 		8450474B178314A0004B9421 /* AFXMLRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFXMLRequestOperation.m; sourceTree = "<group>"; };
 		8450474C178314A0004B9421 /* UIImageView+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+AFNetworking.h"; sourceTree = "<group>"; };
 		8450474D178314A0004B9421 /* UIImageView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+AFNetworking.m"; sourceTree = "<group>"; };
-		84BF063517838915002BB8D9 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
-		84BF06371783891A002BB8D9 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
-		84BF06F31785B167002BB8D9 /* PPRevealSideViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPRevealSideViewController.h; sourceTree = "<group>"; };
-		84BF06F41785B167002BB8D9 /* PPRevealSideViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPRevealSideViewController.m; sourceTree = "<group>"; };
+		845164D9178C459400342C8A /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		845164DB178C459900342C8A /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		84CBE36A1782296000C4B1F2 /* BackendApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackendApi.h; sourceTree = "<group>"; };
 		84CBE36B1782296000C4B1F2 /* BackendApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackendApi.m; sourceTree = "<group>"; };
 		84CBE3761782360000C4B1F2 /* GeoMelodyBackendSong.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeoMelodyBackendSong.h; sourceTree = "<group>"; };
@@ -318,10 +315,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				845164DC178C459900342C8A /* SystemConfiguration.framework in Frameworks */,
+				845164DA178C459400342C8A /* MobileCoreServices.framework in Frameworks */,
 				470799BA177C96680098B2F8 /* CoreLocation.framework in Frameworks */,
 				84046A991785B9FC00168789 /* MapKit.framework in Frameworks */,
-				84BF06381783891A002BB8D9 /* MobileCoreServices.framework in Frameworks */,
-				84BF063617838915002BB8D9 /* SystemConfiguration.framework in Frameworks */,
 				47DF9B5F177C9DF000FBC5C3 /* libJSONKit.a in Frameworks */,
 				47DF9B60177C9DF000FBC5C3 /* libOAuth2Client.a in Frameworks */,
 				47DF9B61177C9DF000FBC5C3 /* libOHAttributedLabel.a in Frameworks */,
@@ -365,6 +362,8 @@
 		47079958177C943F0098B2F8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				845164DB178C459900342C8A /* SystemConfiguration.framework */,
+				845164D9178C459400342C8A /* MobileCoreServices.framework */,
 				47DF9B4F177C9D9D00FBC5C3 /* OHAttributedLabel.xcodeproj */,
 				47DF9B46177C9D9300FBC5C3 /* OAuth2Client.xcodeproj */,
 				47DF9B3D177C9D8A00FBC5C3 /* SoundCloudAPI.xcodeproj */,
@@ -374,9 +373,6 @@
 				472EBBA51785BF7F00B6600A /* YIPopupTextView */,
 				84046AA31785CD9F00168789 /* SMCalloutView */,
 				84046A981785B9FC00168789 /* MapKit.framework */,
-				84BF06F21785B167002BB8D9 /* PPRevealSideviewController */,
-				84BF06371783891A002BB8D9 /* MobileCoreServices.framework */,
-				84BF063517838915002BB8D9 /* SystemConfiguration.framework */,
 				8450473A178314A0004B9421 /* AFNetworking */,
 				472EBB4E17831BC300B6600A /* CoreMedia.framework */,
 				47752CCF1782CFA2000B4F24 /* MediaPlayer.framework */,
@@ -397,13 +393,11 @@
 		4707995F177C943F0098B2F8 /* geomelody */ = {
 			isa = PBXGroup;
 			children = (
-				84D1F3061785CB2D0031D50E /* genres.txt */,
-				47E72CF2178B2045007B80EC /* ImageEntropy.h */,
-				47E72CF3178B2045007B80EC /* ImageEntropy.m */,
 				844EAF361788CC4D006A1131 /* Controls */,
 				84046AA41785D82A00168789 /* Map */,
 				84CBE375178235E800C4B1F2 /* Domain */,
-				84D1F2801781A9EE0031D50E /* tags.txt */,
+				47E72CF2178B2045007B80EC /* ImageEntropy.h */,
+				47E72CF3178B2045007B80EC /* ImageEntropy.m */,
 				47079968177C94400098B2F8 /* AppDelegate.h */,
 				47079969177C94400098B2F8 /* AppDelegate.m */,
 				47752C9317818C08000B4F24 /* SongCell.h */,
@@ -429,6 +423,8 @@
 		47079960177C943F0098B2F8 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				84D1F2801781A9EE0031D50E /* tags.txt */,
+				84D1F3061785CB2D0031D50E /* genres.txt */,
 				47079961177C943F0098B2F8 /* geomelody-Info.plist */,
 				47079962177C943F0098B2F8 /* InfoPlist.strings */,
 				47079965177C943F0098B2F8 /* main.m */,
@@ -590,16 +586,6 @@
 			);
 			name = AFNetworking;
 			path = ../AFNetworking/AFNetworking;
-			sourceTree = "<group>";
-		};
-		84BF06F21785B167002BB8D9 /* PPRevealSideviewController */ = {
-			isa = PBXGroup;
-			children = (
-				84BF06F31785B167002BB8D9 /* PPRevealSideViewController.h */,
-				84BF06F41785B167002BB8D9 /* PPRevealSideViewController.m */,
-			);
-			name = PPRevealSideviewController;
-			path = ../PPRevealSideViewController/PPRevealSideViewController/PPRevealSideviewController;
 			sourceTree = "<group>";
 		};
 		84CBE375178235E800C4B1F2 /* Domain */ = {
@@ -824,7 +810,6 @@
 				84504756178314A0004B9421 /* UIImageView+AFNetworking.m in Sources */,
 				472EBB52178337A300B6600A /* UICircularSlider.m in Sources */,
 				472EBB921785B0A200B6600A /* GenreFilterViewController.m in Sources */,
-				84BF06F51785B167002BB8D9 /* PPRevealSideViewController.m in Sources */,
 				472EBB9F1785BF7B00B6600A /* YIPopupTextView.m in Sources */,
 				472EBBA01785BF7B00B6600A /* YISSTextView.m in Sources */,
 				84046A961785B91000168789 /* NearestSongMapViewController.m in Sources */,

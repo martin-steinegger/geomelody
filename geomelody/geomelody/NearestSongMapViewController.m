@@ -23,7 +23,8 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
- 
+        self.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Map" image:nil tag:0];
+        self.title = @"Map";
     }
     
     return self;
@@ -132,7 +133,7 @@
     NSDictionary* song = [[delegate getTracks] objectAtIndex:btn.tag];
     
     [delegate showPlayer:song];
-    [self.revealSideViewController popViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 -(MKAnnotationView*)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation {

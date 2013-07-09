@@ -7,7 +7,6 @@
 //
 
 #import "AppDelegate.h"
-#import <PPRevealSideViewController.h>
 
 #import "NearestSongListViewController.h"
 #import "SCUI.h"
@@ -15,7 +14,7 @@
 @implementation AppDelegate
 
 @synthesize window = _window;
-@synthesize revealSideViewController = _revealSideViewController;
+@synthesize tabBarController = _tabBarController;
 
 + (void)initialize;
 {
@@ -28,27 +27,24 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-
-
     //no shadows for navigationbar
     [[UINavigationBar appearance]setShadowImage:[[UIImage alloc] init]];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
     NearestSongListViewController *masterViewController = [[NearestSongListViewController alloc] initWithNibName:@"NearestSongListViewController" bundle:nil];
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:masterViewController];
-    _revealSideViewController = [[PPRevealSideViewController alloc] initWithRootViewController:nav];
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:masterViewController];
     
-    _revealSideViewController.delegate = self;
+    NearestSongMapViewController *songMapViewController = [[NearestSongMapViewController alloc] initWithNibName:@"NearestSongMapViewController" bundle:nil];
+    [songMapViewController setDelegate:masterViewController];
     
-    self.window.rootViewController = _revealSideViewController;
+    _tabBarController = [[UITabBarController alloc] init];
+    _tabBarController.viewControllers = [NSArray arrayWithObjects: navigationController, songMapViewController, nil];
     
+    self.window.rootViewController = _tabBarController;
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     return YES;
-    
-    
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
