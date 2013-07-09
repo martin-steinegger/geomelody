@@ -275,8 +275,7 @@
 }
 
 -(void) showPlayerWithCurrentSong {
-    NSDictionary* song = [tracks objectAtIndex:[self getCurrentTrackIndex]];
-    [self showPlayer:song];
+    [self showPlayer:nil];
 }
 
 // change to PlayerView, which is initialised with the defined song object
@@ -285,7 +284,8 @@
         self.playerViewController = [[PlayerViewController alloc] initWithNibName:@"PlayerViewController" bundle:nil];
         self.playerViewController.delegate = self;
     }
-    [self.playerViewController setSongItem:song];
+    if(song != NULL)
+        [self.playerViewController setSongItem:song];
     [self.navigationController pushViewController:self.playerViewController animated:YES];
 }
 
