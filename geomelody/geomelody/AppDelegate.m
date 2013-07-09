@@ -10,7 +10,6 @@
 #import <PPRevealSideViewController.h>
 
 #import "NearestSongListViewController.h"
-#import "SCUI.h"
 #import "Reachability.h"
 
 @implementation AppDelegate
@@ -19,13 +18,6 @@ Reachability *internetReachable;
 @synthesize window = _window;
 @synthesize revealSideViewController = _revealSideViewController;
 
-+ (void)initialize;
-{
-    [SCSoundCloud  setClientID:@"f0cfa9035abc5752e699580d5586d1e6"
-                   secret:@"49baf8628ee99e0e62d6af4742d33073"
-		   redirectURL:[NSURL URLWithString:@"geomelody://oauth"]];
- 
-}
 
 
 
@@ -43,17 +35,21 @@ Reachability *internetReachable;
     _revealSideViewController = [[PPRevealSideViewController alloc] initWithRootViewController:nav];
     _revealSideViewController.delegate = self;
     
-    //Internet check
-    [[NSNotificationCenter defaultCenter] addObserver:masterViewController selector:@selector(reachabilityHasChanged:) name:kReachabilityChangedNotification object:nil];
-    internetReachable = [Reachability reachabilityForInternetConnection];
-    [internetReachable startNotifier];
 
 
     
     self.window.rootViewController = _revealSideViewController;
     
     self.window.backgroundColor = [UIColor whiteColor];
+    //Internet check
+    [[NSNotificationCenter defaultCenter] addObserver:masterViewController selector:@selector(reachabilityHasChanged:) name:kReachabilityChangedNotification object:nil];
+    internetReachable = [Reachability reachabilityForInternetConnection];
+    
+    [internetReachable startNotifier];
+
     [self.window makeKeyAndVisible];
+ 
+    
     return YES;
     
     

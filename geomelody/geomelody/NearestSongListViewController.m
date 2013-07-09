@@ -30,9 +30,8 @@
     // initialize TagFilterViewController
     if (!self.genreFilterViewController) {
         self.genreFilterViewController = [[GenreFilterViewController alloc] initWithNibName:@"GenreFilterViewController" bundle:nil];
+        self.genreFilterViewController.delegate = self;
     }
-    
-    [self updateNearestSongList];
     
     return self;
 }
@@ -48,7 +47,8 @@
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Someone broke the internet :("
                                                           message:@"You require an internet connection to communicate with the server."
                                                           delegate:nil cancelButtonTitle:nil otherButtonTitles:nil];
-                [self setNetworkAlert:alert];
+                [locationManager stopUpdatingLocation];
+                [self setNetworkAlert:alert];                
             }
             [self.networkAlert show];
         }
@@ -56,13 +56,15 @@
         if ([self networkAlert] != nil) {
             [self.networkAlert dismissWithClickedButtonIndex:0 animated:YES];
         }
+        [locationManager startUpdatingLocation];
     }
 }
 
-							
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
     //Layout
     //transparent navigationbar
     self.navigationController.navigationBar.translucent = YES; // Setting this slides the view up, underneath the nav bar (otherwise it'll appear black)
@@ -97,6 +99,12 @@
     self.navigationController.navigationBar.tintColor = [UIColor blackColor];
     self.navigationController.navigationBar.translucent = YES;
     
+    //SC init
+    [SCSoundCloud  setClientID:@"f0cfa9035abc5752e699580d5586d1e6"
+                        secret:@"49baf8628ee99e0e62d6af4742d33073"
+                   redirectURL:[NSURL URLWithString:@"geomelody://oauth"]];
+    
+    
     //get location updates for music
     self.currentLocation = NULL;
     locationManager = [[CLLocationManager alloc] init];
@@ -104,7 +112,10 @@
     [locationManager setDelegate:self];
     [locationManager setDistanceFilter:10]; //only every ten meters
     [locationManager startUpdatingLocation];
+
     [self.tableView registerNib:[UINib nibWithNibName:@"SongCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"SongCellId"];
+    
+    
   
 }
 
@@ -137,6 +148,8 @@
 {
     [SCSoundCloud removeAccess];
     [self checkLogin];
+    // update song list
+    [self updateNearestSongList];
 }
 
 - (void)checkLogin{
@@ -185,8 +198,7 @@
     
     }
     
-    // update song list
-    [self updateNearestSongList];
+
 }
 
 -(void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
@@ -204,7 +216,7 @@
     // check SC Login
     //[SCSoundCloud removeAccess]; //DEBUG only
     [self checkLogin];
-
+    // update song list
 }
 
 - (void)didReceiveMemoryWarning
