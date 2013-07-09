@@ -23,6 +23,7 @@
 @synthesize songItem;
 @synthesize artwork_picture;
 @synthesize audioPlayer;
+@synthesize user_picture;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -48,19 +49,15 @@
     if (self.songProgressTouch==YES) {
         self.songProgressTouch = NO;
         self.lastActivityDate = [[NSDate alloc] init];
-
         float chosenSongSecond=self.songProgressControl.value;
         CMTime newTime = CMTimeMakeWithSeconds(chosenSongSecond, 1);
         [self.audioPlayer seekToTime:newTime toleranceBefore:kCMTimeZero toleranceAfter:kCMTimeZero];
         [self.songProgressTimer invalidate];
         self.songProgressTimer = nil;
-
         NSDate *future = [NSDate dateWithTimeIntervalSinceNow: 1.2 ];
-        
         [NSThread sleepUntilDate:future];
-        self.songProgressTimer = [NSTimer scheduledTimerWithTimeInterval:0.23 target:self selector:@selector(updateSongProgressBar:)  userInfo:nil repeats:YES];
-        
-
+        self.songProgressTimer = [NSTimer scheduledTimerWithTimeInterval:0.23 target:self selector:@selector(updateSongProgressBar:)
+                                                                userInfo:nil repeats:YES];
     }
 }
 
@@ -146,17 +143,6 @@
 }
 
 - (IBAction)playNextSong:(id)button{
-    id song = [self.delegate getNextEntry];
-    [self setSongItem:song];
-}
-
-- (IBAction)playPreviousSong:(id)button{
-    id song = [self.delegate getPreviousEntry];
-    [self setSongItem:song];
-}
-
--(void) handleSwipe:(UISwipeGestureRecognizer*) recognizer {
-    id song;
     [UIView animateWithDuration:0.55 animations:^{
         [UIView setAnimationDelay:0.2];
     }];
@@ -165,17 +151,36 @@
     [animation setTimingFunction:[CAMediaTimingFunction
                                   functionWithName:kCAMediaTimingFunctionDefault]];
     [animation setSpeed:0.4];
-    if(recognizer.direction == UISwipeGestureRecognizerDirectionLeft){
-        song = [self.delegate getNextEntry];
-        [animation setSubtype:kCATransitionFromRight];
-    }else if(recognizer.direction == UISwipeGestureRecognizerDirectionRight){
-        song = [self.delegate getPreviousEntry];
-        [animation setSubtype:kCATransitionFromLeft];
-    }
-    if(!song)
-        return;
+    [animation setSubtype:kCATransitionFromRight];
+
+    id song = [self.delegate getNextEntry];
     [self setSongItem:song];
     [[self.view layer] addAnimation:animation forKey:nil];
+
+}
+
+- (IBAction)playPreviousSong:(id)button{
+    [UIView animateWithDuration:0.55 animations:^{
+        [UIView setAnimationDelay:0.2];
+    }];
+    CATransition *animation = [CATransition animation];
+    [animation setType:kCATransitionPush];
+    [animation setTimingFunction:[CAMediaTimingFunction
+                                  functionWithName:kCAMediaTimingFunctionDefault]];
+    [animation setSpeed:0.4];
+    [animation setSubtype:kCATransitionFromLeft];
+    id song = [self.delegate getPreviousEntry];
+    [self setSongItem:song];
+    [[self.view layer] addAnimation:animation forKey:nil];
+
+}
+
+-(void) handleSwipe:(UISwipeGestureRecognizer*) recognizer {
+    if(recognizer.direction == UISwipeGestureRecognizerDirectionLeft){
+        [self playNextSong:NULL];
+    }else if(recognizer.direction == UISwipeGestureRecognizerDirectionRight){
+        [self playPreviousSong:NULL];
+    }
 }
 
 
@@ -202,8 +207,11 @@
         // Update the song.
         audioPlayer = nil;
         [self setUpSong];
-        [self playAudio];
         [self setUpView];
+    }else{
+        songItem = newDetailItem;
+        [self setUpView];
+
     }
     
     [self.tabBarItem setEnabled:YES];
@@ -214,28 +222,37 @@
         NSString *streamURL = [songItem objectForKey:@"stream_url"];
         NSString *streamClientAuth = [streamURL stringByAppendingString:@"?client_id=f0cfa9035abc5752e699580d5586d1e6"];
         NSURL *url = [NSURL URLWithString:streamClientAuth];
-        AVURLAsset * avAsset = [AVURLAsset URLAssetWithURL:url options:nil];
-        AVPlayerItem * playerItem = [AVPlayerItem playerItemWithAsset:avAsset];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(songDidFinishPlaying) name:AVPlayerItemDidPlayToEndTimeNotification object:playerItem];
-        if(self.audioPlayer==NULL)
-            self.audioPlayer = [AVPlayer playerWithPlayerItem:playerItem];
-        else
-            [self.audioPlayer replaceCurrentItemWithPlayerItem:playerItem];
-        self.songProgressTimer = [NSTimer scheduledTimerWithTimeInterval:0.23 target:self selector:@selector(updateSongProgressBar:) userInfo:nil repeats:YES];
+        AVURLAsset *asset = [AVURLAsset URLAssetWithURL:url options:nil];
+        NSArray *keys     = [NSArray arrayWithObject:@"playable"];
+        
+        [asset loadValuesAsynchronouslyForKeys:keys completionHandler:^() {
+            AVPlayerItem * playerItem = [AVPlayerItem playerItemWithAsset:asset];
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(songDidFinishPlaying)
+                                                         name:AVPlayerItemDidPlayToEndTimeNotification object:playerItem];
+            if(self.audioPlayer==NULL)
+                self.audioPlayer = [AVPlayer playerWithPlayerItem:playerItem];
+            else
+                [self.audioPlayer replaceCurrentItemWithPlayerItem:playerItem ];
+            
+ 
+            self.songProgressControl.maximumValue = [self durationInSeconds];
+            self.songProgressControl.minimumValue = 0.0;
+            self.songProgressControl.continuous = YES;
+            
+
+            [self playAudio];
+
+        }];
         if(self.activityTimer!=NULL){
             [self.activityTimer setFireDate:[NSDate distantFuture]];
             [self.activityTimer invalidate];
             self.activityTimer=nil ;
         }
         self.activityTimer     = [NSTimer scheduledTimerWithTimeInterval:5    target:self selector:@selector(checkActivity:) userInfo:nil repeats:YES];
+        self.songProgressTimer = [NSTimer scheduledTimerWithTimeInterval:0.23 target:self selector:@selector(updateSongProgressBar:) userInfo:nil repeats:YES];
         self.lastActivityDate = [[NSDate alloc] init];
         self.pauseStart = [NSDate dateWithTimeIntervalSinceNow:0];
         self.previousFireDate = [self.songProgressTimer fireDate];
-
-        self.songProgressControl.maximumValue = [self durationInSeconds];
-        self.songProgressControl.minimumValue = 0.0;
-        self.songProgressControl.continuous = YES;
-        
         [self.post_button setEnabled:TRUE];
         [self.post_button setTitle:@"Post" forState:0 ];
     }
@@ -260,7 +277,9 @@
 {
     if (self.songItem) {
         
-        self.songTitle.text = [self.songItem objectForKey:@"title"];
+        self.songTitle.text     = [self.songItem objectForKey:@"title"];
+        self.user_comment.text  = [self.songItem objectForKey:@"Comment"];
+
         NSDictionary *user  = [self.songItem objectForKey:@"user"];
         self.songInterpreter.text = [user objectForKey:@"username"];
         
@@ -570,8 +589,36 @@
 - (void)popupTextView:(YIPopupTextView *)textView willDismissWithText:(NSString *)text cancelled:(BOOL)cancelled
 {
     NSLog(@"will dismiss: cancelled=%d",cancelled);
-    if(cancelled==NO)
+    if(cancelled==NO){
+        NSDictionary * user = [self.delegate getActiveUser];
+        NSObject * userImageUrlObject;
+        if(( userImageUrlObject =[user objectForKey:@"avatar_url"])!=[NSNull null]){
+            NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:(NSString *)userImageUrlObject]];
+            __weak UIImageView * user_picture_image= self.user_picture;
+            __weak UIView * current_view= self.view;
+
+            [self.user_picture setImageWithURLRequest:request placeholderImage:nil
+                                      success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+                                          NSLog(@"success to load userpicture"); //it always lands here! But nothing happens
+                                          [UIView transitionWithView:current_view
+                                                            duration:1.5f
+                                                             options:UIViewAnimationOptionTransitionCrossDissolve
+                                                          animations:^{
+                                                              user_picture_image.image = image;
+                                                          } completion:nil];
+                                        
+                                          
+                                      } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+                                          NSLog(@"fail to load artwork");
+                                      }];
+            
+
+            
+            
+            [self.user_picture setImageWithURL:[NSURL URLWithString:(NSString* )userImageUrlObject]];
+        }
         self.user_comment.text = text;
+    }
 }
 
 - (void)popupTextView:(YIPopupTextView *)textView didDismissWithText:(NSString *)text cancelled:(BOOL)cancelled

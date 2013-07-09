@@ -35,7 +35,7 @@
 //    NSURL *imageURL = [NSURL URLWithString:url];
 //    NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
 //    songImage.image = [UIImage imageWithData:imageData];
-    [songImage setImageWithURL:[NSURL URLWithString:(NSString* )url]];
+//    [songImage setImageWithURL:[NSURL URLWithString:(NSString* )url]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
     [request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
     [songImage setImageWithURLRequest:request placeholderImage:nil
