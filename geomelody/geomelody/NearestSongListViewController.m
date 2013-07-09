@@ -26,7 +26,8 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"List" image:nil tag:0];
+        UIImage *img = [[UIImage alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"152-rolodex" ofType:@"png"]];
+        self.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"List" image:img tag:0];
         self.title = @"List";
         self.navigationItem.title = @"";
     }

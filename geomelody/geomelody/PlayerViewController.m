@@ -28,7 +28,8 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if(self) {
-        self.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Now Playing" image:nil tag:0];
+        UIImage *img = [[UIImage alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"194-note-2" ofType:@"png"]];
+        self.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Now Playing" image:img tag:0];
         self.title = @"Now Playing";
         [self.tabBarItem setEnabled:NO];
     }

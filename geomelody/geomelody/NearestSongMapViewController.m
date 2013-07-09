@@ -23,7 +23,8 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Map" image:nil tag:0];
+        UIImage *img = [[UIImage alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"103-map" ofType:@"png"]];
+        self.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Map" image:img tag:0];
         self.title = @"Map";
     }
     
