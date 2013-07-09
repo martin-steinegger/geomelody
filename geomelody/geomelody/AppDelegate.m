@@ -16,9 +16,12 @@ Reachability *internetReachable;
 
 @synthesize window = _window;
 @synthesize tabBarController = _tabBarController;
-
+@synthesize playerViewController;
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    
+    [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
+	[self becomeFirstResponder];
     //no shadows for navigationbar
     [[UINavigationBar appearance]setShadowImage:[[UIImage alloc] init]];
     
@@ -30,7 +33,7 @@ Reachability *internetReachable;
     NearestSongMapViewController *songMapViewController = [[NearestSongMapViewController alloc] initWithNibName:@"NearestSongMapViewController" bundle:nil];
     [songMapViewController setDelegate:masterViewController];
     
-    PlayerViewController *playerViewController = [[PlayerViewController alloc] initWithNibName:@"PlayerViewController" bundle:nil];
+    playerViewController = [[PlayerViewController alloc] initWithNibName:@"PlayerViewController" bundle:nil];
     [playerViewController setDelegate:masterViewController];
     [masterViewController setPlayerViewController:playerViewController];
     
@@ -50,6 +53,31 @@ Reachability *internetReachable;
     [self.window makeKeyAndVisible];
     return YES;
 }
+
+- (void)remoteControlReceivedWithEvent:(UIEvent *)event {
+    //if it is a remote control event handle it correctly
+    if (event.type == UIEventTypeRemoteControl) {
+        if(playerViewController.songItem != NULL){
+            if (event.subtype == UIEventSubtypeRemoteControlPlay) {
+                NSLog(@"playAudio");
+                [playerViewController playAudio];
+            } else if (event.subtype == UIEventSubtypeRemoteControlPause) {
+                NSLog(@"pauseAudio");
+                [playerViewController pauseAudio];
+            } else if (event.subtype == UIEventSubtypeRemoteControlTogglePlayPause) {
+                NSLog(@"togglePlayPause");
+                [playerViewController togglePlayPause];
+            } else if (event.subtype == UIEventSubtypeRemoteControlNextTrack) {
+                NSLog(@"playNextSong");
+                [playerViewController playNextSong:NULL];
+            } else if (event.subtype == UIEventSubtypeRemoteControlPreviousTrack) {
+                NSLog(@"playPreviousSong");
+                [playerViewController playPreviousSong:NULL];
+            }
+        }
+    }
+}
+
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {

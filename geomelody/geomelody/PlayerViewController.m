@@ -276,7 +276,7 @@
 - (void)setUpView
 {
     if (self.songItem) {
-        
+
         self.songTitle.text     = [self.songItem objectForKey:@"title"];
         self.user_comment.text  = [self.songItem objectForKey:@"Comment"];
 
@@ -375,9 +375,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
-    [self becomeFirstResponder];
 
     [self.songProgressControl addTarget:self action:@selector(songProgressTouchStart:) forControlEvents:UIControlEventTouchDown];
     [self.songProgressControl addTarget:self action:@selector(songProgressTouchEnd:)   forControlEvents:UIControlEventTouchUpInside];
