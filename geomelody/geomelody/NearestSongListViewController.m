@@ -378,8 +378,8 @@
 
 -(NSArray*)mergeData:(NSArray *)soundCloudTracks  backEndTracks:(NSMutableArray *)backEndTracks {
     NSMutableArray* result = [[NSMutableArray alloc] init];
-    for(NSDictionary* scTrack in soundCloudTracks) {
-        for (NSDictionary* beTrack in backEndTracks) {
+    for (NSDictionary* beTrack in backEndTracks) {
+        for (NSDictionary* scTrack in soundCloudTracks) {
             NSInteger beSoundCloudSongId = [[beTrack objectForKey:@"SoundCloudSongId"] intValue];
             NSInteger scSoundCloudSongId = [[scTrack objectForKey:@"id"] intValue];
             if(beSoundCloudSongId == scSoundCloudSongId) {
