@@ -19,6 +19,7 @@
 @synthesize tracks;
 @synthesize locationManager;
 @synthesize tableView;
+@synthesize reachability;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -39,16 +40,16 @@
 
 #pragma mark - Reachability
 
-- (void)reachabilityHasChanged:(NSNotification *)note {
-    NetworkStatus ns = [(Reachability *)[note object] currentReachabilityStatus];
+- (void)showAlertForReachbilty:(NSInteger) ns{
+    reachability = ns;
     if (ns == NotReachable) {
         if (![self.networkAlert isVisible]) {
             if ([self networkAlert] == nil) {
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Someone broke the internet :("
-                                                          message:@"You require an internet connection to communicate with the server."
-                                                          delegate:nil cancelButtonTitle:nil otherButtonTitles:nil];
+                                                                message:@"You require an internet connection to communicate with the server."
+                                                               delegate:nil cancelButtonTitle:nil otherButtonTitles:nil];
                 [locationManager stopUpdatingLocation];
-                [self setNetworkAlert:alert];                
+                [self setNetworkAlert:alert];
             }
             [self.networkAlert show];
         }
@@ -58,6 +59,11 @@
         }
         [locationManager startUpdatingLocation];
     }
+}
+
+- (void)reachabilityHasChanged:(NSNotification *)note {
+    NetworkStatus ns = [(Reachability *)[note object] currentReachabilityStatus];
+    [self showAlertForReachbilty:ns];
 }
 
 
@@ -98,21 +104,22 @@
     //change background of navigation bar to black
     self.navigationController.navigationBar.tintColor = [UIColor blackColor];
     self.navigationController.navigationBar.translucent = YES;
-    
-    //SC init
-    [SCSoundCloud  setClientID:@"f0cfa9035abc5752e699580d5586d1e6"
-                        secret:@"49baf8628ee99e0e62d6af4742d33073"
-                   redirectURL:[NSURL URLWithString:@"geomelody://oauth"]];
-    
-    
+
     //get location updates for music
     self.currentLocation = NULL;
     locationManager = [[CLLocationManager alloc] init];
     [locationManager setDesiredAccuracy:kCLLocationAccuracyBest];
     [locationManager setDelegate:self];
     [locationManager setDistanceFilter:10]; //only every ten meters
-    [locationManager startUpdatingLocation];
 
+    //SC init
+    [SCSoundCloud  setClientID:@"f0cfa9035abc5752e699580d5586d1e6"
+                        secret:@"49baf8628ee99e0e62d6af4742d33073"
+                   redirectURL:[NSURL URLWithString:@"geomelody://oauth"]];
+    
+    
+    
+    
     [self.tableView registerNib:[UINib nibWithNibName:@"SongCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"SongCellId"];
     
     
@@ -153,6 +160,8 @@
 }
 
 - (void)checkLogin{
+    if(reachability==NotReachable)
+        return;
     SCAccount *account = [SCSoundCloud account];
     if (account == nil) {
         SCLoginViewControllerCompletionHandler handler = ^(NSError *error) {
@@ -173,7 +182,8 @@
                                    completionHandler:handler];
             [self presentViewController:loginViewController animated:YES completion:nil];
         }];
-    }else { // get user information
+    }
+    if(self.activeUser == NULL){
         SCRequestResponseHandler handler;
         handler = ^(NSURLResponse *response, NSData *data, NSError *error) {
             NSError *jsonError = nil;
@@ -184,7 +194,7 @@
             if (!jsonError && [jsonResponse isKindOfClass:[NSDictionary class]]) {
                 
                 self.activeUser = (NSDictionary *)jsonResponse;
-          
+                
             }
         };
         
@@ -195,9 +205,7 @@
                      withAccount:account
           sendingProgressHandler:nil
                  responseHandler:handler];
-    
     }
-    
 
 }
 
@@ -213,9 +221,13 @@
 
 
 - (void)viewDidAppear:(BOOL)animated {
+    // check internet
+    [self showAlertForReachbilty:reachability];
+    
     // check SC Login
-    //[SCSoundCloud removeAccess]; //DEBUG only
     [self checkLogin];
+
+
     // update song list
 }
 
@@ -332,7 +344,7 @@
 - (void) updateNearestSongList {
     
     NSLog(@"update nearest song list");
-    
+    [self checkLogin];
     NSArray *genreFilter = [self.genreFilterViewController getGenreFilter];
 
     // 1) todo: get nearest songs from database with filter

@@ -44,8 +44,10 @@ Reachability *internetReachable;
     //Internet check
     [[NSNotificationCenter defaultCenter] addObserver:masterViewController selector:@selector(reachabilityHasChanged:) name:kReachabilityChangedNotification object:nil];
     internetReachable = [Reachability reachabilityForInternetConnection];
-    
     [internetReachable startNotifier];
+
+    NetworkStatus remoteHostStatus = [internetReachable currentReachabilityStatus];
+    [masterViewController setReachability:remoteHostStatus];
 
     [self.window makeKeyAndVisible];
  

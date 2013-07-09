@@ -31,5 +31,6 @@ GenreFilterViewControllerProtocol, NearestSongMapViewControllerProtocol>
 @property NSInteger currentSongPosition;
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
+@property NSInteger reachability;
 
 @end
