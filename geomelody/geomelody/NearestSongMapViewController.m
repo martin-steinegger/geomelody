@@ -25,15 +25,20 @@
     if (self) {
  
     }
+    
     return self;
 }
 
 - (void)viewDidLoad
 {
+    
+    
     self.calloutView = [SMCalloutView new];
     self.calloutView.delegate = self;
     self.mapView.calloutView = self.calloutView;
     self.mapView.delegate = self;
+    
+
     
     [self configureView];
     [super viewDidLoad];

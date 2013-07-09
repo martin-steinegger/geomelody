@@ -13,7 +13,7 @@
 #import "PlayerViewController.h"
 #import "BackendApi.h"
 #import "GMSegmentedButtonBar.h"
-
+#import "ImageEntropy.h"
 
 
 @implementation NearestSongListViewController
@@ -41,6 +41,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    ImageEntropy * entropy = [ImageEntropy alloc];
+    UIImage * image = [UIImage imageNamed:@"soundcloud.jpg" ];
+    [entropy setImage:image];
+    [entropy calculateRowRange];
     
 	// Do any additional setup after loading the view, typically from a nib.
     UISwipeGestureRecognizer* gestureSwipeUpRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipe:)];
