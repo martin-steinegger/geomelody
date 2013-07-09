@@ -45,7 +45,7 @@
 		472EBB951785B17800B6600A /* GoToLibraryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 472EBB941785B17700B6600A /* GoToLibraryCell.xib */; };
 		472EBB9F1785BF7B00B6600A /* YIPopupTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 472EBB9C1785BF7B00B6600A /* YIPopupTextView.m */; };
 		472EBBA01785BF7B00B6600A /* YISSTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 472EBB9E1785BF7B00B6600A /* YISSTextView.m */; };
-		472EBBA71785F5BC00B6600A /* DisclosureIndicator@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 472EBBA61785F5BC00B6600A /* DisclosureIndicator@2x.png */; };
+		472EBBA71785F5BC00B6600A /* BackArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 472EBBA61785F5BC00B6600A /* BackArrow.png */; };
 		472EBBAA178609AC00B6600A /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 472EBBA9178609AB00B6600A /* Reachability.m */; };
 		47752C9C17818C08000B4F24 /* SongCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 47752C9417818C08000B4F24 /* SongCell.m */; };
 		47752C9D17818C08000B4F24 /* SongCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47752C9517818C08000B4F24 /* SongCell.xib */; };
@@ -63,6 +63,7 @@
 		47DF9B62177C9DF000FBC5C3 /* libSoundCloudAPI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 47DF9B45177C9D8B00FBC5C3 /* libSoundCloudAPI.a */; };
 		47DF9B63177C9DF000FBC5C3 /* libSoundCloudUI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 47DF9B3A177C9D8200FBC5C3 /* libSoundCloudUI.a */; };
 		47DF9B65177C9FA100FBC5C3 /* SoundCloud.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 47DF9B64177C9FA100FBC5C3 /* SoundCloud.bundle */; };
+		47E72CF4178B2045007B80EC /* ImageEntropy.m in Sources */ = {isa = PBXBuildFile; fileRef = 47E72CF3178B2045007B80EC /* ImageEntropy.m */; };
 		84046A961785B91000168789 /* NearestSongMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84046A941785B91000168789 /* NearestSongMapViewController.m */; };
 		84046A971785B91000168789 /* NearestSongMapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84046A951785B91000168789 /* NearestSongMapViewController.xib */; };
 		84046A991785B9FC00168789 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84046A981785B9FC00168789 /* MapKit.framework */; };
@@ -242,7 +243,7 @@
 		472EBB9C1785BF7B00B6600A /* YIPopupTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YIPopupTextView.m; path = ../YIPopupTextView/YIPopupTextView.m; sourceTree = "<group>"; };
 		472EBB9D1785BF7B00B6600A /* YISSTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YISSTextView.h; path = ../YIPopupTextView/YISSTextView.h; sourceTree = "<group>"; };
 		472EBB9E1785BF7B00B6600A /* YISSTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YISSTextView.m; path = ../YIPopupTextView/YISSTextView.m; sourceTree = "<group>"; };
-		472EBBA61785F5BC00B6600A /* DisclosureIndicator@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "DisclosureIndicator@2x.png"; sourceTree = "<group>"; };
+		472EBBA61785F5BC00B6600A /* BackArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BackArrow.png; sourceTree = "<group>"; };
 		472EBBA9178609AB00B6600A /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Reachability.m; path = ../Reachability/Reachability.m; sourceTree = "<group>"; };
 		47752C9317818C08000B4F24 /* SongCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SongCell.h; sourceTree = "<group>"; };
 		47752C9417818C08000B4F24 /* SongCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SongCell.m; sourceTree = "<group>"; };
@@ -261,6 +262,8 @@
 		47DF9B46177C9D9300FBC5C3 /* OAuth2Client.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = OAuth2Client.xcodeproj; path = ../OAuth2Client/OAuth2Client.xcodeproj; sourceTree = "<group>"; };
 		47DF9B4F177C9D9D00FBC5C3 /* OHAttributedLabel.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = OHAttributedLabel.xcodeproj; path = ../OHAttributedLabel/OHAttributedLabel.xcodeproj; sourceTree = "<group>"; };
 		47DF9B64177C9FA100FBC5C3 /* SoundCloud.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SoundCloud.bundle; path = ../SoundCloud.bundle; sourceTree = "<group>"; };
+		47E72CF2178B2045007B80EC /* ImageEntropy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageEntropy.h; sourceTree = "<group>"; };
+		47E72CF3178B2045007B80EC /* ImageEntropy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageEntropy.m; sourceTree = "<group>"; };
 		84046A931785B91000168789 /* NearestSongMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NearestSongMapViewController.h; sourceTree = "<group>"; };
 		84046A941785B91000168789 /* NearestSongMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NearestSongMapViewController.m; sourceTree = "<group>"; };
 		84046A951785B91000168789 /* NearestSongMapViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NearestSongMapViewController.xib; sourceTree = "<group>"; };
@@ -394,6 +397,8 @@
 			isa = PBXGroup;
 			children = (
 				84D1F3061785CB2D0031D50E /* genres.txt */,
+				47E72CF2178B2045007B80EC /* ImageEntropy.h */,
+				47E72CF3178B2045007B80EC /* ImageEntropy.m */,
 				844EAF361788CC4D006A1131 /* Controls */,
 				84046AA41785D82A00168789 /* Map */,
 				84CBE375178235E800C4B1F2 /* Domain */,
@@ -462,7 +467,7 @@
 				84D1F31E178AA5E60031D50E /* nonexpanded.png */,
 				84D1F316178997AC0031D50E /* checkmark.png */,
 				47DF9B64177C9FA100FBC5C3 /* SoundCloud.bundle */,
-				472EBBA61785F5BC00B6600A /* DisclosureIndicator@2x.png */,
+				472EBBA61785F5BC00B6600A /* BackArrow.png */,
 				472EBB891785AE7A00B6600A /* point1sec.mp3 */,
 				472EBB7D1784573400B6600A /* stretchable_image_red.png */,
 				472EBB77178389E000B6600A /* heart32.png */,
@@ -786,6 +791,7 @@
 				84D1F31F178AA5E60031D50E /* expanded.png in Resources */,
 				84D1F320178AA5E60031D50E /* nonexpanded.png in Resources */,
 				472EBBA71785F5BC00B6600A /* DisclosureIndicator@2x.png in Resources */,
+				472EBBA71785F5BC00B6600A /* BackArrow.png in Resources */,
 				84046A971785B91000168789 /* NearestSongMapViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -825,6 +831,7 @@
 				84046AA71785D84500168789 /* CalloutMapView.m in Sources */,
 				472EBBAA178609AC00B6600A /* Reachability.m in Sources */,
 				844EAF391788CC76006A1131 /* GMSegmentedButtonBar.m in Sources */,
+				47E72CF4178B2045007B80EC /* ImageEntropy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
