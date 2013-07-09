@@ -47,19 +47,15 @@
     if (self.songProgressTouch==YES) {
         self.songProgressTouch = NO;
         self.lastActivityDate = [[NSDate alloc] init];
-
         float chosenSongSecond=self.songProgressControl.value;
         CMTime newTime = CMTimeMakeWithSeconds(chosenSongSecond, 1);
         [self.audioPlayer seekToTime:newTime toleranceBefore:kCMTimeZero toleranceAfter:kCMTimeZero];
         [self.songProgressTimer invalidate];
         self.songProgressTimer = nil;
-
         NSDate *future = [NSDate dateWithTimeIntervalSinceNow: 1.2 ];
-        
         [NSThread sleepUntilDate:future];
-        self.songProgressTimer = [NSTimer scheduledTimerWithTimeInterval:0.23 target:self selector:@selector(updateSongProgressBar:)  userInfo:nil repeats:YES];
-        
-
+        self.songProgressTimer = [NSTimer scheduledTimerWithTimeInterval:0.23 target:self selector:@selector(updateSongProgressBar:)
+                                                                userInfo:nil repeats:YES];
     }
 }
 
@@ -178,13 +174,11 @@
 }
 
 -(void) handleSwipe:(UISwipeGestureRecognizer*) recognizer {
-
     if(recognizer.direction == UISwipeGestureRecognizerDirectionLeft){
         [self playNextSong:NULL];
     }else if(recognizer.direction == UISwipeGestureRecognizerDirectionRight){
         [self playPreviousSong:NULL];
     }
-
 }
 
 
