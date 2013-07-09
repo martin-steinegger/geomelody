@@ -13,7 +13,6 @@
 #import "PlayerViewController.h"
 #import "BackendApi.h"
 #import "GMSegmentedButtonBar.h"
-#import "ImageEntropy.h"
 
 
 @implementation NearestSongListViewController
@@ -41,13 +40,16 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    ImageEntropy * entropy = [ImageEntropy alloc];
-    UIImage * image = [UIImage imageNamed:@"soundcloud.jpg" ];
-    [entropy setImage:image];
-    [entropy calculateRowRange];
-    
-	// Do any additional setup after loading the view, typically from a nib.
+    //Layout
+    //transparent navigationbar
+    self.navigationController.navigationBar.translucent = YES; // Setting this slides the view up, underneath the nav bar (otherwise it'll appear black)
+    const float colorMask[6] = {222, 255, 222, 255, 222, 255};
+    UIImage *img = [[UIImage alloc] init];
+    UIImage *maskedImage = [UIImage imageWithCGImage: CGImageCreateWithMaskingColors(img.CGImage, colorMask)];
+    [self.navigationController.navigationBar setBackgroundImage:maskedImage forBarMetrics:UIBarMetricsDefault];
+    [[UINavigationBar appearance] setShadowImage: [[UIImage alloc] init]];
+    [tableView setContentInset:UIEdgeInsetsMake(0,0,0,0)];
+    // Do any additional setup after loading the view, typically from a nib.
     UISwipeGestureRecognizer* gestureSwipeUpRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipe:)];
     gestureSwipeUpRecognizer.direction = UISwipeGestureRecognizerDirectionUp;
     [self.view addGestureRecognizer:gestureSwipeUpRecognizer];
@@ -81,7 +83,17 @@
 
 -(void)setPlayerButtonVisible:(bool)visible {
     if(visible == YES) {
-        UIBarButtonItem *playerButton = [[UIBarButtonItem alloc] initWithTitle:@"Player" style:UIBarButtonItemStylePlain target:self action:@selector(showPlayerWithCurrentSong)];
+        UIButton *playButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [playButton setTitle:@"Song" forState:UIControlStateNormal];
+        UIImage* btnImage = [UIImage imageNamed:@"FrontArrow.png"];
+        [playButton setImage:btnImage forState:UIControlStateNormal];
+        [playButton sizeToFit];
+        playButton.titleEdgeInsets = UIEdgeInsetsMake(0, -playButton.imageView.frame.size.width, 0, playButton.imageView.frame.size.width);
+        playButton.imageEdgeInsets = UIEdgeInsetsMake(0, playButton.titleLabel.frame.size.width, 0, -playButton.titleLabel.frame.size.width);
+        [playButton addTarget:self action:@selector(showPlayerWithCurrentSong) forControlEvents:UIControlEventTouchUpInside];
+        playButton.frame = CGRectMake(0.0f, 0.0f, 64.0f, 41.0f);
+        UIBarButtonItem *playerButton = [[UIBarButtonItem alloc] initWithCustomView:playButton];
+        
         self.navigationItem.rightBarButtonItem = playerButton;
     } else {
         self.navigationItem.rightBarButtonItem = nil;
@@ -193,6 +205,17 @@
 
 #pragma mark - Table View
 
+- (NSString *) changeUrlForPictureQuality:(NSString *) url{
+    NSRange start =[url rangeOfString:@"-" options:NSBackwardsSearch];
+    NSRange end   =[url rangeOfString:@"." options:NSBackwardsSearch];
+    if(end.location < start.location){
+        NSLog(@"Start > End");
+        return url;
+    }
+    NSRange range = NSMakeRange(start.location+1,(end.location-start.location)-1);
+    return [url stringByReplacingCharactersInRange:range withString:@"t300x300"];
+}
+
 // Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)tv cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {    
@@ -210,9 +233,14 @@
     NSNumber *shared_count = [track objectForKey:@"shared_to_count"];
     cell.shares.text = [NSString stringWithFormat:@"%d",(int)[shared_count intValue]];
     
+    NSNumber *playback_count = [track objectForKey:@"playback_count"];
+    cell.plays.text = [NSString stringWithFormat:@"%d",(int)[playback_count intValue]];
+    
+    
     NSObject * imageUrlObject;
     if((imageUrlObject =[track objectForKey:@"artwork_url"])!=[NSNull null]){
-            [cell setImageUrl:(NSString*)imageUrlObject];
+            NSString* artworkImageUrlObject=[self changeUrlForPictureQuality:(NSString *)imageUrlObject];
+            [cell setImageUrl:(NSString*)artworkImageUrlObject];
     }
     return cell;
 }
@@ -391,7 +419,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 100;
+    return 160;
 }
 
 #pragma mark NearestSongMapViewControllerProtocoll

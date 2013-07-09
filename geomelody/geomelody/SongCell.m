@@ -9,7 +9,7 @@
 #import "SongCell.h"
 #import <QuartzCore/QuartzCore.h>
 #import "UIImageView+AFNetworking.h"
-
+#import "ImageEntropy.h"
 @implementation SongCell
 
 @synthesize songImage, songTitle, songInterpreter, likes;
@@ -32,7 +32,28 @@
 }
 
 - (void) setImageUrl:(NSString *)url {
-   [songImage setImageWithURL:[NSURL URLWithString:(NSString* )url]];
+//    NSURL *imageURL = [NSURL URLWithString:url];
+//    NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
+//    songImage.image = [UIImage imageWithData:imageData];
+    [songImage setImageWithURL:[NSURL URLWithString:(NSString* )url]];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
+    [request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
+    [songImage setImageWithURLRequest:request placeholderImage:nil
+                                         success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+                                             NSLog(@"success to load artwork"); //it always lands here! But nothing happens
+                                             ImageEntropy * entropy = [ImageEntropy alloc];
+                                             [entropy setImage:image];
+                                             NSRange range=[entropy calculateRowRange];
+                                             CGRect cropRect = CGRectMake(0, range.location, image.size.width, range.length);
+                                             CGImageRef imageRef = CGImageCreateWithImageInRect([image CGImage], cropRect);
+                                             // or use the UIImage wherever you like
+                                             [songImage setImage:[UIImage imageWithCGImage:imageRef]];
+                                             CGImageRelease(imageRef);
+                                                                                        
+                                         } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+                                             NSLog(@"fail to load artwork");
+                                         }];
+    
 }
 
 @end

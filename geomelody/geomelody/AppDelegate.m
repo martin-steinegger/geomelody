@@ -80,13 +80,8 @@
 
 - (NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
 {
-    NSUInteger orientations = UIInterfaceOrientationMaskAll;
-    
-    if (self.window.rootViewController) {
-        UIViewController* presented = [[[(UINavigationController *)self.window.rootViewController.revealSideViewController navigationController] viewControllers] lastObject];
-        orientations = [presented supportedInterfaceOrientations];
-    }
-    return orientations;
+
+    return UIInterfaceOrientationMaskPortrait;
 }
 
 @end

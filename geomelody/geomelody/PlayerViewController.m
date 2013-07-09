@@ -9,6 +9,9 @@
 #import <CoreLocation/CoreLocation.h>
 #import "SCUI.h"
 #import "BackendApi.h"
+#import <QuartzCore/QuartzCore.h>
+#import "UIImageView+AFNetworking.h"
+
 
 @interface PlayerViewController ()
 - (void)setUpView;
@@ -18,7 +21,7 @@
 @implementation PlayerViewController
 @synthesize playPauseButton;
 @synthesize songItem;
-
+@synthesize artwork_picture;
 @synthesize audioPlayer;
 
 
@@ -251,40 +254,45 @@
         NSNumber *shared_count = [songItem objectForKey:@"shared_to_count"];
         self.shares.text = [NSString stringWithFormat:@"%d",(int)[shared_count intValue]];
         
-        NSObject * artworkImageUrlObject;
-        UIImage *art_work_image=NULL;
+        
+        Class playingInfoCenter = NSClassFromString(@"MPNowPlayingInfoCenter");
+        NSMutableDictionary *songInfo = [[NSMutableDictionary alloc] init];
+        if (playingInfoCenter) {
+            [songInfo setObject:[self.songItem objectForKey:@"title"] forKey:MPMediaItemPropertyTitle];
+            [songInfo setObject:[user objectForKey:@"username"] forKey:MPMediaItemPropertyArtist];
+            [songInfo setObject:@"Sound Cloud" forKey:MPMediaItemPropertyAlbumTitle];
+ 
+        }
+        
+        
+        NSObject * artworkImageUrlObject=NULL;
         if(( artworkImageUrlObject =[songItem objectForKey:@"artwork_url"])!=[NSNull null]){
-            artworkImageUrlObject=[self changeUrlForPictureQuality:(NSString *)artworkImageUrlObject];
+            UIImageView * artWorkPicture = self.artwork_picture;
+            NSString *artworkImageUrlString =[self changeUrlForPictureQuality:(NSString* )artworkImageUrlObject];
+            NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:artworkImageUrlString]];
+            [request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
+            
+            [self.artwork_picture setImageWithURLRequest:request placeholderImage:nil
+             success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+                NSLog(@"success to load artwork"); //it always lands here! But nothing happens
+                 [artWorkPicture setImage:image];
+                 MPMediaItemArtwork *albumArt = [[MPMediaItemArtwork alloc] initWithImage: image];
+                 [songInfo setObject:albumArt forKey:MPMediaItemPropertyArtwork];
+                 [MPNowPlayingInfoCenter defaultCenter].nowPlayingInfo = songInfo;
 
-            NSURL *imageURL = [NSURL URLWithString:(NSString* )artworkImageUrlObject];
-            NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
-            art_work_image = [UIImage imageWithData:imageData];
-            self.artwork_picture.image = art_work_image;
+            } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+                NSLog(@"fail to load artwork");
+            }];
+            
         } else {
             self.artwork_picture.image = nil;
+            [songInfo removeObjectForKey:MPMediaItemPropertyArtwork];
+            [MPNowPlayingInfoCenter defaultCenter].nowPlayingInfo = songInfo;
         }
         
         NSObject * userImageUrlObject;
         if(( userImageUrlObject =[user objectForKey:@"avatar_url"])!=[NSNull null]){            
-            NSURL *imageURL = [NSURL URLWithString:(NSString* )userImageUrlObject];
-            NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
-            UIImage *image = [UIImage imageWithData:imageData];
-            self.user_picture.image = image;
-        }
-        
-        Class playingInfoCenter = NSClassFromString(@"MPNowPlayingInfoCenter");
-        if (playingInfoCenter) {
-            NSMutableDictionary *songInfo = [[NSMutableDictionary alloc] init];
-            [songInfo setObject:[self.songItem objectForKey:@"title"] forKey:MPMediaItemPropertyTitle];
-            [songInfo setObject:[user objectForKey:@"username"] forKey:MPMediaItemPropertyArtist];
-            [songInfo setObject:@"Sound Cloud" forKey:MPMediaItemPropertyAlbumTitle];
-            if(art_work_image != NULL){
-                MPMediaItemArtwork *albumArt = [[MPMediaItemArtwork alloc] initWithImage: art_work_image];
-                [songInfo setObject:albumArt forKey:MPMediaItemPropertyArtwork];
-            }else{
-                [songInfo removeObjectForKey:MPMediaItemPropertyArtwork];
-            }
-            [MPNowPlayingInfoCenter defaultCenter].nowPlayingInfo = songInfo;
+            [self.user_picture setImageWithURL:[NSURL URLWithString:(NSString* )userImageUrlObject]];
         }
     }
 }
@@ -305,14 +313,6 @@
     
     [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
     [self becomeFirstResponder];
-    //Layout
-    //transparent navigationbar
-    self.navigationController.navigationBar.translucent = YES; // Setting this slides the view up, underneath the nav bar (otherwise it'll appear black)
-    const float colorMask[6] = {222, 255, 222, 255, 222, 255};
-    UIImage *img = [[UIImage alloc] init];
-    UIImage *maskedImage = [UIImage imageWithCGImage: CGImageCreateWithMaskingColors(img.CGImage, colorMask)];
-    [self.navigationController.navigationBar setBackgroundImage:maskedImage forBarMetrics:UIBarMetricsDefault];
-    [[UINavigationBar appearance] setShadowImage: [[UIImage alloc] init]];
 
     [self.songProgressControl addTarget:self action:@selector(songProgressTouchStart:) forControlEvents:UIControlEventTouchDown];
     [self.songProgressControl addTarget:self action:@selector(songProgressTouchEnd:)   forControlEvents:UIControlEventTouchUpInside];

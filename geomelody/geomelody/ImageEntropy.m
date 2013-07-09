@@ -8,6 +8,8 @@
 
 #import "ImageEntropy.h"
 #import "Math.h"
+#include <stdlib.h>
+
 @implementation ImageEntropy {
     CFDataRef imageData;
     UIImage * image;
@@ -61,7 +63,7 @@
     double secondLineEntropy = [self imageRowEntropy:secondLineIndex];
     if(firstLineEntropy < secondLineEntropy)
         return 1;
-    else if (firstLineEntropy < secondLineEntropy)
+    else if (firstLineEntropy > secondLineEntropy)
         return -1;
     else
         return 0;
@@ -70,7 +72,7 @@
 
 - (NSRange) calculateRowRange
 {
-    NSInteger searchWidth = 200;
+    NSInteger searchWidth = 160;
     NSInteger currentSize = imageRowSize;
     NSInteger topLine = 0;
     NSInteger buttomLine = imageRowSize-1;
@@ -84,13 +86,21 @@
                 topLine++;
                 break;
             case 0:
-                buttomLine--;
+
+                if(arc4random_uniform(2)==0)
+                    buttomLine--;
+                else
+                    topLine++;
+
                 break;
                 
         }
         currentSize--;
     }
+    if((topLine+searchWidth) > imageRowSize)
+        topLine = imageRowSize - searchWidth;
     return NSMakeRange(topLine, searchWidth);
 }
+
 
 @end
