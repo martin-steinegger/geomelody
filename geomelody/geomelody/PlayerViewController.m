@@ -355,13 +355,13 @@
     gradientLayer.frame = self.artwork_picture.layer.bounds;
 
     gradientLayer.colors = [NSArray arrayWithObjects:
-                            (id)[UIColor colorWithRed:(0/255.0) green:(0/255.0) blue:(0/255.0) alpha:0.7f].CGColor,
                             (id)[UIColor colorWithRed:(0/255.0) green:(0/255.0) blue:(0/255.0) alpha:0.3f].CGColor,
+                            (id)[UIColor colorWithRed:(0/255.0) green:(0/255.0) blue:(0/255.0) alpha:0.1f].CGColor,
                             nil];
     
     gradientLayer.locations = [NSArray arrayWithObjects:
                                [NSNumber numberWithFloat:0.0f],
-                               [NSNumber numberWithFloat:0.8f],
+                               [NSNumber numberWithFloat:1.0f],
                                nil];
     
 
@@ -379,7 +379,13 @@
     UIImage* btnImage = [UIImage imageNamed:@"BackArrow.png"];
     [backButton setImage:btnImage forState:UIControlStateNormal];
     [backButton addTarget:self action:@selector(backButtonDidPressed:) forControlEvents:UIControlEventTouchUpInside];
-    backButton.frame = CGRectMake(0.0f, 0.0f, 64.0f, 41.0f);
+    backButton.frame = CGRectMake(0.0f, 0.0f, 72.0f, 33.0f);
+    [[backButton layer] setCornerRadius:8.0f];
+    [[backButton layer] setMasksToBounds:YES];
+    [[backButton layer] setShadowOffset:CGSizeMake(5, 5)];
+    [[backButton layer] setShadowColor:[[UIColor blackColor] CGColor]];
+    [[backButton layer] setShadowOpacity:0.5];
+    backButton.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.4];
     UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
     
     self.navigationItem.leftBarButtonItem = backButtonItem;

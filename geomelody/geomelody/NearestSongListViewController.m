@@ -53,9 +53,22 @@
     UISwipeGestureRecognizer* gestureSwipeUpRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipe:)];
     gestureSwipeUpRecognizer.direction = UISwipeGestureRecognizerDirectionUp;
     [self.view addGestureRecognizer:gestureSwipeUpRecognizer];
-    
-    UIBarButtonItem *logout = [[UIBarButtonItem alloc] initWithTitle:@"Logout" style:UIBarButtonItemStylePlain target:self action:@selector(logoutSoundCloud:)];
-    self.navigationItem.leftBarButtonItem = logout;
+    // setup filter button
+    UIButton *filterButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [filterButton setTitle:@"Filter" forState:UIControlStateNormal];
+    [filterButton sizeToFit];
+    [filterButton addTarget:self action:@selector(showFilter) forControlEvents:UIControlEventTouchUpInside];
+    filterButton.frame = CGRectMake(0.0f, 0.0f, 48.0f, 33.0f);
+    [[filterButton layer] setCornerRadius:8.0f];
+    [[filterButton layer] setMasksToBounds:YES];
+    [[filterButton layer] setShadowOffset:CGSizeMake(5, 5)];
+    [[filterButton layer] setShadowColor:[[UIColor blackColor] CGColor]];
+    [[filterButton layer] setShadowOpacity:0.5];
+    filterButton.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.4];
+
+    UIBarButtonItem *filterButtonItem = [[UIBarButtonItem alloc] initWithCustomView:filterButton];
+    self.navigationItem.leftBarButtonItem = filterButtonItem;
+
     
     //change background of navigation bar to black
     self.navigationController.navigationBar.tintColor = [UIColor blackColor];
@@ -68,15 +81,6 @@
     [locationManager setDelegate:self];
     [locationManager setDistanceFilter:10]; //only every ten meters
     [locationManager startUpdatingLocation];
-    
-    NSArray *segments = [NSArray arrayWithObjects: @"Map", @"Filters", nil];
-    GMSegmentedButtonBar *navigationControls = [[GMSegmentedButtonBar alloc] initWithItems:segments];
-    [navigationControls setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
-    [navigationControls setSegmentedControlStyle:UISegmentedControlStyleBar];
-    [navigationControls addTarget:self action:@selector(navigationSegmentAction:) forControlEvents:UIControlEventTouchUpInside];
-
-    self.navigationItem.titleView = navigationControls;
-    
     [self.tableView registerNib:[UINib nibWithNibName:@"SongCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"SongCellId"];
   
 }
@@ -91,7 +95,13 @@
         playButton.titleEdgeInsets = UIEdgeInsetsMake(0, -playButton.imageView.frame.size.width, 0, playButton.imageView.frame.size.width);
         playButton.imageEdgeInsets = UIEdgeInsetsMake(0, playButton.titleLabel.frame.size.width, 0, -playButton.titleLabel.frame.size.width);
         [playButton addTarget:self action:@selector(showPlayerWithCurrentSong) forControlEvents:UIControlEventTouchUpInside];
-        playButton.frame = CGRectMake(0.0f, 0.0f, 64.0f, 41.0f);
+        playButton.frame = CGRectMake(0.0f, 0.0f, 72.0f, 33.0f);
+        [[playButton layer] setCornerRadius:8.0f];
+        [[playButton layer] setMasksToBounds:YES];
+        [[playButton layer] setShadowOffset:CGSizeMake(5, 5)];
+        [[playButton layer] setShadowColor:[[UIColor blackColor] CGColor]];
+        [[playButton layer] setShadowOpacity:0.5];
+        playButton.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.4];
         UIBarButtonItem *playerButton = [[UIBarButtonItem alloc] initWithCustomView:playButton];
         
         self.navigationItem.rightBarButtonItem = playerButton;

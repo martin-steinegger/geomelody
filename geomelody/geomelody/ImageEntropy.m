@@ -58,10 +58,18 @@
     return -entropy;
 }
 
+bool AreSame(double a, double b)
+{
+    return fabs(a - b) < DBL_EPSILON;
+}
+
 -(NSInteger) compareLines:(NSInteger) firstLineIndex secondLineIndex:(NSInteger)secondLineIndex{
     double firstLineEntropy  = [self imageRowEntropy:firstLineIndex];
     double secondLineEntropy = [self imageRowEntropy:secondLineIndex];
-    if(firstLineEntropy < secondLineEntropy)
+
+    if (AreSame(firstLineEntropy,secondLineEntropy))
+        return 0;
+    else if(firstLineEntropy < secondLineEntropy)
         return 1;
     else if (firstLineEntropy > secondLineEntropy)
         return -1;
@@ -86,12 +94,7 @@
                 topLine++;
                 break;
             case 0:
-
-                if(arc4random_uniform(2)==0)
-                    buttomLine--;
-                else
-                    topLine++;
-
+                buttomLine--;
                 break;
                 
         }
