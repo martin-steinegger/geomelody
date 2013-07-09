@@ -9,20 +9,14 @@
 #import "AppDelegate.h"
 
 #import "NearestSongListViewController.h"
-#import "SCUI.h"
+#import "Reachability.h"
 
 @implementation AppDelegate
+Reachability *internetReachable;
 
 @synthesize window = _window;
 @synthesize tabBarController = _tabBarController;
 
-+ (void)initialize;
-{
-    [SCSoundCloud  setClientID:@"f0cfa9035abc5752e699580d5586d1e6"
-                   secret:@"49baf8628ee99e0e62d6af4742d33073"
-		   redirectURL:[NSURL URLWithString:@"geomelody://oauth"]];
- 
-}
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -43,6 +37,14 @@
     
     self.window.rootViewController = _tabBarController;
     self.window.backgroundColor = [UIColor whiteColor];
+    //Internet check
+    [[NSNotificationCenter defaultCenter] addObserver:masterViewController selector:@selector(reachabilityHasChanged:) name:kReachabilityChangedNotification object:nil];
+    internetReachable = [Reachability reachabilityForInternetConnection];
+    [internetReachable startNotifier];
+
+    NetworkStatus remoteHostStatus = [internetReachable currentReachabilityStatus];
+    [masterViewController setReachability:remoteHostStatus];
+
     [self.window makeKeyAndVisible];
     return YES;
 }

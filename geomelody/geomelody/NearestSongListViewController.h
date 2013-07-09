@@ -11,12 +11,14 @@
 #import "SongCell.h"
 #import "PlayerViewController.h"
 #import "NearestSongMapViewController.h"
+#import "GenreFilterViewController.h"
 
 
 @class PlayerViewController;
 @class GenreFilterViewController;
 
-@interface NearestSongListViewController : UITableViewController<CLLocationManagerDelegate,PlayerViewControllerProtocol, NearestSongMapViewControllerProtocol>
+@interface NearestSongListViewController : UITableViewController<CLLocationManagerDelegate,PlayerViewControllerProtocol,
+GenreFilterViewControllerProtocol, NearestSongMapViewControllerProtocol>
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (strong, nonatomic) PlayerViewController *playerViewController;
 @property (strong, nonatomic) GenreFilterViewController *genreFilterViewController;
@@ -24,9 +26,11 @@
 @property (nonatomic, strong) AVAudioPlayer *player;
 @property (strong,nonatomic) CLLocation   *currentLocation;
 @property (strong,nonatomic) NSDictionary *activeUser;
+@property (strong,nonatomic) UIAlertView *networkAlert;
 
 @property NSInteger currentSongPosition;
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
+@property NSInteger reachability;
 
 @end
