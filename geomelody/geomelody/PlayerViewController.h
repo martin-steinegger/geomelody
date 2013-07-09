@@ -58,10 +58,6 @@
 - (void)togglePlayPause;
 - (IBAction)playNextSong:(id)button;
 - (IBAction)playPreviousSong:(id)button;
-- (IBAction)songProgressDidChange:(UISlider *)slider;
 - (void)setSongItem:(id)newDetailItem;
-- (IBAction)handleCommentSelect:(id)sender;
-
-
 
 @end

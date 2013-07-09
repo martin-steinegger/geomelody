@@ -233,7 +233,7 @@ typedef enum {
         if (maxCount > 0) {
             _countLabel = [[UILabel alloc] initWithFrame:CGRectZero];
             _countLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleTopMargin;
-            _countLabel.textAlignment = UITextAlignmentRight;
+            _countLabel.textAlignment = NSTextAlignmentRight;
             _countLabel.backgroundColor = [UIColor clearColor];
             _countLabel.textColor = [UIColor lightGrayColor];
             _countLabel.font = [UIFont boldSystemFontOfSize:COUNT_SIZE];

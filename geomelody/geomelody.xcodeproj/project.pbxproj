@@ -44,7 +44,6 @@
 		472EBB931785B0A200B6600A /* GenreFilterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 472EBB911785B0A100B6600A /* GenreFilterViewController.xib */; };
 		472EBB9F1785BF7B00B6600A /* YIPopupTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 472EBB9C1785BF7B00B6600A /* YIPopupTextView.m */; };
 		472EBBA01785BF7B00B6600A /* YISSTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 472EBB9E1785BF7B00B6600A /* YISSTextView.m */; };
-		472EBBA71785F5BC00B6600A /* BackArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 472EBBA61785F5BC00B6600A /* BackArrow.png */; };
 		472EBBAA178609AC00B6600A /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 472EBBA9178609AB00B6600A /* Reachability.m */; };
 		4740AAD8178C140F0053B1D9 /* FrontArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 4740AAD7178C140F0053B1D9 /* FrontArrow.png */; };
 		47752C9C17818C08000B4F24 /* SongCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 47752C9417818C08000B4F24 /* SongCell.m */; };
@@ -792,8 +791,6 @@
 				84D1F317178997AC0031D50E /* checkmark.png in Resources */,
 				84D1F31F178AA5E60031D50E /* expanded.png in Resources */,
 				84D1F320178AA5E60031D50E /* nonexpanded.png in Resources */,
-				472EBBA71785F5BC00B6600A /* BackArrow.png in Resources */,
-				472EBBA71785F5BC00B6600A /* BackArrow.png in Resources */,
 				84046A971785B91000168789 /* NearestSongMapViewController.xib in Resources */,
 				844EAF58178B6892006A1131 /* songcell_background.png in Resources */,
 				4740AAD8178C140F0053B1D9 /* FrontArrow.png in Resources */,

@@ -29,6 +29,4 @@
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 
-- (IBAction)showMap:(id)sender;
-
 @end
