@@ -16,6 +16,12 @@
 @interface PlayerViewController ()
 - (void)setUpView;
 - (void)setUpSong;
+@property (nonatomic, retain) IBOutlet NSTimer  *songProgressTimer;
+@property (nonatomic, retain) IBOutlet NSTimer  *activityTimer;
+@property (nonatomic, retain) IBOutlet NSDate   *lastActivityDate;
+@property(nonatomic) BOOL songProgressTouch;
+@property (nonatomic, retain) IBOutlet NSDate   *pauseStart;
+@property (nonatomic, retain) IBOutlet NSDate   *previousFireDate;
 @end
 
 @implementation PlayerViewController
@@ -119,29 +125,6 @@
     }
 }
 
-//Make sure we can recieve remote control events
-- (BOOL)canBecomeFirstResponder {
-    return YES;
-}
-
-// handle headphone events
-- (void)remoteControlReceivedWithEvent:(UIEvent *)event {
-    //if it is a remote control event handle it correctly
-    if (event.type == UIEventTypeRemoteControl) {
-        if (event.subtype == UIEventSubtypeRemoteControlPlay) {
-            [self playAudio];
-        } else if (event.subtype == UIEventSubtypeRemoteControlPause) {
-            [self pauseAudio];
-        } else if (event.subtype == UIEventSubtypeRemoteControlTogglePlayPause) {
-            [self togglePlayPause];
-        } else if (event.subtype == UIEventSubtypeRemoteControlNextTrack) {
-            [self playNextSong:NULL];
-        } else if (event.subtype == UIEventSubtypeRemoteControlPreviousTrack) {
-            [self playPreviousSong:NULL];
-        }
-    }
-}
-
 - (IBAction)playNextSong:(id)button{
     [UIView animateWithDuration:0.55 animations:^{
         [UIView setAnimationDelay:0.2];
@@ -219,12 +202,13 @@
 
 - (void)setUpSong{
     if (self.songItem) {
+
         NSString *streamURL = [songItem objectForKey:@"stream_url"];
         NSString *streamClientAuth = [streamURL stringByAppendingString:@"?client_id=f0cfa9035abc5752e699580d5586d1e6"];
         NSURL *url = [NSURL URLWithString:streamClientAuth];
         AVURLAsset *asset = [AVURLAsset URLAssetWithURL:url options:nil];
         NSArray *keys     = [NSArray arrayWithObject:@"playable"];
-        
+
         [asset loadValuesAsynchronouslyForKeys:keys completionHandler:^() {
             AVPlayerItem * playerItem = [AVPlayerItem playerItemWithAsset:asset];
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(songDidFinishPlaying)
@@ -233,13 +217,9 @@
                 self.audioPlayer = [AVPlayer playerWithPlayerItem:playerItem];
             else
                 [self.audioPlayer replaceCurrentItemWithPlayerItem:playerItem ];
-            
- 
-            self.songProgressControl.maximumValue = [self durationInSeconds];
             self.songProgressControl.minimumValue = 0.0;
+            self.songProgressControl.maximumValue = [self durationInSeconds];
             self.songProgressControl.continuous = YES;
-            
-
             [self playAudio];
 
         }];
@@ -623,7 +603,6 @@
     NSLog(@"did dismiss: cancelled=%d",cancelled);
 }
 
-
 - (void)handleCommentSelect
 {
     YIPopupTextView* popupTextView = [[YIPopupTextView alloc] initWithPlaceHolder:@"input here" maxCount:1000
@@ -633,8 +612,6 @@
     popupTextView.text = self.user_comment.text;
     //    popupTextView.editable = NO;                  // set editable=NO to show without keyboard
     [popupTextView showInView:NULL];
-    
-
 }
 
 
