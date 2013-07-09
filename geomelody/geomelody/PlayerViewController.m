@@ -276,7 +276,9 @@
 {
     if (self.songItem) {
         
-        self.songTitle.text = [self.songItem objectForKey:@"title"];
+        self.songTitle.text     = [self.songItem objectForKey:@"title"];
+        self.user_comment.text  = [self.songItem objectForKey:@"Comment"];
+
         NSDictionary *user  = [self.songItem objectForKey:@"user"];
         self.songInterpreter.text = [user objectForKey:@"username"];
         
