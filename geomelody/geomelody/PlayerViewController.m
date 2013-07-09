@@ -203,6 +203,10 @@
         [self setUpSong];
         [self playAudio];
         [self setUpView];
+    }else{
+        songItem = newDetailItem;
+        [self setUpView];
+
     }
     
     [self.tabBarItem setEnabled:YES];
