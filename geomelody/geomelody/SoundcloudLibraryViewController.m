@@ -25,8 +25,11 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-
+        UIImage *img = [[UIImage alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"103-map" ofType:@"png"]];
+        self.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Search" image:img tag:0];
+        self.title = @"Search";
     }
+    
     return self;
 }
 

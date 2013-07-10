@@ -24,6 +24,8 @@
 @synthesize tableView;
 @synthesize reachability;
 @synthesize playerViewController;
+@synthesize soundcloudLibraryViewController;
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {

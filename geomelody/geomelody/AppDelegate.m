@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 
 #import "NearestSongListViewController.h"
+#import "SoundcloudLibraryViewController.h"
 #import "Reachability.h"
 
 @implementation AppDelegate
@@ -33,12 +34,15 @@ Reachability *internetReachable;
     NearestSongMapViewController *songMapViewController = [[NearestSongMapViewController alloc] initWithNibName:@"NearestSongMapViewController" bundle:nil];
     [songMapViewController setDelegate:masterViewController];
     
+    SoundcloudLibraryViewController * soundcloudLibraryViewController= [[SoundcloudLibraryViewController alloc] initWithNibName:@"SoundcloudLibraryViewController" bundle:nil];
+    
     playerViewController = [[PlayerViewController alloc] initWithNibName:@"PlayerViewController" bundle:nil];
     [playerViewController setDelegate:masterViewController];
     [masterViewController setPlayerViewController:playerViewController];
+    [masterViewController setSoundcloudLibraryViewController:soundcloudLibraryViewController];
     
     _tabBarController = [[UITabBarController alloc] init];
-    _tabBarController.viewControllers = [NSArray arrayWithObjects:navigationController, songMapViewController, playerViewController, nil];
+    _tabBarController.viewControllers = [NSArray arrayWithObjects:navigationController, songMapViewController, playerViewController, soundcloudLibraryViewController, nil];
     
     self.window.rootViewController = _tabBarController;
     self.window.backgroundColor = [UIColor whiteColor];
