@@ -46,12 +46,10 @@
 - (IBAction)songProgressTouchStart:(UISlider *)slider {
     NSLog(@"songProgressTouchStart");
     self.songProgressTouch = YES;
-//    [self pauseAudio];
 }
 
 - (IBAction)songProgressTouchEnd:(UISlider *)slider {
     NSLog(@"songProgressTouchStart");
-
     if (self.songProgressTouch==YES) {
         self.songProgressTouch = NO;
         self.lastActivityDate = [[NSDate alloc] init];
@@ -67,9 +65,7 @@
     }
 }
 
-
 - (void)updateSongProgressBar:(NSTimer *)timer {
-    
     if(self.songProgressTouch == NO){
         self.songProgressControl.maximumValue = [self durationInSeconds];
         [self.songProgressControl setValueWithoutUpdate:[self currentTimeInSeconds]];
@@ -167,8 +163,6 @@
 }
 
 
-#pragma mark - Managing the detail item
-
 -(void)createAudioSession
 {
     // Registers this class as the delegate of the audio session.
@@ -180,6 +174,7 @@
     [audioSession setCategory:AVAudioSessionCategoryPlayback error:&myErr];
 }
 
+#pragma mark - Managing the detail item
 - (void)setSongItem:(id)newDetailItem
 {
     NSDictionary * newSongDict = (NSDictionary* ) newDetailItem;
@@ -260,16 +255,12 @@
 
         self.songTitle.text     = [self.songItem objectForKey:@"title"];
         self.user_comment.text  = [self.songItem objectForKey:@"Comment"];
-
         NSDictionary *user  = [self.songItem objectForKey:@"user"];
         self.songInterpreter.text = [user objectForKey:@"username"];
-        
         NSNumber *favoritings_count = [songItem objectForKey:@"favoritings_count"];
         self.likes.text = [NSString stringWithFormat:@"%d",(int)[favoritings_count intValue]];
-
         NSNumber *shared_count = [songItem objectForKey:@"shared_to_count"];
         self.shares.text = [NSString stringWithFormat:@"%d",(int)[shared_count intValue]];
-        
         
         Class playingInfoCenter = NSClassFromString(@"MPNowPlayingInfoCenter");
         NSMutableDictionary *songInfo = [[NSMutableDictionary alloc] init];
@@ -279,8 +270,6 @@
             [songInfo setObject:@"Sound Cloud" forKey:MPMediaItemPropertyAlbumTitle];
  
         }
-        
-        
         NSObject * artworkImageUrlObject=NULL;
         if(( artworkImageUrlObject =[songItem objectForKey:@"artwork_url"])!=[NSNull null]){
             UIImageView * artWorkPicture = self.artwork_picture;
@@ -305,7 +294,6 @@
             [songInfo removeObjectForKey:MPMediaItemPropertyArtwork];
             [MPNowPlayingInfoCenter defaultCenter].nowPlayingInfo = songInfo;
         }
-        
         NSObject * soundCloudUserIdObject=[songItem objectForKey:@"SoundCloudUserId"];
         if(soundCloudUserIdObject!=NULL){
             SCAccount *account = [SCSoundCloud account];
@@ -325,7 +313,6 @@
 
                 }
             };
-            
             NSString *resourceURL = @"https://api.soundcloud.com/users/";
             resourceURL=[resourceURL stringByAppendingString:(NSString *)soundCloudUserIdObject];
             [SCRequest performMethod:SCRequestMethodGET
@@ -356,11 +343,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
     [self.songProgressControl addTarget:self action:@selector(songProgressTouchStart:) forControlEvents:UIControlEventTouchDown];
     [self.songProgressControl addTarget:self action:@selector(songProgressTouchEnd:)   forControlEvents:UIControlEventTouchUpInside];
-
-
     self.songProgressControl.sliderStyle = UICircularSliderStyleCircle;
     self.songProgressControl.maximumTrackTintColor = [[UIColor lightGrayColor] colorWithAlphaComponent:0.5];
     self.songProgressControl.minimumTrackTintColor = [UIColor whiteColor];
@@ -388,10 +372,7 @@
     [[self.post_button  layer] setShadowOffset:CGSizeMake(5, 5)];
     [[self.post_button  layer] setShadowColor:[[UIColor blackColor] CGColor]];
     [[self.post_button  layer] setShadowOpacity:0.5];
-    self.post_button.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.4];
-
-    
-    
+    self.post_button.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.4]; 
     
     CAGradientLayer *gradientLayer = [CAGradientLayer layer];
     gradientLayer.frame = self.artwork_picture.layer.bounds;
@@ -409,12 +390,6 @@
 
     [self.artwork_picture.layer addSublayer:gradientLayer];
 
-
-    // Controll
-    // Hack http://stackoverflow.com/questions/900461/slow-start-for-avaudioplayer-the-first-time-a-sound-is-played
-
-    
-    
     UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
     
     [backButton setTitle:@"Back" forState:UIControlStateNormal];
@@ -432,32 +407,25 @@
     
     self.navigationItem.leftBarButtonItem = backButtonItem;
     
-    
     UISwipeGestureRecognizer* gestureSwipeLeftRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipe:)];
     gestureSwipeLeftRecognizer.direction = UISwipeGestureRecognizerDirectionLeft;
     [self.artwork_picture addGestureRecognizer:gestureSwipeLeftRecognizer];
-    
     UISwipeGestureRecognizer* gestureSwipeRightRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipe:)];
     gestureSwipeRightRecognizer.direction = UISwipeGestureRecognizerDirectionRight;
     [self.artwork_picture addGestureRecognizer:gestureSwipeRightRecognizer];
-    
-    UISwipeGestureRecognizer* gestureSwipeLeftSongProgressControl = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipe:)];
-    gestureSwipeLeftSongProgressControl.direction = UISwipeGestureRecognizerDirectionLeft;
-    [self.songProgressControl addGestureRecognizer:gestureSwipeLeftSongProgressControl];
-    
-    UISwipeGestureRecognizer* gestureSwipeRightSongProgressControl = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipe:)];
-    gestureSwipeRightSongProgressControl.direction = UISwipeGestureRecognizerDirectionRight;
-    [self.songProgressControl addGestureRecognizer:gestureSwipeRightSongProgressControl];
-    
-
-    UITapGestureRecognizer *single_tap_songprogress_recognizer =[[UITapGestureRecognizer alloc] initWithTarget: self action:@selector(handleSingleTapArtwork)];
-    single_tap_songprogress_recognizer.numberOfTapsRequired = 1;
-    [self.songProgressControl addGestureRecognizer:single_tap_songprogress_recognizer];
-    
     UITapGestureRecognizer *single_tap_artwork_recognizer =[[UITapGestureRecognizer alloc] initWithTarget: self action:@selector(handleSingleTapArtwork)];
     single_tap_artwork_recognizer.numberOfTapsRequired = 1;
     [self.artwork_picture addGestureRecognizer:single_tap_artwork_recognizer];
 
+    UISwipeGestureRecognizer* gestureSwipeLeftSongProgressControl = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipe:)];
+    gestureSwipeLeftSongProgressControl.direction = UISwipeGestureRecognizerDirectionLeft;
+    [self.songProgressControl addGestureRecognizer:gestureSwipeLeftSongProgressControl];
+    UISwipeGestureRecognizer* gestureSwipeRightSongProgressControl = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipe:)];
+    gestureSwipeRightSongProgressControl.direction = UISwipeGestureRecognizerDirectionRight;
+    [self.songProgressControl addGestureRecognizer:gestureSwipeRightSongProgressControl];
+    UITapGestureRecognizer *single_tap_songprogress_recognizer =[[UITapGestureRecognizer alloc] initWithTarget: self action:@selector(handleSingleTapArtwork)];
+    single_tap_songprogress_recognizer.numberOfTapsRequired = 1;
+    [self.songProgressControl addGestureRecognizer:single_tap_songprogress_recognizer];
     
     UITapGestureRecognizer *single_tap_comment_field =[[UITapGestureRecognizer alloc] initWithTarget: self action:@selector(handleCommentSelect)];
     single_tap_comment_field.numberOfTapsRequired = 1;
@@ -583,23 +551,19 @@
             __weak UIView * current_view= self.view;
 
             [self.user_picture setImageWithURLRequest:request placeholderImage:nil
-                                      success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-                                          NSLog(@"success to load userpicture"); //it always lands here! But nothing happens
-                                          [UIView transitionWithView:current_view
-                                                            duration:1.5f
-                                                             options:UIViewAnimationOptionTransitionCrossDissolve
-                                                          animations:^{
-                                                              user_picture_image.image = image;
-                                                          } completion:nil];
-                                        
-                                          
-                                      } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-                                          NSLog(@"fail to load artwork");
-                                      }];
+                              success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+                                  NSLog(@"success to load userpicture"); //it always lands here! But nothing happens
+                                  [UIView transitionWithView:current_view
+                                                    duration:1.5f
+                                                     options:UIViewAnimationOptionTransitionCrossDissolve
+                                                  animations:^{
+                                                      user_picture_image.image = image;
+                                                  } completion:nil];
+                              } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+                                  NSLog(@"fail to load artwork");
+                              }];
             
 
-            
-            
             [self.user_picture setImageWithURL:[NSURL URLWithString:(NSString* )userImageUrlObject]];
         }
         self.user_comment.text = text;
@@ -616,11 +580,8 @@
     YIPopupTextView* popupTextView = [[YIPopupTextView alloc] initWithPlaceHolder:@"input here" maxCount:1000
                                         buttonStyle:YIPopupTextViewButtonStyleLeftCancelRightDone tintsDoneButton:YES];
     popupTextView.delegate = self;
-    popupTextView.caretShiftGestureEnabled = YES;   // default = NO
+    popupTextView.caretShiftGestureEnabled = YES;   
     popupTextView.text = self.user_comment.text;
-    //    popupTextView.editable = NO;                  // set editable=NO to show without keyboard
     [popupTextView showInView:NULL];
 }
-
-
 @end
