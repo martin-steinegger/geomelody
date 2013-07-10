@@ -85,8 +85,10 @@
     self.navigationController.navigationBar.translucent = YES; // Setting this slides the view up, underneath the nav bar (otherwise it'll appear black)
     const float colorMask[6] = {222, 255, 222, 255, 222, 255};
     UIImage *img = [[UIImage alloc] init];
-    UIImage *maskedImage = [UIImage imageWithCGImage: CGImageCreateWithMaskingColors(img.CGImage, colorMask)];
+    CGImageRef imageRef = CGImageCreateWithMaskingColors(img.CGImage, colorMask);
+    UIImage *maskedImage = [UIImage imageWithCGImage: imageRef];
     [self.navigationController.navigationBar setBackgroundImage:maskedImage forBarMetrics:UIBarMetricsDefault];
+    CGImageRelease(imageRef);
     [[UINavigationBar appearance] setShadowImage: [[UIImage alloc] init]];
     [tableView setContentInset:UIEdgeInsetsMake(0,0,0,0)];
 
