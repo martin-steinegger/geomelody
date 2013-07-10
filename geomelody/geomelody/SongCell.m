@@ -12,30 +12,12 @@
 #import "ImageEntropy.h"
 @implementation SongCell
 
-@synthesize songImage, songTitle, songInterpreter, likes;
-
-- (void) awakeFromNib {
-    CAGradientLayer *gradientLayer = [CAGradientLayer layer];
-        
-    gradientLayer.frame = songImage.layer.bounds;
-    gradientLayer.colors = [NSArray arrayWithObjects:
-                                (id)[UIColor colorWithRed:1 green:1 blue:1 alpha:0].CGColor,
-                                (id)[UIColor colorWithRed:0 green:0 blue:0 alpha:0.6f].CGColor,
-                                nil];
-        
-    gradientLayer.locations = [NSArray arrayWithObjects:
-                                   [NSNumber numberWithFloat:0.4f],
-                                   [NSNumber numberWithFloat:1.0f],
-                                   nil];
-        
-   [songImage.layer insertSublayer:gradientLayer atIndex:0];
-}
+@synthesize songImage;
+@synthesize songTitle, songInterpreter;
+@synthesize likes, plays, shares;
+@synthesize likesImage, playsImage, sharesImage;
 
 - (void) setImageUrl:(NSString *)url {
-//    NSURL *imageURL = [NSURL URLWithString:url];
-//    NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
-//    songImage.image = [UIImage imageWithData:imageData];
-//    [songImage setImageWithURL:[NSURL URLWithString:(NSString* )url]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
     [request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
     [songImage setImageWithURLRequest:request placeholderImage:nil
@@ -54,6 +36,69 @@
                                              NSLog(@"fail to load artwork");
                                          }];
     
+}
+
+-(void) setActive:(bool)active {
+    [self clearSublayers];
+    [self initInnerShadow];
+    [self initReadabilityGradient];
+    
+    if(active) {
+        CALayer *sublayer = [CALayer layer];
+        sublayer.frame = songImage.bounds;
+        sublayer.contents = (id) [UIImage imageNamed:@"play-overlay.png"].CGImage;
+        sublayer.opacity = 0.8;
+        [songImage.layer addSublayer:sublayer];
+    
+    }
+}
+
+-(void) initReadabilityGradient {
+    CAGradientLayer *gradientLayer = [CAGradientLayer layer];
+    gradientLayer.frame = songImage.layer.bounds;
+    
+    gradientLayer.colors = [NSArray arrayWithObjects:
+                            (id)[UIColor colorWithRed:0 green:0 blue:0 alpha:0].CGColor,
+                            (id)[UIColor colorWithRed:0 green:0 blue:0 alpha:0.9f].CGColor, nil];
+    
+    gradientLayer.locations = [NSArray arrayWithObjects:
+                                [NSNumber numberWithFloat:0.4f],
+                                [NSNumber numberWithFloat:1.0f], nil];
+    
+    [songImage.layer insertSublayer:gradientLayer atIndex:0];
+}
+
+-(void) initInnerShadow {
+    CAShapeLayer* shadowLayer = [CAShapeLayer layer];
+    [shadowLayer setFrame:[songImage bounds]];
+    
+    // Standard shadow stuff
+    [shadowLayer setShadowColor:[[UIColor blackColor] CGColor]];
+    [shadowLayer setShadowOffset:CGSizeMake(0.0f, 0.0f)];
+    [shadowLayer setShadowOpacity:1.0f];
+    [shadowLayer setShadowRadius:5];
+    
+    // Causes the inner region in this example to NOT be filled.
+    [shadowLayer setFillRule:kCAFillRuleEvenOdd];
+    
+    // Create the larger rectangle path.
+    CGMutablePathRef path = CGPathCreateMutable();
+    CGPathAddRect(path, NULL, CGRectInset([songImage bounds], -42, -42));
+    
+    // Add the inner path so it's subtracted from the outer path.
+    CGPathAddPath(path, NULL, [[UIBezierPath bezierPathWithRect:[shadowLayer bounds]] CGPath]);
+    CGPathCloseSubpath(path);
+    
+    [shadowLayer setPath:path];
+    CGPathRelease(path);
+    
+    [songImage.layer insertSublayer:shadowLayer atIndex:0];
+}
+
+-(void) clearSublayers {
+    for (int i = songImage.layer.sublayers.count-1; i >= 0; i--) {
+        [[songImage.layer.sublayers objectAtIndex:i] removeFromSuperlayer];
+    }
 }
 
 @end

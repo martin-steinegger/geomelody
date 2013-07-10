@@ -240,6 +240,11 @@
 {    
     SongCell *cell = (SongCell*)[tv dequeueReusableCellWithIdentifier:@"SongCellId" forIndexPath:indexPath];
 
+    if(indexPath.row == [self currentSongPosition])
+        [cell setActive:YES];
+    else
+        [cell setActive:NO];
+    
     NSDictionary *track = [self.tracks objectAtIndex:indexPath.row];
     //todo: get all information for the song (title, interpret, genre/tags, likes, image)
     cell.songTitle.text = [track objectForKey:@"title"];
@@ -308,11 +313,6 @@
     NSLog(@"update nearest song list");
     [self checkLogin];
     NSArray *genreFilter = [self.genreFilterViewController getGenreFilter];
-
-    // 1) todo: get nearest songs from database with filter
-    // 2) ask soundcloud for information http://api.soundcloud.com/tracks?client_id=f0cfa9035abc5752e699580d5586d1e6&ids=41558714,13158665
-    // 3) order by favoritings_count and playback_count
-    // getSoundCloudSongs
     
     BackendApi* backendApi=[BackendApi sharedBackendApi];
     
@@ -367,7 +367,27 @@
                                                  options:0
                                                  error:&jsonError];
             if (!jsonError && [jsonResponse isKindOfClass:[NSArray class]]) {
-                tracks = [self mergeData:(NSArray *)jsonResponse backEndTracks:backendSongArray];
+                NSArray* newData = [self mergeData:(NSArray *)jsonResponse backEndTracks:backendSongArray];
+                
+                // check if the new song list contains the same entries as the old one
+                bool isSame = true;
+                if([newData count] != [tracks count]) {
+                    isSame = false;
+                } else {
+                    for(int i = 0; i < [newData count]; i++) {
+                        if(![newData[i] isEqualToDictionary:tracks[i]]) {
+                            isSame = false;
+                            break;
+                        }
+                    }
+                }
+                
+                // only update if we have different entries
+                if(!isSame) {
+                    tracks = newData;
+                    [self setCurrentSongPosition:-1];
+                }
+                
                 [self.tableView reloadData];
             }
         };

@@ -85,6 +85,7 @@
 		84707E95178C7C9500FB14A0 /* 194-note-2.png in Resources */ = {isa = PBXBuildFile; fileRef = 84707E92178C7C9500FB14A0 /* 194-note-2.png */; };
 		84707E9C178C7E8300FB14A0 /* 103-map.png in Resources */ = {isa = PBXBuildFile; fileRef = 84707E9A178C7E8300FB14A0 /* 103-map.png */; };
 		84707E9D178C7E8300FB14A0 /* 152-rolodex.png in Resources */ = {isa = PBXBuildFile; fileRef = 84707E9B178C7E8300FB14A0 /* 152-rolodex.png */; };
+		84B5CB75178D70B200A8F6DA /* play-overlay.png in Resources */ = {isa = PBXBuildFile; fileRef = 84B5CB74178D70B200A8F6DA /* play-overlay.png */; };
 		84CBE36C1782296000C4B1F2 /* BackendApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 84CBE36B1782296000C4B1F2 /* BackendApi.m */; };
 		84CBE3781782360000C4B1F2 /* GeoMelodyBackendSong.m in Sources */ = {isa = PBXBuildFile; fileRef = 84CBE3771782360000C4B1F2 /* GeoMelodyBackendSong.m */; };
 		84CBE37B1782367C00C4B1F2 /* GeoMelodyBackendLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 84CBE37A1782367C00C4B1F2 /* GeoMelodyBackendLocation.m */; };
@@ -305,6 +306,7 @@
 		84707E92178C7C9500FB14A0 /* 194-note-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "194-note-2.png"; sourceTree = "<group>"; };
 		84707E9A178C7E8300FB14A0 /* 103-map.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "103-map.png"; sourceTree = "<group>"; };
 		84707E9B178C7E8300FB14A0 /* 152-rolodex.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "152-rolodex.png"; sourceTree = "<group>"; };
+		84B5CB74178D70B200A8F6DA /* play-overlay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "play-overlay.png"; sourceTree = "<group>"; };
 		84CBE36A1782296000C4B1F2 /* BackendApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackendApi.h; sourceTree = "<group>"; };
 		84CBE36B1782296000C4B1F2 /* BackendApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackendApi.m; sourceTree = "<group>"; };
 		84CBE3761782360000C4B1F2 /* GeoMelodyBackendSong.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeoMelodyBackendSong.h; sourceTree = "<group>"; };
@@ -473,6 +475,7 @@
 		47752CA617818C57000B4F24 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				84B5CB74178D70B200A8F6DA /* play-overlay.png */,
 				84707E9A178C7E8300FB14A0 /* 103-map.png */,
 				84707E9B178C7E8300FB14A0 /* 152-rolodex.png */,
 				84707E92178C7C9500FB14A0 /* 194-note-2.png */,
@@ -801,6 +804,7 @@
 				84707E9C178C7E8300FB14A0 /* 103-map.png in Resources */,
 				84707E9D178C7E8300FB14A0 /* 152-rolodex.png in Resources */,
 				84D1F32A178B44900031D50E /* SoundcloudLibraryViewController.xib in Resources */,
+				84B5CB75178D70B200A8F6DA /* play-overlay.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
