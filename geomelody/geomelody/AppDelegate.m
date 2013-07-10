@@ -18,6 +18,9 @@ Reachability *internetReachable;
 @synthesize window = _window;
 @synthesize tabBarController = _tabBarController;
 @synthesize playerViewController;
+@synthesize locationManager;
+@synthesize nearestSongListViewController;
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     
@@ -28,36 +31,55 @@ Reachability *internetReachable;
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
-    NearestSongListViewController *masterViewController = [[NearestSongListViewController alloc] initWithNibName:@"NearestSongListViewController" bundle:nil];
-    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:masterViewController];
+    nearestSongListViewController = [[NearestSongListViewController alloc] initWithNibName:@"NearestSongListViewController" bundle:nil];
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:nearestSongListViewController];
     
     NearestSongMapViewController *songMapViewController = [[NearestSongMapViewController alloc] initWithNibName:@"NearestSongMapViewController" bundle:nil];
-    [songMapViewController setDelegate:masterViewController];
+    [songMapViewController setDelegate:nearestSongListViewController];
     
     SoundcloudLibraryViewController * soundcloudLibraryViewController= [[SoundcloudLibraryViewController alloc] initWithNibName:@"SoundcloudLibraryViewController" bundle:nil];
-    soundcloudLibraryViewController.delegate = masterViewController;
+    soundcloudLibraryViewController.delegate = nearestSongListViewController;
     
     playerViewController = [[PlayerViewController alloc] initWithNibName:@"PlayerViewController" bundle:nil];
-    [playerViewController setDelegate:masterViewController];
-    [masterViewController setPlayerViewController:playerViewController];
-    [masterViewController setSoundcloudLibraryViewController:soundcloudLibraryViewController];
+    [playerViewController setDelegate:nearestSongListViewController];
+    [nearestSongListViewController setPlayerViewController:playerViewController];
+    [nearestSongListViewController setSoundcloudLibraryViewController:soundcloudLibraryViewController];
     
     _tabBarController = [[UITabBarController alloc] init];
     _tabBarController.viewControllers = [NSArray arrayWithObjects:navigationController, songMapViewController, playerViewController, soundcloudLibraryViewController, nil];
     
+    
+    locationManager = [[CLLocationManager alloc] init];
+    [locationManager setDesiredAccuracy:kCLLocationAccuracyBest];
+    [locationManager setDelegate:self];
+    [locationManager setDistanceFilter:10]; //only every ten meters
+    [locationManager startUpdatingLocation]; //only every ten meters
+
     self.window.rootViewController = _tabBarController;
     self.window.backgroundColor = [UIColor whiteColor];
     //Internet check
-    [[NSNotificationCenter defaultCenter] addObserver:masterViewController selector:@selector(reachabilityHasChanged:) name:kReachabilityChangedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:nearestSongListViewController selector:@selector(reachabilityHasChanged:) name:kReachabilityChangedNotification object:nil];
     internetReachable = [Reachability reachabilityForInternetConnection];
     [internetReachable startNotifier];
 
     NetworkStatus remoteHostStatus = [internetReachable currentReachabilityStatus];
-    [masterViewController setReachability:remoteHostStatus];
+    [nearestSongListViewController setReachability:remoteHostStatus];
 
     [self.window makeKeyAndVisible];
     return YES;
 }
+
+
+-(void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
+    //updated    newLocation
+    nearestSongListViewController.currentLocation = newLocation;
+    [nearestSongListViewController updateNearestSongList];
+}
+
+-(void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
+    NSLog(@"%@", [error description]);
+}
+
 
 - (void)remoteControlReceivedWithEvent:(UIEvent *)event {
     //if it is a remote control event handle it correctly
