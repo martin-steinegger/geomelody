@@ -20,7 +20,6 @@
 @implementation NearestSongListViewController
 
 @synthesize tracks;
-@synthesize locationManager;
 @synthesize tableView;
 @synthesize reachability;
 @synthesize playerViewController;
@@ -58,7 +57,6 @@
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Someone broke the internet :("
                                                                 message:@"You require an internet connection to communicate with the server."
                                                                delegate:nil cancelButtonTitle:nil otherButtonTitles:nil];
-                [locationManager stopUpdatingLocation];
                 [self setNetworkAlert:alert];
             }
             [self.networkAlert show];
@@ -67,7 +65,6 @@
         if ([self networkAlert] != nil) {
             [self.networkAlert dismissWithClickedButtonIndex:0 animated:YES];
         }
-        [locationManager startUpdatingLocation];
     }
 }
 
@@ -85,8 +82,10 @@
     self.navigationController.navigationBar.translucent = YES; // Setting this slides the view up, underneath the nav bar (otherwise it'll appear black)
     const float colorMask[6] = {222, 255, 222, 255, 222, 255};
     UIImage *img = [[UIImage alloc] init];
-    UIImage *maskedImage = [UIImage imageWithCGImage: CGImageCreateWithMaskingColors(img.CGImage, colorMask)];
+    CGImageRef imageRef = CGImageCreateWithMaskingColors(img.CGImage, colorMask);
+    UIImage *maskedImage = [UIImage imageWithCGImage: imageRef];
     [self.navigationController.navigationBar setBackgroundImage:maskedImage forBarMetrics:UIBarMetricsDefault];
+    CGImageRelease(imageRef);
     [[UINavigationBar appearance] setShadowImage: [[UIImage alloc] init]];
     [tableView setContentInset:UIEdgeInsetsMake(0,0,0,0)];
 
@@ -113,10 +112,7 @@
 
     //get location updates for music
     self.currentLocation = NULL;
-    locationManager = [[CLLocationManager alloc] init];
-    [locationManager setDesiredAccuracy:kCLLocationAccuracyBest];
-    [locationManager setDelegate:self];
-    [locationManager setDistanceFilter:10]; //only every ten meters
+
 
     //SC init
     [SCSoundCloud  setClientID:@"f0cfa9035abc5752e699580d5586d1e6"
@@ -194,15 +190,6 @@
 
 }
 
--(void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
-    //updated    newLocation
-    self.currentLocation = newLocation;
-    [self updateNearestSongList];
-}
-
--(void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
-    NSLog(@"%@", [error description]);
-}
 
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -214,6 +201,7 @@
 
 
     // update song list
+    [self.tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning
@@ -240,6 +228,11 @@
 {    
     SongCell *cell = (SongCell*)[tv dequeueReusableCellWithIdentifier:@"SongCellId" forIndexPath:indexPath];
 
+    if(indexPath.row == [self currentSongPosition])
+        [cell setActive:YES];
+    else
+        [cell setActive:NO];
+    
     NSDictionary *track = [self.tracks objectAtIndex:indexPath.row];
     //todo: get all information for the song (title, interpret, genre/tags, likes, image)
     cell.songTitle.text = [track objectForKey:@"title"];
@@ -307,12 +300,10 @@
     
     NSLog(@"update nearest song list");
     [self checkLogin];
+    if(reachability==NotReachable)
+        return;
+    
     NSArray *genreFilter = [self.genreFilterViewController getGenreFilter];
-
-    // 1) todo: get nearest songs from database with filter
-    // 2) ask soundcloud for information http://api.soundcloud.com/tracks?client_id=f0cfa9035abc5752e699580d5586d1e6&ids=41558714,13158665
-    // 3) order by favoritings_count and playback_count
-    // getSoundCloudSongs
     
     BackendApi* backendApi=[BackendApi sharedBackendApi];
     
@@ -367,7 +358,27 @@
                                                  options:0
                                                  error:&jsonError];
             if (!jsonError && [jsonResponse isKindOfClass:[NSArray class]]) {
-                tracks = [self mergeData:(NSArray *)jsonResponse backEndTracks:backendSongArray];
+                NSArray* newData = [self mergeData:(NSArray *)jsonResponse backEndTracks:backendSongArray];
+                
+                // check if the new song list contains the same entries as the old one
+                bool isSame = true;
+                if([newData count] != [tracks count]) {
+                    isSame = false;
+                } else {
+                    for(int i = 0; i < [newData count]; i++) {
+                        if(![newData[i] isEqualToDictionary:tracks[i]]) {
+                            isSame = false;
+                            break;
+                        }
+                    }
+                }
+                
+                // only update if we have different entries
+                if(!isSame) {
+                    tracks = newData;
+                    [self setCurrentSongPosition:-1];
+                }
+                
                 [self.tableView reloadData];
             }
         };

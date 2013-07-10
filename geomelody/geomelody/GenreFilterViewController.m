@@ -25,9 +25,9 @@
     self = [super initWithStyle:style];
     if (self) {
         self.title = @"Filter Settings";
+        //initially set to disabled (only needed, when user starts app for the first time and has not changed the filter yet)
+        self->_filterEnabled = NO;
     }
-    //initially set to disabled (only needed, when user starts app for the first time and has not changed the filter yet)
-    _filterEnabled = NO;
     return self;
 }
 
