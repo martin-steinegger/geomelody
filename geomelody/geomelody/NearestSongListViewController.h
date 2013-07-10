@@ -18,11 +18,9 @@
 @class PlayerViewController;
 @class GenreFilterViewController;
 
-@interface NearestSongListViewController : UITableViewController<CLLocationManagerDelegate,
-                                                                PlayerViewControllerProtocol,
+@interface NearestSongListViewController : UITableViewController<PlayerViewControllerProtocol,
                                                                 GenreFilterViewControllerProtocol,
                                                                 NearestSongMapViewControllerProtocol>
-@property (strong, nonatomic) CLLocationManager *locationManager;
 @property (strong, nonatomic) PlayerViewController *playerViewController;
 @property (strong, nonatomic) GenreFilterViewController *genreFilterViewController;
 @property (strong, nonatomic) SoundcloudLibraryViewController *soundcloudLibraryViewController;

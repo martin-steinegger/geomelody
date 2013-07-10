@@ -20,7 +20,6 @@
 @implementation NearestSongListViewController
 
 @synthesize tracks;
-@synthesize locationManager;
 @synthesize tableView;
 @synthesize reachability;
 @synthesize playerViewController;
@@ -58,7 +57,6 @@
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Someone broke the internet :("
                                                                 message:@"You require an internet connection to communicate with the server."
                                                                delegate:nil cancelButtonTitle:nil otherButtonTitles:nil];
-                [locationManager stopUpdatingLocation];
                 [self setNetworkAlert:alert];
             }
             [self.networkAlert show];
@@ -67,7 +65,6 @@
         if ([self networkAlert] != nil) {
             [self.networkAlert dismissWithClickedButtonIndex:0 animated:YES];
         }
-        [locationManager startUpdatingLocation];
     }
 }
 
@@ -115,10 +112,7 @@
 
     //get location updates for music
     self.currentLocation = NULL;
-    locationManager = [[CLLocationManager alloc] init];
-    [locationManager setDesiredAccuracy:kCLLocationAccuracyBest];
-    [locationManager setDelegate:self];
-    [locationManager setDistanceFilter:10]; //only every ten meters
+
 
     //SC init
     [SCSoundCloud  setClientID:@"f0cfa9035abc5752e699580d5586d1e6"
@@ -196,15 +190,6 @@
 
 }
 
--(void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
-    //updated    newLocation
-    self.currentLocation = newLocation;
-    [self updateNearestSongList];
-}
-
--(void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
-    NSLog(@"%@", [error description]);
-}
 
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -216,6 +201,7 @@
 
 
     // update song list
+    [self.tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning
@@ -314,6 +300,9 @@
     
     NSLog(@"update nearest song list");
     [self checkLogin];
+    if(reachability==NotReachable)
+        return;
+    
     NSArray *genreFilter = [self.genreFilterViewController getGenreFilter];
     
     BackendApi* backendApi=[BackendApi sharedBackendApi];
