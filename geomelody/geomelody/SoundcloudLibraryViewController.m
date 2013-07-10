@@ -70,13 +70,6 @@
     if(searchString.length>0) {
         [requestParameter setObject:searchString forKey:@"q"];
     }
-    // apply search on for user if "my music" is selected
-    if (librarySelector.selectedSegmentIndex == 1) {
-        NSLog(@"my id: %@", [[self getActiveUser] objectForKey:@"id"]);
-        [requestParameter setObject:[[self getActiveUser] objectForKey:@"id"] forKey:@"user_id"];
-    }
-    //todo
-    //[requestParameter setObject:ids_string forKey:@"ids"];
     
     SCAccount *account = [SCSoundCloud account];
     SCRequestResponseHandler handler;
@@ -95,7 +88,8 @@
             NSLog(@"error occurred when loading songs: %@", jsonError);
         }
     };
-    NSString *resourceURL = @"https://api.soundcloud.com/tracks.json";
+    // distinguish between "my music" and "everything"
+    NSString *resourceURL = (librarySelector.selectedSegmentIndex == 0) ? @"https://api.soundcloud.com/tracks.json" : @"https://api.soundcloud.com/me/tracks.json";
     [SCRequest performMethod:SCRequestMethodGET
                   onResource:[NSURL URLWithString:resourceURL]
              usingParameters:requestParameter
