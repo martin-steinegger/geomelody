@@ -101,6 +101,10 @@
     bottomRightCoord.latitude = 90;
     bottomRightCoord.longitude = -180;
     
+    // use first song if no track was selected
+    if(currentTrack == -1)
+        currentTrack = 1;
+    
     for(id<MKAnnotation> annotation in _mapView.annotations)
     {
         if([annotation isKindOfClass:[MapAnnotation class]]) {
@@ -151,6 +155,10 @@
     if([annotation isKindOfClass:[MapAnnotation class]]) {
         MapAnnotation* mapAnnotation = annotation;
         NSInteger currentTrack = [delegate getCurrentTrackIndex];
+        
+        // no Track set yet, use nearest
+        if(currentTrack == -1)
+            currentTrack = 1;
         
         MKPinAnnotationView *pinView = [[MKPinAnnotationView alloc] initWithAnnotation:mapAnnotation reuseIdentifier:@""];
         if([mapAnnotation.index intValue] == currentTrack)
