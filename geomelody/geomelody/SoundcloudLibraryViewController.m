@@ -109,17 +109,25 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 160;
+    return (tracks.count == 0) ? 350 : 160;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSLog(@"number racks: %i", tracks.count);
-    return tracks.count;
+    return MAX(tracks.count, 1);
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    //no music found
+    if(tracks.count == 0) {
+        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"EmptyLibraryView" owner:self options:nil];
+        UITableViewCell *cell = [nib objectAtIndex:0];
+        return cell;
+    }
+    
     static NSString *CellIdentifier = @"SongCell";
     SongCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+
     if(cell == nil) {
         //cell = [[SongCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         NSArray *nib = [[NSBundle mainBundle] loadNibNamed:CellIdentifier owner:self options:nil];
