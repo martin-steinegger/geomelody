@@ -12,16 +12,17 @@
 #import "PlayerViewController.h"
 #import "NearestSongMapViewController.h"
 #import "GenreFilterViewController.h"
+#import "SoundcloudLibraryViewController.h"
 
 
 @class PlayerViewController;
 @class GenreFilterViewController;
 
-@interface NearestSongListViewController : UITableViewController<CLLocationManagerDelegate,PlayerViewControllerProtocol,
-GenreFilterViewControllerProtocol, NearestSongMapViewControllerProtocol>
+@interface NearestSongListViewController : UITableViewController<CLLocationManagerDelegate,PlayerViewControllerProtocol, NearestSongMapViewControllerProtocol,SoundcloudLibraryViewControllerProtocol>
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (strong, nonatomic) PlayerViewController *playerViewController;
 @property (strong, nonatomic) GenreFilterViewController *genreFilterViewController;
+@property (strong, nonatomic) SoundcloudLibraryViewController *soundcloudLibraryViewController;
 @property (nonatomic, strong) NSArray *tracks;
 @property (nonatomic, strong) AVAudioPlayer *player;
 @property (strong,nonatomic) CLLocation   *currentLocation;

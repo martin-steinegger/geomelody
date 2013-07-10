@@ -93,6 +93,8 @@
 		84D1F317178997AC0031D50E /* checkmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 84D1F316178997AC0031D50E /* checkmark.png */; };
 		84D1F31F178AA5E60031D50E /* expanded.png in Resources */ = {isa = PBXBuildFile; fileRef = 84D1F31D178AA5E60031D50E /* expanded.png */; };
 		84D1F320178AA5E60031D50E /* nonexpanded.png in Resources */ = {isa = PBXBuildFile; fileRef = 84D1F31E178AA5E60031D50E /* nonexpanded.png */; };
+		84D1F329178B44900031D50E /* SoundcloudLibraryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D1F327178B44900031D50E /* SoundcloudLibraryViewController.m */; };
+		84D1F32A178B44900031D50E /* SoundcloudLibraryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84D1F328178B44900031D50E /* SoundcloudLibraryViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -314,6 +316,9 @@
 		84D1F316178997AC0031D50E /* checkmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkmark.png; sourceTree = "<group>"; };
 		84D1F31D178AA5E60031D50E /* expanded.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = expanded.png; sourceTree = "<group>"; };
 		84D1F31E178AA5E60031D50E /* nonexpanded.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nonexpanded.png; sourceTree = "<group>"; };
+		84D1F326178B44900031D50E /* SoundcloudLibraryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundcloudLibraryViewController.h; sourceTree = "<group>"; };
+		84D1F327178B44900031D50E /* SoundcloudLibraryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoundcloudLibraryViewController.m; sourceTree = "<group>"; };
+		84D1F328178B44900031D50E /* SoundcloudLibraryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SoundcloudLibraryViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -421,6 +426,9 @@
 				84046A931785B91000168789 /* NearestSongMapViewController.h */,
 				84046A941785B91000168789 /* NearestSongMapViewController.m */,
 				84046A951785B91000168789 /* NearestSongMapViewController.xib */,
+				84D1F326178B44900031D50E /* SoundcloudLibraryViewController.h */,
+				84D1F327178B44900031D50E /* SoundcloudLibraryViewController.m */,
+				84D1F328178B44900031D50E /* SoundcloudLibraryViewController.xib */,
 				47079960177C943F0098B2F8 /* Supporting Files */,
 			);
 			path = geomelody;
@@ -792,6 +800,7 @@
 				84707E95178C7C9500FB14A0 /* 194-note-2.png in Resources */,
 				84707E9C178C7E8300FB14A0 /* 103-map.png in Resources */,
 				84707E9D178C7E8300FB14A0 /* 152-rolodex.png in Resources */,
+				84D1F32A178B44900031D50E /* SoundcloudLibraryViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -830,6 +839,7 @@
 				472EBBAA178609AC00B6600A /* Reachability.m in Sources */,
 				844EAF391788CC76006A1131 /* GMSegmentedButtonBar.m in Sources */,
 				47E72CF4178B2045007B80EC /* ImageEntropy.m in Sources */,
+				84D1F329178B44900031D50E /* SoundcloudLibraryViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

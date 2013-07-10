@@ -14,6 +14,9 @@
 #import "BackendApi.h"
 #import "GMSegmentedButtonBar.h"
 #import "Reachability.h"
+#import "SoundcloudLibraryViewController.h"
+
+
 @implementation NearestSongListViewController
 
 @synthesize tracks;
@@ -264,7 +267,7 @@
     NSLog(@"selected song at position: %d from %d songs",indexPath.row, tracks.count);
     self.currentSongPosition = indexPath.row;
     NSDictionary *song = [self.tracks objectAtIndex:indexPath.row];
-        
+    
     //NSLog(@"selected song: %@",selectedSong.soundcloud_id);
     [self showPlayer:song];
 }
@@ -289,7 +292,12 @@
 
 // change to user's soundcloud library
 - (void) showLibrary {
-    //todo
+    if (!self.soundcloudLibraryViewController) {
+        self.soundcloudLibraryViewController = [[SoundcloudLibraryViewController alloc] init];
+        self.soundcloudLibraryViewController.delegate = self;
+    }
+    // maybe pass userid and geolocation; now: delegate
+    [self.navigationController pushViewController:self.soundcloudLibraryViewController animated:YES];
 }
 
 - (void) updateNearestSongList {
