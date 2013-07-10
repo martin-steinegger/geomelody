@@ -202,6 +202,7 @@
 
 - (void)setUpSong{
     if (self.songItem) {
+        [self.playPauseButton setImage:[UIImage imageNamed:@"pause64.png"] forState:UIControlStateNormal];
 
         NSString *streamURL = [songItem objectForKey:@"stream_url"];
         NSString *streamClientAuth = [streamURL stringByAppendingString:@"?client_id=f0cfa9035abc5752e699580d5586d1e6"];
@@ -378,11 +379,18 @@
     self.user_comment.clipsToBounds = YES;
 
 
-    UIImage *redImage = [UIImage imageNamed:@"stretchable_image_red.png"];
-    UIImage *redButtonImage = [redImage stretchableImageWithLeftCapWidth:12 topCapHeight:0];
-    [self.post_button addTarget:self action:@selector(postSong:) forControlEvents:UIControlEventTouchUpInside];
-    [self.post_button setBackgroundImage:redButtonImage forState:UIControlStateHighlighted];
-    [self.post_button setBackgroundImage:redButtonImage forState:UIControlStateNormal];
+    [self.post_button  setTitle:@"Post" forState:UIControlStateNormal];
+    [self.post_button sizeToFit];
+    [self.post_button  addTarget:self action:@selector(postSong:) forControlEvents:UIControlEventTouchUpInside];
+    self.post_button.frame = CGRectMake(0.0f, 0.0f, 28.0f, 33.0f);
+    [[self.post_button  layer] setCornerRadius:8.0f];
+    [[self.post_button  layer] setMasksToBounds:YES];
+    [[self.post_button  layer] setShadowOffset:CGSizeMake(5, 5)];
+    [[self.post_button  layer] setShadowColor:[[UIColor blackColor] CGColor]];
+    [[self.post_button  layer] setShadowOpacity:0.5];
+    self.post_button.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.4];
+
+    
     
     
     CAGradientLayer *gradientLayer = [CAGradientLayer layer];
