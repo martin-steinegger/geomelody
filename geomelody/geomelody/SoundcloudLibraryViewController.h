@@ -11,7 +11,7 @@
 
 @class PlayerViewController;
 
-@interface SoundcloudLibraryViewController : UIViewController <PlayerViewControllerProtocol,UITableViewDelegate, UITableViewDataSource>
+@interface SoundcloudLibraryViewController : UIViewController <PlayerViewControllerProtocol,UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UITextFieldDelegate>
 
 @property (strong, nonatomic) id <PlayerViewControllerProtocol> delegate;
 @property (strong, nonatomic) PlayerViewController *playerViewController;
@@ -20,7 +20,9 @@
 
 @property (weak, nonatomic) IBOutlet UISearchBar *search;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *librarySelector;
+@property (weak, nonatomic) IBOutlet UITableView *libraryTableView;
 
 - (IBAction)librarySelection:(id)sender;
+
 
 @end
