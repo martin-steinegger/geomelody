@@ -35,6 +35,7 @@ Reachability *internetReachable;
     [songMapViewController setDelegate:masterViewController];
     
     SoundcloudLibraryViewController * soundcloudLibraryViewController= [[SoundcloudLibraryViewController alloc] initWithNibName:@"SoundcloudLibraryViewController" bundle:nil];
+    soundcloudLibraryViewController.delegate = masterViewController;
     
     playerViewController = [[PlayerViewController alloc] initWithNibName:@"PlayerViewController" bundle:nil];
     [playerViewController setDelegate:masterViewController];
