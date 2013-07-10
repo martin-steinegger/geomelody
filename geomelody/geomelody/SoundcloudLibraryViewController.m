@@ -153,6 +153,7 @@
         NSString* artworkImageUrlObject=[self changeUrlForPictureQuality:(NSString *)imageUrlObject];
         [cell setImageUrl:(NSString*)artworkImageUrlObject];
     }
+    [cell setActive:NO];
     
     return cell;
 
@@ -169,19 +170,27 @@
     return [url stringByReplacingCharactersInRange:range withString:@"t300x300"];
 }
 
-//library selection changed
-- (IBAction)librarySelection:(id)sender {
-    [self updateLibrarySongList];
+// showPlayer is called when user taps on a item
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    self.currentSongPosition = indexPath.row;
+    NSDictionary *song = [self.tracks objectAtIndex:indexPath.row];
+    
+    //NSLog(@"selected song: %@",selectedSong.soundcloud_id);
+    [self showPlayer:song];
 }
 
 // change to PlayerView, which is initialised with the defined song object
 - (void) showPlayer:(NSDictionary*)song {
-    if (!playerViewController) {
-        playerViewController = [[PlayerViewController alloc] initWithNibName:@"PlayerViewController" bundle:nil];
-        playerViewController.delegate = self;
-    }
-    [playerViewController setSongItem:song];
-    [self.navigationController pushViewController:self.playerViewController animated:YES];
+    
+    if(song != NULL)
+        [self.playerViewController setSongItem:song];
+    [self.tabBarController setSelectedIndex:2];
+}
+
+//library selection changed
+- (IBAction)librarySelection:(id)sender {
+    [self updateLibrarySongList];
 }
 
 - (void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
