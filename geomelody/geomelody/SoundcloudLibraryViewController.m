@@ -20,6 +20,7 @@
 @synthesize tracks;
 @synthesize playerViewController;
 @synthesize currentSongPosition;
+@synthesize search;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -35,6 +36,9 @@
 
 // load songs for tab selection: all music/only my music
 - (void) loadSongs {
+    
+    NSString *searchString = search.text;
+    
     //todo: connection to tabs
     
     // do request for SoundCloud
@@ -137,4 +141,6 @@
 }
 
 
+- (IBAction)librarySelection:(id)sender {
+}
 @end

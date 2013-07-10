@@ -22,4 +22,8 @@
 @property (nonatomic, strong) NSArray *tracks;
 @property NSInteger currentSongPosition;
 
+@property (weak, nonatomic) IBOutlet UISearchBar *search;
+
+- (IBAction)librarySelection:(id)sender;
+
 @end
