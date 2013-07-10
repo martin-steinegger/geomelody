@@ -20,7 +20,7 @@
 @synthesize tracks;
 @synthesize playerViewController;
 @synthesize currentSongPosition;
-@synthesize search;
+@synthesize search, librarySelector;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -45,6 +45,14 @@
     // like https://api.soundcloud.com/tracks.json?client_id=f0cfa9035abc5752e699580d5586d1e6&sharing=public&ids=41558714,13158665
     NSMutableDictionary *requestParameter = [NSMutableDictionary dictionary];
     [requestParameter setObject:@"public"  forKey:@"sharing"];
+    // check if search field contains string
+    if(searchString.length>0) {
+        [requestParameter setObject:searchString forKey:@"q"];
+    }
+    // apply search on for user if "my music" is selected
+    if (librarySelector.selectedSegmentIndex == 1) {
+        [requestParameter setObject:[[self getActiveUser] objectForKey:@"id"] forKey:@"user_id"];
+    }
     //todo
     //[requestParameter setObject:ids_string forKey:@"ids"];
     
@@ -137,7 +145,7 @@
 }
 
 - (id)getActiveUser {
-    return [self.delegate getCurrentGeoPosition];
+    return [self.delegate getActiveUser];
 }
 
 

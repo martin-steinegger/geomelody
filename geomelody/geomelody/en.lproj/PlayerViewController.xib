@@ -54,7 +54,7 @@
 					<object class="IBUILabel" id="83102700">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{16, 6}, {213, 21}}</string>
+						<string key="NSFrame">{{8, 6}, {213, 21}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="727923543"/>
@@ -85,7 +85,7 @@
 					<object class="IBUILabel" id="727923543">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{16, 26}, {213, 21}}</string>
+						<string key="NSFrame">{{8, 26}, {213, 21}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="109698914"/>
@@ -385,14 +385,6 @@
 					<int key="connectionID">52</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">post_button</string>
-						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="109698914"/>
-					</object>
-					<int key="connectionID">54</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">togglePlayingState:</string>
 						<reference key="source" ref="784089984"/>
@@ -494,11 +486,6 @@
 						<reference key="parent" ref="191373211"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">53</int>
-						<reference key="object" ref="109698914"/>
-						<reference key="parent" ref="191373211"/>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">29</int>
 						<reference key="object" ref="542955711"/>
 						<reference key="parent" ref="1063613071"/>
@@ -507,6 +494,11 @@
 						<int key="objectID">31</int>
 						<reference key="object" ref="575022889"/>
 						<reference key="parent" ref="1063613071"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">53</int>
+						<reference key="object" ref="109698914"/>
+						<reference key="parent" ref="191373211"/>
 					</object>
 				</array>
 			</object>
@@ -538,6 +530,14 @@
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
 				<object class="IBPartialClassDescription">
+					<string key="className">NSDate</string>
+					<string key="superclassName">NSObject</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/NSDate.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
 					<string key="className">NSTimer</string>
 					<string key="superclassName">NSObject</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
@@ -551,6 +551,8 @@
 					<dictionary class="NSMutableDictionary" key="actions">
 						<string key="playNextSong:">id</string>
 						<string key="playPreviousSong:">id</string>
+						<string key="postSong:">id</string>
+						<string key="songProgressTouchStart:">UISlider</string>
 						<string key="togglePlayingState:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
@@ -561,6 +563,14 @@
 						<object class="IBActionInfo" key="playPreviousSong:">
 							<string key="name">playPreviousSong:</string>
 							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="postSong:">
+							<string key="name">postSong:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="songProgressTouchStart:">
+							<string key="name">songProgressTouchStart:</string>
+							<string key="candidateClassName">UISlider</string>
 						</object>
 						<object class="IBActionInfo" key="togglePlayingState:">
 							<string key="name">togglePlayingState:</string>
