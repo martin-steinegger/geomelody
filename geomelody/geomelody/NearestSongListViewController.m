@@ -35,14 +35,15 @@
         self.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"List" image:img tag:0];
         self.title = @"List";
         self.navigationItem.title = @"";
+        // initialize TagFilterViewController
+        if (!self.genreFilterViewController) {
+            self.genreFilterViewController = [[GenreFilterViewController alloc] initWithNibName:@"GenreFilterViewController" bundle:nil];
+            self.genreFilterViewController.delegate = self;
+        }
+        
     }
     
-    // initialize TagFilterViewController
-    if (!self.genreFilterViewController) {
-        self.genreFilterViewController = [[GenreFilterViewController alloc] initWithNibName:@"GenreFilterViewController" bundle:nil];
-        self.genreFilterViewController.delegate = self;
-    }
-    
+
     return self;
 }
 
@@ -103,7 +104,7 @@
     filterButton.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.4];
 
     UIBarButtonItem *filterButtonItem = [[UIBarButtonItem alloc] initWithCustomView:filterButton];
-    self.navigationItem.leftBarButtonItem = filterButtonItem;
+    self.navigationItem.rightBarButtonItem = filterButtonItem;
 
     
     //change background of navigation bar to black
