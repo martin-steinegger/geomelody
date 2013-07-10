@@ -8,21 +8,18 @@
 
 #import <UIKit/UIKit.h>
 #import "PlayerViewController.h"
-@protocol SoundcloudLibraryViewControllerProtocol <NSObject>
-- (id)getCurrentGeoPosition;
-- (id)getActiveUser;
-@end
 
 @class PlayerViewController;
 
 @interface SoundcloudLibraryViewController : UIViewController <PlayerViewControllerProtocol,UITableViewDelegate, UITableViewDataSource>
 
-@property (strong, nonatomic) id <SoundcloudLibraryViewControllerProtocol> delegate;
+@property (strong, nonatomic) id <PlayerViewControllerProtocol> delegate;
 @property (strong, nonatomic) PlayerViewController *playerViewController;
 @property (nonatomic, strong) NSArray *tracks;
 @property NSInteger currentSongPosition;
 
 @property (weak, nonatomic) IBOutlet UISearchBar *search;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *librarySelector;
 
 - (IBAction)librarySelection:(id)sender;
 
