@@ -280,8 +280,10 @@
 // change to PlayerView, which is initialised with the defined song object
 - (void) showPlayer:(NSDictionary*)song {
 
-    if(song != NULL)
+    if(song != NULL){
         [self.playerViewController setSongItem:song];
+        [self.playerViewController setDelegate:self];
+    }
     [self.tabBarController setSelectedIndex:2];
 }
 
