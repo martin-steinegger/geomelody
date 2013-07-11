@@ -134,6 +134,12 @@
         cell = (SongCell *)[nib objectAtIndex:0];
     }
     
+    //set state (if playing)
+    if(indexPath.row == [self currentSongPosition])
+        [cell setActive:YES];
+    else
+        [cell setActive:NO];
+    
     NSDictionary *track = [self.tracks objectAtIndex:indexPath.row];
     //todo: get all information for the song (title, interpret, genre/tags, likes, image)
     cell.songTitle.text = [track objectForKey:@"title"];
@@ -155,7 +161,6 @@
         NSString* artworkImageUrlObject=[self changeUrlForPictureQuality:(NSString *)imageUrlObject];
         [cell setImageUrl:(NSString*)artworkImageUrlObject];
     }
-    [cell setActive:NO];
     
     return cell;
 
@@ -185,8 +190,11 @@
 // change to PlayerView, which is initialised with the defined song object
 - (void) showPlayer:(NSDictionary*)song {
     
-    if(song != NULL)
+    if(song != NULL){
         [self.playerViewController setSongItem:song];
+        [self.playerViewController setDelegate:self];
+    }
+    [self.libraryTableView reloadData];
     [self.tabBarController setSelectedIndex:2];
 }
 
@@ -214,12 +222,14 @@
 - (id)getPreviousEntry {
     self.currentSongPosition--;
     self.currentSongPosition=MAX(self.currentSongPosition, 0);
+    [self.libraryTableView reloadData];
     return tracks[self.currentSongPosition];
 }
 
 - (id)getNextEntry {
     self.currentSongPosition++;
     self.currentSongPosition=MIN(self.currentSongPosition, [tracks count]-1);
+    [self.libraryTableView reloadData];
     return tracks[self.currentSongPosition];
 }
 
