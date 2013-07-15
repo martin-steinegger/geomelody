@@ -30,6 +30,7 @@
 @synthesize artwork_picture;
 @synthesize audioPlayer;
 @synthesize user_picture;
+@synthesize post_button;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -364,9 +365,7 @@
 
 
     [self.post_button  setTitle:@"Post" forState:UIControlStateNormal];
-    [self.post_button sizeToFit];
     [self.post_button  addTarget:self action:@selector(postSong:) forControlEvents:UIControlEventTouchUpInside];
-    self.post_button.frame = CGRectMake(0.0f, 0.0f, 28.0f, 33.0f);
     [[self.post_button  layer] setCornerRadius:8.0f];
     [[self.post_button  layer] setMasksToBounds:YES];
     [[self.post_button  layer] setShadowOffset:CGSizeMake(5, 5)];
@@ -508,6 +507,8 @@
     [backendApi saveSong:song onSuccess:^{
         NSLog(@"Post Song successful");
         [self.post_button setEnabled:FALSE];
+        [self.post_button setTitle:@"Posted" forState:0 ];
+
     } onFail:^(NSError * error)  {
         NSLog(@"Post Song error");
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Post was not successful"

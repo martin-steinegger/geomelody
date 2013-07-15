@@ -264,7 +264,7 @@
 					<object class="IBUIButton" id="109698914">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{255, 5}, {58, 44}}</string>
+						<string key="NSFrame">{{250, 12}, {65, 33}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="1063613071"/>
@@ -383,6 +383,14 @@
 						<reference key="destination" ref="633299990"/>
 					</object>
 					<int key="connectionID">52</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">post_button</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="109698914"/>
+					</object>
+					<int key="connectionID">61</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
@@ -525,7 +533,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">60</int>
+			<int key="maxID">61</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -552,6 +560,7 @@
 						<string key="playNextSong:">id</string>
 						<string key="playPreviousSong:">id</string>
 						<string key="postSong:">id</string>
+						<string key="songProgressTouchEnd:">UISlider</string>
 						<string key="songProgressTouchStart:">UISlider</string>
 						<string key="togglePlayingState:">id</string>
 					</dictionary>
@@ -567,6 +576,10 @@
 						<object class="IBActionInfo" key="postSong:">
 							<string key="name">postSong:</string>
 							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="songProgressTouchEnd:">
+							<string key="name">songProgressTouchEnd:</string>
+							<string key="candidateClassName">UISlider</string>
 						</object>
 						<object class="IBActionInfo" key="songProgressTouchStart:">
 							<string key="name">songProgressTouchStart:</string>
