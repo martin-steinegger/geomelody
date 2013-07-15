@@ -17,6 +17,9 @@
 @synthesize likes, plays, shares;
 @synthesize likesImage, playsImage, sharesImage;
 
+
+
+
 - (void) setImageUrl:(NSString *)url {
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
     [request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
@@ -26,10 +29,13 @@
                                              ImageEntropy * entropy = [ImageEntropy alloc];
                                              [entropy setImage:image];
                                              NSRange range=[entropy calculateRowRange];
-                                             CGRect cropRect = CGRectMake(0, range.location, image.size.width, range.length);
+                                             CGRect cropRect = CGRectMake(0,
+                                                                          range.location,
+                                                                          image.size.width*image.scale,
+                                                                          range.length);
                                              CGImageRef imageRef = CGImageCreateWithImageInRect([image CGImage], cropRect);
                                              // or use the UIImage wherever you like
-                                             [songImage setImage:[UIImage imageWithCGImage:imageRef]];
+                                             [songImage setImage:[UIImage imageWithCGImage:imageRef scale:image.scale orientation:image.imageOrientation]];
                                              CGImageRelease(imageRef);
                                                                                         
                                          } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {

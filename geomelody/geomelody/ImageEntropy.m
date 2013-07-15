@@ -25,8 +25,8 @@
     image = img;
     imageData = CGDataProviderCopyData(CGImageGetDataProvider(img.CGImage));
     CGSize imageSize = [image  size];
-    imageColumnSize = imageSize.width;
-    imageRowSize = imageSize.height;
+    imageColumnSize = imageSize.width *image.scale;
+    imageRowSize = imageSize.height * image.scale;
 }
 
 - (double) imageRowEntropy:(NSInteger) rowIndex
