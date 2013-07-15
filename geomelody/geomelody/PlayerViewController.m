@@ -217,6 +217,9 @@
             self.songProgressControl.minimumValue = 0.0;
             self.songProgressControl.maximumValue = [self durationInSeconds];
             self.songProgressControl.continuous = YES;
+            NSLog(@"Load done, start audio");
+            NSDate *future = [NSDate dateWithTimeIntervalSinceNow: 0.5 ];
+            [NSThread sleepUntilDate:future];
             [self playAudio];
 
         }];
