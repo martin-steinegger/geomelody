@@ -8,12 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "PlayerViewController.h"
+#import "NearestSongListViewController.h"
+#import "SongSelectionProtocol.h"
 
-@class PlayerViewController;
+@interface SoundcloudLibraryViewController : UIViewController <PlayerViewControllerProtocol,UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UITextFieldDelegate, SongSelectionProtocol>
 
-@interface SoundcloudLibraryViewController : UIViewController <PlayerViewControllerProtocol,UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UITextFieldDelegate>
-
-@property (strong, nonatomic) id <PlayerViewControllerProtocol> delegate;
+@property (strong, nonatomic) id <PlayerViewControllerProtocol, SongSelectionProtocol> delegate;
 @property (strong, nonatomic) PlayerViewController *playerViewController;
 @property (nonatomic, strong) NSArray *tracks;
 @property NSInteger currentSongPosition;
@@ -23,6 +23,4 @@
 @property (weak, nonatomic) IBOutlet UITableView *libraryTableView;
 
 - (IBAction)librarySelection:(id)sender;
-
-
 @end

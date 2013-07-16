@@ -184,6 +184,7 @@
     NSDictionary *song = [self.tracks objectAtIndex:indexPath.row];
     
     //NSLog(@"selected song: %@",selectedSong.soundcloud_id);
+    [[self delegate] selectSongIndex:-1];
     [self showPlayer:song];
 }
 
@@ -239,6 +240,11 @@
 
 - (id)getActiveUser {
     return [self.delegate getActiveUser];
+}
+
+- (void) selectSongIndex:(int)index {
+    [self setCurrentSongPosition:index];
+    [libraryTableView reloadData];
 }
 
 @end

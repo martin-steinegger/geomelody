@@ -286,10 +286,15 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSLog(@"selected song at position: %d from %d songs",indexPath.row, tracks.count);
-    self.currentSongPosition = indexPath.row;
-    NSDictionary *song = [self.tracks objectAtIndex:indexPath.row];
+    [self playSongAtIndex:indexPath.row];
+}
+
+- (void)playSongAtIndex:(int)index {
+    self.currentSongPosition = index;
+    NSDictionary *song = [self.tracks objectAtIndex:index];
     
     //NSLog(@"selected song: %@",selectedSong.soundcloud_id);
+    [soundcloudLibraryViewController selectSongIndex:-1];
     [self showPlayer:song];
 }
 
@@ -310,17 +315,6 @@
         [self.playerViewController setDelegate:self];
     }
     [self.tabBarController setSelectedIndex:2];
-}
-
-
-// change to user's soundcloud library
-- (void) showLibrary {
-    if (!self.soundcloudLibraryViewController) {
-        self.soundcloudLibraryViewController = [[SoundcloudLibraryViewController alloc] init];
-        self.soundcloudLibraryViewController.delegate = self;
-    }
-    // maybe pass userid and geolocation; now: delegate
-    [self.navigationController pushViewController:self.soundcloudLibraryViewController animated:YES];
 }
 
 - (void) updateNearestSongList {
@@ -494,6 +488,11 @@
 
 -(NSInteger) getCurrentTrackIndex {
     return self.currentSongPosition;
+}
+
+-(void) selectSongIndex:(int)index {
+    [self setCurrentSongPosition:index];
+    [tableView reloadData];
 }
 
 @end

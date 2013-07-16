@@ -140,10 +140,8 @@
 - (void)disclosureTapped:(UITapGestureRecognizer*) recognizer {
     UIButton *btn = (UIButton *) recognizer.view;
     
-    NSDictionary* song = [[delegate getTracks] objectAtIndex:btn.tag];
-    
-    [delegate showPlayer:song];
-    [self.navigationController popViewControllerAnimated:YES];
+    [delegate playSongAtIndex:btn.tag];
+    [self updateMapAnnotations];
 }
 
 -(MKAnnotationView*)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation {
@@ -155,12 +153,8 @@
         MapAnnotation* mapAnnotation = annotation;
         NSInteger currentTrack = [delegate getCurrentTrackIndex];
         
-        // no Track set yet, use nearest
-        if(currentTrack == -1)
-            currentTrack = 0;
-        
         MKPinAnnotationView *pinView = [[MKPinAnnotationView alloc] initWithAnnotation:mapAnnotation reuseIdentifier:@""];
-        if([mapAnnotation.index intValue] == currentTrack)
+        if([mapAnnotation.index intValue] == currentTrack && currentTrack != -1)
             pinView.pinColor = MKPinAnnotationColorPurple;
         else
             pinView.pinColor = MKPinAnnotationColorRed;
