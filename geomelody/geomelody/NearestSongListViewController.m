@@ -417,14 +417,15 @@
 - (id)getPreviousEntry {
     self.currentSongPosition--;
     self.currentSongPosition=MAX(self.currentSongPosition, 0);
-    return tracks[self.currentSongPosition];
-    
+    return tracks[self.currentSongPosition];    
 }
 
 - (id)getNextEntry {
     self.currentSongPosition++;
-    self.currentSongPosition=MIN(self.currentSongPosition, [tracks count]-1);
-    return tracks[self.currentSongPosition];
+    if(self.currentSongPosition>=[tracks count])
+        return NULL;
+    else
+        return tracks[self.currentSongPosition];
 }
 
 - (id)getCurrentGeoPosition {

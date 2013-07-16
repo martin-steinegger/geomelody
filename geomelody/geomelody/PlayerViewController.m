@@ -132,9 +132,21 @@
                                   functionWithName:kCAMediaTimingFunctionDefault]];
     [animation setSpeed:0.4];
     [animation setSubtype:kCATransitionFromRight];
-
-    id song = [self.delegate getNextEntry];
-    [self setSongItem:song];
+    id song = NULL;
+    bool get_next_song = true;
+    while(get_next_song) {
+        song = [self.delegate getNextEntry];
+        get_next_song=false;
+        NSDictionary * newSongDict = (NSDictionary* ) song;
+        NSDictionary * oldSongDict = (NSDictionary* ) songItem;
+        if(song != NULL){
+            if([[newSongDict objectForKey:@"id"] isEqual:[oldSongDict objectForKey:@"id"]]==true){
+                get_next_song = true;
+            }
+        }
+    }
+    if(song !=NULL)
+        [self setSongItem:song];
     [[self.view layer] addAnimation:animation forKey:nil];
 
 }
@@ -150,7 +162,8 @@
     [animation setSpeed:0.4];
     [animation setSubtype:kCATransitionFromLeft];
     id song = [self.delegate getPreviousEntry];
-    [self setSongItem:song];
+    if(song !=NULL)
+        [self setSongItem:song];
     [[self.view layer] addAnimation:animation forKey:nil];
 
 }
