@@ -23,7 +23,8 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        UIImage *img = [[UIImage alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"103-map" ofType:@"png"]];
+        UIImage *img = [UIImage imageNamed:@"103-map.png"];
+;
         self.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Map" image:img tag:0];
         self.title = @"Map";
     }
@@ -42,7 +43,8 @@
     
 
     
-    [self configureView];
+    [self updateMapAnnotations];
+    [self zoomToPins];
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 }
@@ -57,7 +59,7 @@
     // Dispose of any resources that can be recreated.
 }
 
--(void) configureView  {
+-(void) updateMapAnnotations  {
     [self removeAllPinsButUserLocation];
     
     NSArray* tracks = [delegate getTracks];
@@ -75,7 +77,7 @@
         NSString* userName = [user objectForKey:@"username"];
         
         MapAnnotation *annotation = [MapAnnotation new];
-        annotation.coordinate = (CLLocationCoordinate2D){[longitude doubleValue], [latitude doubleValue]};
+        annotation.coordinate = (CLLocationCoordinate2D){[latitude doubleValue], [longitude doubleValue]};
         annotation.title = title;
         annotation.subtitle = userName;
         annotation.tag = track;
@@ -83,8 +85,6 @@
         
         [self.mapView addAnnotation:annotation];
     }
-    
-    [self zoomToPins];
 }
 
 -(void)zoomToPins {
@@ -103,7 +103,7 @@
     
     // use first song if no track was selected
     if(currentTrack == -1)
-        currentTrack = 1;
+        currentTrack = 0;
     
     for(id<MKAnnotation> annotation in _mapView.annotations)
     {
@@ -141,10 +141,8 @@
 - (void)disclosureTapped:(UITapGestureRecognizer*) recognizer {
     UIButton *btn = (UIButton *) recognizer.view;
     
-    NSDictionary* song = [[delegate getTracks] objectAtIndex:btn.tag];
-    
-    [delegate showPlayer:song];
-    [self.navigationController popViewControllerAnimated:YES];
+    [delegate playSongAtIndex:btn.tag];
+    [self updateMapAnnotations];
 }
 
 -(MKAnnotationView*)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation {
@@ -156,12 +154,8 @@
         MapAnnotation* mapAnnotation = annotation;
         NSInteger currentTrack = [delegate getCurrentTrackIndex];
         
-        // no Track set yet, use nearest
-        if(currentTrack == -1)
-            currentTrack = 1;
-        
         MKPinAnnotationView *pinView = [[MKPinAnnotationView alloc] initWithAnnotation:mapAnnotation reuseIdentifier:@""];
-        if([mapAnnotation.index intValue] == currentTrack)
+        if([mapAnnotation.index intValue] == currentTrack && currentTrack != -1)
             pinView.pinColor = MKPinAnnotationColorPurple;
         else
             pinView.pinColor = MKPinAnnotationColorRed;

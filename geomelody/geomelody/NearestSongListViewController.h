@@ -8,22 +8,25 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
+
 #import "SongCell.h"
 #import "PlayerViewController.h"
 #import "NearestSongMapViewController.h"
 #import "GenreFilterViewController.h"
 #import "SoundcloudLibraryViewController.h"
+#import "SongSelectionProtocol.h"
 
-
-@class PlayerViewController;
-@class GenreFilterViewController;
+@class SoundcloudLibraryViewController;
 
 @interface NearestSongListViewController : UITableViewController<PlayerViewControllerProtocol,
                                                                 GenreFilterViewControllerProtocol,
-                                                                NearestSongMapViewControllerProtocol>
+                                                                NearestSongMapViewControllerProtocol,
+                                                                SongSelectionProtocol>
+
 @property (strong, nonatomic) PlayerViewController *playerViewController;
 @property (strong, nonatomic) GenreFilterViewController *genreFilterViewController;
 @property (strong, nonatomic) SoundcloudLibraryViewController *soundcloudLibraryViewController;
+@property (strong, nonatomic) NearestSongMapViewController *nearestSongMapViewController;
 @property (nonatomic, strong) NSArray *tracks;
 @property (nonatomic, strong) AVAudioPlayer *player;
 @property (strong,nonatomic) CLLocation   *currentLocation;

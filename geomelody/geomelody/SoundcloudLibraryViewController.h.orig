@@ -23,8 +23,11 @@
 @property (weak, nonatomic) IBOutlet UITableView *libraryTableView;
 
 - (IBAction)librarySelection:(id)sender;
+<<<<<<< HEAD
+=======
 
 - (IBAction)dismissKeyboard:(id)sender;
 
 
+>>>>>>> 5a921409b357a3a0d56ea521d3c4d9d5040c8bf1
 @end

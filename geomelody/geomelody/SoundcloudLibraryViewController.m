@@ -27,7 +27,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        UIImage *img = [[UIImage alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"103-map" ofType:@"png"]];
+        UIImage *img = [UIImage imageNamed:@"06-magnify.png"];
         self.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Search" image:img tag:0];
         self.title = @"Search";
     }
@@ -82,7 +82,6 @@
         if (!jsonError && [jsonResponse isKindOfClass:[NSArray class]]) {
             //todo
             tracks = [jsonResponse copy];
-            NSLog(@"tracks: %@", tracks);
             [self.libraryTableView reloadData];
         }else {
             NSLog(@"error occurred when loading songs: %@", jsonError);
@@ -122,6 +121,7 @@
     if(tracks.count == 0) {
         NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"EmptyLibraryView" owner:self options:nil];
         UITableViewCell *cell = [nib objectAtIndex:0];
+        cell.userInteractionEnabled = NO;
         return cell;
     }
     
@@ -170,7 +170,6 @@
     NSRange start =[url rangeOfString:@"-" options:NSBackwardsSearch];
     NSRange end   =[url rangeOfString:@"." options:NSBackwardsSearch];
     if(end.location < start.location){
-        NSLog(@"Start > End");
         return url;
     }
     NSRange range = NSMakeRange(start.location+1,(end.location-start.location)-1);
@@ -184,6 +183,7 @@
     NSDictionary *song = [self.tracks objectAtIndex:indexPath.row];
     
     //NSLog(@"selected song: %@",selectedSong.soundcloud_id);
+    [[self delegate] selectSongIndex:-1];
     [self showPlayer:song];
 }
 
@@ -203,18 +203,24 @@
     [self updateLibrarySongList];
 }
 
-- (void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+- (IBAction)dismissKeyboard:(id)sender{
     NSLog(@"touch");
-    [self.view endEditing:YES];
+    //[self.view endEditing:YES];
+    libraryTableView.userInteractionEnabled = YES;
     [search resignFirstResponder];
 }
 
 // filter library items on search string
 - (void) searchBarSearchButtonClicked:(UISearchBar *)searchBar {
-    NSLog(@"start search");
     [self.view endEditing:YES];
     [search resignFirstResponder];
     [self updateLibrarySongList];
+    self.currentSongPosition = -1;
+}
+
+- (void) searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
+    NSLog(@"search opened");
+    libraryTableView.userInteractionEnabled = NO;
 }
 
 // delegate methods ***
@@ -239,6 +245,11 @@
 
 - (id)getActiveUser {
     return [self.delegate getActiveUser];
+}
+
+- (void) selectSongIndex:(int)index {
+    [self setCurrentSongPosition:index];
+    [libraryTableView reloadData];
 }
 
 @end
