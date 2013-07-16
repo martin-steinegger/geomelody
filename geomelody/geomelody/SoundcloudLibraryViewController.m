@@ -82,7 +82,6 @@
         if (!jsonError && [jsonResponse isKindOfClass:[NSArray class]]) {
             //todo
             tracks = [jsonResponse copy];
-            NSLog(@"tracks: %@", tracks);
             [self.libraryTableView reloadData];
         }else {
             NSLog(@"error occurred when loading songs: %@", jsonError);
@@ -122,6 +121,7 @@
     if(tracks.count == 0) {
         NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"EmptyLibraryView" owner:self options:nil];
         UITableViewCell *cell = [nib objectAtIndex:0];
+        cell.userInteractionEnabled = NO;
         return cell;
     }
     
@@ -170,7 +170,6 @@
     NSRange start =[url rangeOfString:@"-" options:NSBackwardsSearch];
     NSRange end   =[url rangeOfString:@"." options:NSBackwardsSearch];
     if(end.location < start.location){
-        NSLog(@"Start > End");
         return url;
     }
     NSRange range = NSMakeRange(start.location+1,(end.location-start.location)-1);
@@ -203,9 +202,10 @@
     [self updateLibrarySongList];
 }
 
-- (void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+- (IBAction)dismissKeyboard:(id)sender{
     NSLog(@"touch");
-    [self.view endEditing:YES];
+    //[self.view endEditing:YES];
+    libraryTableView.userInteractionEnabled = YES;
     [search resignFirstResponder];
 }
 
@@ -215,6 +215,11 @@
     [search resignFirstResponder];
     [self updateLibrarySongList];
     self.currentSongPosition = -1;
+}
+
+- (void) searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
+    NSLog(@"search opened");
+    libraryTableView.userInteractionEnabled = NO;
 }
 
 // delegate methods ***
