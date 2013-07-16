@@ -13,7 +13,7 @@
 @synthesize latitude  = latitude_;
 @synthesize longitude = longitude_;
 
--(NSDictionary*) toDictionary {
+- (NSDictionary *) toDictionary {
     return [[NSDictionary alloc] initWithObjectsAndKeys:latitude_, @"Latitude", longitude_, @"Longitude", nil];
 }
 

@@ -11,19 +11,19 @@
 #import "GeoMelodyBackendLocation.h"
 
 @interface GeoMelodyBackendSong : NSObject {
-    NSNumber* soundCloudSongId_;
-    NSNumber* soundCloudUserId_;
-    NSString* comment_;
-    GeoMelodyBackendLocation* location_;
-    NSArray*  tags_;
+    NSNumber * soundCloudSongId_;
+    NSNumber * soundCloudUserId_;
+    NSString * comment_;
+    GeoMelodyBackendLocation * location_;
+    NSArray * tags_;
 }
 
-@property (nonatomic) NSNumber* soundCloudSongId;
-@property (nonatomic) NSNumber* soundCloudUserId;
-@property (nonatomic) NSString* comment;
-@property (nonatomic) GeoMelodyBackendLocation* location;
-@property (nonatomic) NSArray*  tags;
+@property (nonatomic) NSNumber * soundCloudSongId;
+@property (nonatomic) NSNumber * soundCloudUserId;
+@property (nonatomic) NSString * comment;
+@property (nonatomic) GeoMelodyBackendLocation * location;
+@property (nonatomic) NSArray * tags;
 
--(NSDictionary*) toDictionary;
+- (NSDictionary *) toDictionary;
 
 @end

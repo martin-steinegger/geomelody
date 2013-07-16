@@ -19,23 +19,24 @@
 @class SoundcloudLibraryViewController;
 
 @interface NearestSongListViewController : UITableViewController<PlayerViewControllerProtocol,
-                                                                GenreFilterViewControllerProtocol,
-                                                                NearestSongMapViewControllerProtocol,
-                                                                SongSelectionProtocol>
+                                                                 GenreFilterViewControllerProtocol,
+                                                                 NearestSongMapViewControllerProtocol,
+                                                                 SongSelectionProtocol>
 
-@property (strong, nonatomic) PlayerViewController *playerViewController;
-@property (strong, nonatomic) GenreFilterViewController *genreFilterViewController;
-@property (strong, nonatomic) SoundcloudLibraryViewController *soundcloudLibraryViewController;
-@property (strong, nonatomic) NearestSongMapViewController *nearestSongMapViewController;
-@property (nonatomic, strong) NSArray *tracks;
-@property (nonatomic, strong) AVAudioPlayer *player;
-@property (strong,nonatomic) CLLocation   *currentLocation;
-@property (strong,nonatomic) NSDictionary *activeUser;
-@property (strong,nonatomic) UIAlertView *networkAlert;
+@property (strong, nonatomic) PlayerViewController * playerViewController;
+@property (strong, nonatomic) GenreFilterViewController * genreFilterViewController;
+@property (strong, nonatomic) SoundcloudLibraryViewController * soundcloudLibraryViewController;
+@property (strong, nonatomic) NearestSongMapViewController * nearestSongMapViewController;
+
+@property (strong, nonatomic) NSArray * tracks;
+@property (strong, nonatomic) AVAudioPlayer * player;
+@property (strong, nonatomic) CLLocation * currentLocation;
+@property (strong, nonatomic) NSDictionary * activeUser;
+@property (strong, nonatomic) UIAlertView * networkAlert;
+
+@property (strong, nonatomic) IBOutlet UITableView * tableView;
 
 @property NSInteger currentSongPosition;
-
-@property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property NSInteger reachability;
 
 @end

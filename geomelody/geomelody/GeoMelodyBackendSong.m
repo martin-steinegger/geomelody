@@ -16,8 +16,9 @@
 @synthesize location         = location_;
 @synthesize tags             = tags_;
 
--(NSDictionary*) toDictionary {
-    NSDictionary* location = [location_ toDictionary];
+- (NSDictionary *) toDictionary {
+    NSDictionary * location = [location_ toDictionary];
+
     return [[NSDictionary alloc] initWithObjectsAndKeys:soundCloudSongId_, @"SoundCloudSongId", soundCloudUserId_, @"SoundCloudUserId", comment_, @"Comment", location, @"Location", tags_, @"Tags", nil];
 }
 

@@ -89,6 +89,7 @@
 		847BCE091795A96100DAD2AE /* 06-magnify.png in Resources */ = {isa = PBXBuildFile; fileRef = 847BCE081795A96100DAD2AE /* 06-magnify.png */; };
 		8499582D178DA000003B4BA5 /* EmptyLibraryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8499582C178DA000003B4BA5 /* EmptyLibraryView.xib */; };
 		84B5CB75178D70B200A8F6DA /* play-overlay.png in Resources */ = {isa = PBXBuildFile; fileRef = 84B5CB74178D70B200A8F6DA /* play-overlay.png */; };
+		84C83CA11795F69200AD7E60 /* Distance.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C83CA01795F69200AD7E60 /* Distance.m */; };
 		84CBE36C1782296000C4B1F2 /* BackendApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 84CBE36B1782296000C4B1F2 /* BackendApi.m */; };
 		84CBE3781782360000C4B1F2 /* GeoMelodyBackendSong.m in Sources */ = {isa = PBXBuildFile; fileRef = 84CBE3771782360000C4B1F2 /* GeoMelodyBackendSong.m */; };
 		84CBE37B1782367C00C4B1F2 /* GeoMelodyBackendLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 84CBE37A1782367C00C4B1F2 /* GeoMelodyBackendLocation.m */; };
@@ -314,6 +315,11 @@
 		847BCE081795A96100DAD2AE /* 06-magnify.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "06-magnify.png"; sourceTree = "<group>"; };
 		8499582C178DA000003B4BA5 /* EmptyLibraryView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmptyLibraryView.xib; sourceTree = "<group>"; };
 		84B5CB74178D70B200A8F6DA /* play-overlay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "play-overlay.png"; sourceTree = "<group>"; };
+		84C83C971795F28700AD7E60 /* PlayerViewControllerProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlayerViewControllerProtocol.h; sourceTree = "<group>"; };
+		84C83C9C1795F2FA00AD7E60 /* NearestSongMapViewControllerProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NearestSongMapViewControllerProtocol.h; sourceTree = "<group>"; };
+		84C83C9D1795F36B00AD7E60 /* GenreFilterViewControllerProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GenreFilterViewControllerProtocol.h; sourceTree = "<group>"; };
+		84C83C9F1795F4B600AD7E60 /* Distance.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Distance.h; sourceTree = "<group>"; };
+		84C83CA01795F69200AD7E60 /* Distance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Distance.m; sourceTree = "<group>"; };
 		84CBE36A1782296000C4B1F2 /* BackendApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackendApi.h; sourceTree = "<group>"; };
 		84CBE36B1782296000C4B1F2 /* BackendApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackendApi.m; sourceTree = "<group>"; };
 		84CBE3761782360000C4B1F2 /* GeoMelodyBackendSong.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeoMelodyBackendSong.h; sourceTree = "<group>"; };
@@ -413,12 +419,11 @@
 		4707995F177C943F0098B2F8 /* geomelody */ = {
 			isa = PBXGroup;
 			children = (
+				84C83C9E1795F3C300AD7E60 /* Helpers */,
 				847BCE06179598BC00DAD2AE /* Protocols */,
 				844EAF361788CC4D006A1131 /* Controls */,
 				84046AA41785D82A00168789 /* Map */,
 				84CBE375178235E800C4B1F2 /* Domain */,
-				47E72CF2178B2045007B80EC /* ImageEntropy.h */,
-				47E72CF3178B2045007B80EC /* ImageEntropy.m */,
 				47079968177C94400098B2F8 /* AppDelegate.h */,
 				47079969177C94400098B2F8 /* AppDelegate.m */,
 				47752C9317818C08000B4F24 /* SongCell.h */,
@@ -623,8 +628,22 @@
 			isa = PBXGroup;
 			children = (
 				847BCE071795990D00DAD2AE /* SongSelectionProtocol.h */,
+				84C83C971795F28700AD7E60 /* PlayerViewControllerProtocol.h */,
+				84C83C9C1795F2FA00AD7E60 /* NearestSongMapViewControllerProtocol.h */,
+				84C83C9D1795F36B00AD7E60 /* GenreFilterViewControllerProtocol.h */,
 			);
 			name = Protocols;
+			sourceTree = "<group>";
+		};
+		84C83C9E1795F3C300AD7E60 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				47E72CF2178B2045007B80EC /* ImageEntropy.h */,
+				47E72CF3178B2045007B80EC /* ImageEntropy.m */,
+				84C83C9F1795F4B600AD7E60 /* Distance.h */,
+				84C83CA01795F69200AD7E60 /* Distance.m */,
+			);
+			name = Helpers;
 			sourceTree = "<group>";
 		};
 		84CBE375178235E800C4B1F2 /* Domain */ = {
@@ -866,6 +885,7 @@
 				844EAF391788CC76006A1131 /* GMSegmentedButtonBar.m in Sources */,
 				47E72CF4178B2045007B80EC /* ImageEntropy.m in Sources */,
 				84D1F329178B44900031D50E /* SoundcloudLibraryViewController.m in Sources */,
+				84C83CA11795F69200AD7E60 /* Distance.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -12,16 +12,16 @@
 #import "GeoMelodyBackendSong.h"
 #import "GeoMelodyBackendLocation.h"
 
-typedef void (^SaveSongRequestBlock) ();
-typedef void (^GetNearestSongsRequestBlock) (NSArray*);
-typedef void (^ResponseErrorBlock) (NSError*);
+typedef void (^ SaveSongRequestBlock) ();
+typedef void (^ GetNearestSongsRequestBlock) (NSArray *);
+typedef void (^ ResponseErrorBlock) (NSError *);
 
 @interface BackendApi : NSObject
 
-+(BackendApi*) sharedBackendApi;
++ (BackendApi *) sharedBackendApi;
 
--(void) saveSong:(GeoMelodyBackendSong*) song onSuccess:(SaveSongRequestBlock) successCallback onFail:(ResponseErrorBlock) failiureCallback;
+- (void) saveSong:(GeoMelodyBackendSong *) song onSuccess:(SaveSongRequestBlock) successCallback onFail:(ResponseErrorBlock) failiureCallback;
 
--(void) getkNearestSongsWithLocation:(GeoMelodyBackendLocation*) location andFilters:(NSArray*) filters k:(NSInteger)k
-                           onSuccess:(GetNearestSongsRequestBlock) successCallback onFail:(ResponseErrorBlock) failiureCallback;
+- (void) getkNearestSongsWithLocation:(GeoMelodyBackendLocation *) location andFilters:(NSArray *) filters k:(NSInteger) k
+    onSuccess:(GetNearestSongsRequestBlock) successCallback onFail:(ResponseErrorBlock) failiureCallback;
 @end

@@ -11,6 +11,6 @@
 
 @interface CalloutMapView : MKMapView
 
-@property (strong, nonatomic) SMCalloutView *calloutView;
+@property (strong, nonatomic) SMCalloutView * calloutView;
 
 @end

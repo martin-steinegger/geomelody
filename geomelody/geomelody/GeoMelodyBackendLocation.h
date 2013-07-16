@@ -9,13 +9,13 @@
 #import <Foundation/Foundation.h>
 
 @interface GeoMelodyBackendLocation : NSObject {
-    NSNumber* latitude_;
-    NSNumber* longitude_;
+    NSNumber * latitude_;
+    NSNumber * longitude_;
 }
 
-@property (nonatomic) NSNumber* latitude;
-@property (nonatomic) NSNumber* longitude;
+@property (nonatomic) NSNumber * latitude;
+@property (nonatomic) NSNumber * longitude;
 
--(NSDictionary*) toDictionary;
+- (NSDictionary *) toDictionary;
 
 @end

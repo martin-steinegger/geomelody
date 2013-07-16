@@ -18,75 +18,72 @@
 
 }
 
-
-
-- (void)setImage:(UIImage *) img
-{
+- (void) setImage:(UIImage *)img {
     image = img;
     imageData = CGDataProviderCopyData(CGImageGetDataProvider(img.CGImage));
     CGSize imageSize = [image  size];
-    imageColumnSize = imageSize.width *image.scale;
+    imageColumnSize = imageSize.width * image.scale;
     imageRowSize = imageSize.height * image.scale;
 }
 
-- (double) imageRowEntropy:(NSInteger) rowIndex
-{
-    int COUNTER[256*3];
-    memset(&COUNTER[0], 0, (256*3)*sizeof(int));
-    const UInt8 *pixels = CFDataGetBytePtr(imageData);
+- (double) imageRowEntropy:(NSInteger)rowIndex {
+    int COUNTER[256 * 3];
+
+    memset(&COUNTER[0], 0, (256 * 3) * sizeof(int));
+    const UInt8 * pixels = CFDataGetBytePtr(imageData);
     int bytesPerPixel = CGImageGetBitsPerPixel(image.CGImage) / 8;
-    for(int y = 0; y < imageColumnSize; y++) {
+    for (int y = 0; y < imageColumnSize; y++) {
         int pixelStartIndex = (y + (rowIndex * imageColumnSize)) * bytesPerPixel;
         UInt8 redVal = pixels[pixelStartIndex ];
         UInt8 greenVal = pixels[pixelStartIndex + 1];
         UInt8 blueVal = pixels[pixelStartIndex + 2];
         COUNTER[redVal]++;       // red
-        COUNTER[256+greenVal]++; // green
-        COUNTER[512+blueVal]++;  // blue
-        
+        COUNTER[256 + greenVal]++; // green
+        COUNTER[512 + blueVal]++;  // blue
+
     }
     double entropy = 0;
-    double two_log=log(2);
-    double histlength=imageColumnSize*3;
+    double two_log = log(2);
+    double histlength = imageColumnSize * 3;
 
-    for(int i = 0; i < 256*3; i ++){
-        double p= ((double)COUNTER[i])/histlength;
-        if(p!=0)
-            entropy += p * log(p)/two_log;
+    for (int i = 0; i < 256 * 3; i++) {
+        double p = ((double) COUNTER[i]) / histlength;
+        if (p != 0) {
+            entropy += p * log(p) / two_log;
+        }
     }
-    
+
     return -entropy;
 }
 
-bool AreSame(double a, double b)
-{
+bool AreSame(double a, double b){
     return fabs(a - b) < DBL_EPSILON;
 }
 
--(NSInteger) compareLines:(NSInteger) firstLineIndex secondLineIndex:(NSInteger)secondLineIndex{
+- (NSInteger) compareLines:(NSInteger)firstLineIndex secondLineIndex:(NSInteger)secondLineIndex {
     double firstLineEntropy  = [self imageRowEntropy:firstLineIndex];
     double secondLineEntropy = [self imageRowEntropy:secondLineIndex];
 
-    if (AreSame(firstLineEntropy,secondLineEntropy))
+    if (AreSame(firstLineEntropy, secondLineEntropy)) {
         return 0;
-    else if(firstLineEntropy < secondLineEntropy)
+    } else if (firstLineEntropy < secondLineEntropy) {
         return 1;
-    else if (firstLineEntropy > secondLineEntropy)
+    } else if (firstLineEntropy > secondLineEntropy) {
         return -1;
-    else
+    } else {
         return 0;
+    }
 
 }
 
-- (NSRange) calculateRowRange
-{
+- (NSRange) calculateRowRange {
     NSInteger searchWidth = 160;
     NSInteger currentSize = imageRowSize;
     NSInteger topLine = 0;
-    NSInteger buttomLine = imageRowSize-1;
+    NSInteger buttomLine = imageRowSize - 1;
 
-    while(currentSize > searchWidth){
-        switch([self compareLines:topLine secondLineIndex:buttomLine]){
+    while (currentSize > searchWidth) {
+        switch ([self compareLines:topLine secondLineIndex:buttomLine]) {
             case -1:
                 buttomLine--;
                 break;
@@ -96,12 +93,13 @@ bool AreSame(double a, double b)
             case 0:
                 buttomLine--;
                 break;
-                
+
         }
         currentSize--;
     }
-    if((topLine+searchWidth) > imageRowSize)
+    if ((topLine + searchWidth) > imageRowSize) {
         topLine = imageRowSize - searchWidth;
+    }
     return NSMakeRange(topLine, searchWidth);
 }
 

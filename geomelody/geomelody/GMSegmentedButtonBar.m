@@ -10,40 +10,33 @@
 
 @implementation GMSegmentedButtonBar
 
-- (id)initWithFrame:(CGRect)frame
-{
+- (id) initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
     }
     return self;
 }
 
-- (void) touchesBegan: (NSSet *) touches withEvent: (UIEvent *) event
-{
-    [super touchesBegan: touches withEvent: event];
-    
-    [self sendActionsForControlEvents: UIControlEventTouchDown];
+- (void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    [super touchesBegan:touches withEvent:event];
+
+    [self sendActionsForControlEvents:UIControlEventTouchDown];
 }
 
-- (void) touchesEnded: (NSSet *) touches withEvent: (UIEvent *) event
-{
-    [super touchesEnded: touches withEvent: event];
-    
-    if (CGRectContainsPoint(self.bounds, [touches.anyObject locationInView: self]))
-    {
-        [self sendActionsForControlEvents: UIControlEventTouchUpInside];
-    }
-    else
-    {
-        [self sendActionsForControlEvents: UIControlEventTouchUpOutside];
+- (void) touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+    [super touchesEnded:touches withEvent:event];
+
+    if (CGRectContainsPoint(self.bounds, [touches.anyObject locationInView:self])) {
+        [self sendActionsForControlEvents:UIControlEventTouchUpInside];
+    } else {
+        [self sendActionsForControlEvents:UIControlEventTouchUpOutside];
     }
 }
 
-- (void) touchesCancelled: (NSSet *) touches withEvent: (UIEvent *) event
-{
-    [super touchesCancelled: touches withEvent: event];
-    
-    [self sendActionsForControlEvents: UIControlEventTouchCancel];
+- (void) touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
+    [super touchesCancelled:touches withEvent:event];
+
+    [self sendActionsForControlEvents:UIControlEventTouchCancel];
 }
 
 @end

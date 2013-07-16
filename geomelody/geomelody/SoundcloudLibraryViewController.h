@@ -7,24 +7,29 @@
 //
 
 #import <UIKit/UIKit.h>
+
 #import "PlayerViewController.h"
 #import "NearestSongListViewController.h"
 #import "SongSelectionProtocol.h"
 
-@interface SoundcloudLibraryViewController : UIViewController <PlayerViewControllerProtocol,UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UITextFieldDelegate, SongSelectionProtocol>
+@interface SoundcloudLibraryViewController : UIViewController <PlayerViewControllerProtocol,
+                                                               UITableViewDelegate,
+                                                               UITableViewDataSource,
+                                                               UISearchBarDelegate,
+                                                               UITextFieldDelegate,
+                                                               SongSelectionProtocol>
 
 @property (strong, nonatomic) id <PlayerViewControllerProtocol, SongSelectionProtocol> delegate;
-@property (strong, nonatomic) PlayerViewController *playerViewController;
-@property (nonatomic, strong) NSArray *tracks;
+@property (strong, nonatomic) PlayerViewController * playerViewController;
+@property (strong, nonatomic) NSArray * tracks;
+
+@property (weak, nonatomic) IBOutlet UISearchBar * search;
+@property (weak, nonatomic) IBOutlet UISegmentedControl * librarySelector;
+@property (weak, nonatomic) IBOutlet UITableView * libraryTableView;
+
 @property NSInteger currentSongPosition;
 
-@property (weak, nonatomic) IBOutlet UISearchBar *search;
-@property (weak, nonatomic) IBOutlet UISegmentedControl *librarySelector;
-@property (weak, nonatomic) IBOutlet UITableView *libraryTableView;
-
-- (IBAction)librarySelection:(id)sender;
-
-- (IBAction)dismissKeyboard:(id)sender;
-
+- (IBAction) librarySelection:(id) sender;
+- (IBAction) dismissKeyboard:(id) sender;
 
 @end

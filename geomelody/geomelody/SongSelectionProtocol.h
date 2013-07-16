@@ -9,5 +9,5 @@
 #import <Foundation/Foundation.h>
 
 @protocol SongSelectionProtocol <NSObject>
-- (void) selectSongIndex:(int)index;
+- (void) selectSongIndex:(int) index;
 @end

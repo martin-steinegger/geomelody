@@ -13,7 +13,7 @@
 #import "Reachability.h"
 
 @implementation AppDelegate
-Reachability *internetReachable;
+Reachability * internetReachable;
 
 @synthesize window = _window;
 @synthesize tabBarController = _tabBarController;
@@ -21,47 +21,47 @@ Reachability *internetReachable;
 @synthesize locationManager;
 @synthesize nearestSongListViewController;
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{
-    
+- (BOOL) application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+
     [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
-	[self becomeFirstResponder];
-    //no shadows for navigationbar
+    [self becomeFirstResponder];
+    // no shadows for navigationbar
     [[UINavigationBar appearance]setShadowImage:[[UIImage alloc] init]];
-    
+
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    
+
     nearestSongListViewController = [[NearestSongListViewController alloc] initWithNibName:@"NearestSongListViewController" bundle:nil];
-    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:nearestSongListViewController];
-    
-    NearestSongMapViewController *songMapViewController = [[NearestSongMapViewController alloc] initWithNibName:@"NearestSongMapViewController" bundle:nil];
+    UINavigationController * navigationController = [[UINavigationController alloc] initWithRootViewController:nearestSongListViewController];
+
+    NearestSongMapViewController * songMapViewController = [[NearestSongMapViewController alloc] initWithNibName:@"NearestSongMapViewController" bundle:nil];
     [songMapViewController setDelegate:nearestSongListViewController];
-    
-    SoundcloudLibraryViewController * soundcloudLibraryViewController= [[SoundcloudLibraryViewController alloc] initWithNibName:@"SoundcloudLibraryViewController" bundle:nil];
+
+    SoundcloudLibraryViewController * soundcloudLibraryViewController = [[SoundcloudLibraryViewController alloc] initWithNibName:@"SoundcloudLibraryViewController" bundle:nil];
     [soundcloudLibraryViewController setDelegate:nearestSongListViewController];
-    
+
     playerViewController = [[PlayerViewController alloc] initWithNibName:@"PlayerViewController" bundle:nil];
     [playerViewController setDelegate:nearestSongListViewController];
-    
+
     [nearestSongListViewController setPlayerViewController:playerViewController];
     [nearestSongListViewController setSoundcloudLibraryViewController:soundcloudLibraryViewController];
     [nearestSongListViewController setNearestSongMapViewController:songMapViewController];
-    
+
     [soundcloudLibraryViewController setPlayerViewController:playerViewController];
-    
+
     _tabBarController = [[UITabBarController alloc] init];
     _tabBarController.viewControllers = [NSArray arrayWithObjects:navigationController, songMapViewController, playerViewController, soundcloudLibraryViewController, nil];
-    
-    
+
+
     locationManager = [[CLLocationManager alloc] init];
     [locationManager setDesiredAccuracy:kCLLocationAccuracyBest];
     [locationManager setDelegate:self];
-    [locationManager setDistanceFilter:10]; //only every ten meters
-    [locationManager startUpdatingLocation]; //only every ten meters
+    [locationManager setDistanceFilter:10]; // only every ten meters
+    [locationManager startUpdatingLocation]; // only every ten meters
 
     self.window.rootViewController = _tabBarController;
     self.window.backgroundColor = [UIColor whiteColor];
-    //Internet check
+    
+    // Internet check
     [[NSNotificationCenter defaultCenter] addObserver:nearestSongListViewController selector:@selector(reachabilityHasChanged:) name:kReachabilityChangedNotification object:nil];
     internetReachable = [Reachability reachabilityForInternetConnection];
     [internetReachable startNotifier];
@@ -74,21 +74,21 @@ Reachability *internetReachable;
 }
 
 
--(void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
-    //updated    newLocation
+- (void) locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
+    // updated    newLocation
     nearestSongListViewController.currentLocation = newLocation;
     [nearestSongListViewController updateNearestSongList];
 }
 
--(void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
+- (void) locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
     NSLog(@"%@", [error description]);
 }
 
 
-- (void)remoteControlReceivedWithEvent:(UIEvent *)event {
-    //if it is a remote control event handle it correctly
+- (void) remoteControlReceivedWithEvent:(UIEvent *)event {
+    // if it is a remote control event handle it correctly
     if (event.type == UIEventTypeRemoteControl) {
-        if(playerViewController.songItem != NULL){
+        if (playerViewController.songItem != NULL) {
             if (event.subtype == UIEventSubtypeRemoteControlPlay) {
                 NSLog(@"playAudio");
                 [playerViewController playAudio];
@@ -110,35 +110,29 @@ Reachability *internetReachable;
 }
 
 
-- (void)applicationWillResignActive:(UIApplication *)application
-{
+- (void) applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
 }
 
-- (void)applicationDidEnterBackground:(UIApplication *)application
-{
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
+- (void) applicationDidEnterBackground:(UIApplication *)application {
+    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
 }
 
-- (void)applicationWillEnterForeground:(UIApplication *)application
-{
+- (void) applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
 }
 
-- (void)applicationDidBecomeActive:(UIApplication *)application
-{
+- (void) applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 }
 
-- (void)applicationWillTerminate:(UIApplication *)application
-{
+- (void) applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
-- (NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
-{
+- (NSUInteger) application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window {
 
     return UIInterfaceOrientationMaskPortrait;
 }

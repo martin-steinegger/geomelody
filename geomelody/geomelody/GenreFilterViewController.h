@@ -8,15 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol GenreFilterViewControllerProtocol <NSObject>
-- (void) updateNearestSongList;
-- (void) updateNearestSongListWithKNN:(int)k;
-@end
+#import "GenreFilterViewControllerProtocol.h"
 
 @interface GenreFilterViewController : UITableViewController
 
 @property (strong, nonatomic) id <GenreFilterViewControllerProtocol> delegate;
 
-- (NSMutableArray *)getGenreFilter;
+- (NSMutableArray *) getGenreFilter;
 
 @end

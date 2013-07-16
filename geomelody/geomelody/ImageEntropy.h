@@ -9,8 +9,6 @@
 #import <Foundation/Foundation.h>
 
 @interface ImageEntropy : NSObject
-- (void)setImage:(UIImage *) img;
+- (void) setImage:(UIImage *) img;
 - (NSRange) calculateRowRange;
-
-
 @end

@@ -7,26 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
+
 #import "SMCalloutView.h"
 #import "CalloutMapView.h"
 #import "SongSelectionProtocol.h"
-
-@protocol NearestSongMapViewControllerProtocol <NSObject>
-
--(NSArray*) getTracks;
--(NSInteger) getCurrentTrackIndex;
--(void) showPlayer:(NSDictionary*)song;
--(void) playSongAtIndex:(int)index;
-
-@end
+#import "NearestSongMapViewControllerProtocol.h"
 
 @interface NearestSongMapViewController : UIViewController <MKMapViewDelegate, SMCalloutViewDelegate>
 
 @property (strong, nonatomic) id <NearestSongMapViewControllerProtocol, SongSelectionProtocol> delegate;
+@property (weak, nonatomic) IBOutlet CalloutMapView * mapView;
+@property (strong, nonatomic) SMCalloutView * calloutView;
 
-@property (weak, nonatomic) IBOutlet CalloutMapView *mapView;
-@property (strong, nonatomic) SMCalloutView *calloutView;
+- (void) updateMapAnnotations;
+- (void) zoomToPins;
 
--(void) updateMapAnnotations;
--(void) zoomToPins;
 @end
