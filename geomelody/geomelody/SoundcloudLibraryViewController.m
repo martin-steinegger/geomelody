@@ -211,10 +211,10 @@
 
 // filter library items on search string
 - (void) searchBarSearchButtonClicked:(UISearchBar *)searchBar {
-    NSLog(@"start search");
     [self.view endEditing:YES];
     [search resignFirstResponder];
     [self updateLibrarySongList];
+    self.currentSongPosition = -1;
 }
 
 // delegate methods ***
