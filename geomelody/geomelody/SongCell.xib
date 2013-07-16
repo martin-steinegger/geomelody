@@ -52,6 +52,10 @@
 								<int key="IBUIContentMode">2</int>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+								<object class="NSCustomResource" key="IBUIImage">
+									<string key="NSClassName">NSImage</string>
+									<string key="NSResourceName">songcell_background.png</string>
+								</object>
 							</object>
 							<object class="IBUILabel" id="737727301">
 								<reference key="NSNextResponder" ref="735591696"/>
@@ -508,6 +512,7 @@
 			<string key="Ruler-icon.png">{16, 16}</string>
 			<string key="heart32.png">{32, 32}</string>
 			<string key="play32.png">{32, 32}</string>
+			<string key="songcell_background.png">{320, 160}</string>
 		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">2083</string>
 	</data>
