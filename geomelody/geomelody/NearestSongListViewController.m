@@ -16,6 +16,9 @@
 #import "Reachability.h"
 #import "SoundcloudLibraryViewController.h"
 
+#import <CoreLocation/CoreLocation.h>
+
+#include "math.h"
 
 @implementation NearestSongListViewController
 
@@ -24,6 +27,7 @@
 @synthesize reachability;
 @synthesize playerViewController;
 @synthesize soundcloudLibraryViewController;
+@synthesize nearestSongMapViewController;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -242,8 +246,18 @@
     NSNumber *favoritings_count = [track objectForKey:@"favoritings_count"];
     cell.likes.text = [NSString stringWithFormat:@"%d",(int)[favoritings_count intValue]];
     
-    NSNumber *shared_count = [track objectForKey:@"shared_to_count"];
-    cell.shares.text = [NSString stringWithFormat:@"%d",(int)[shared_count intValue]];
+    NSDictionary* location = [track objectForKey:@"Location"];
+    if(location) {
+        double latitude = [[location objectForKey:@"Latitude"] doubleValue];
+        double longitude = [[location objectForKey:@"Longitude"] doubleValue];
+        
+        CLLocation* userLocation = [[CLLocation alloc] initWithLatitude:latitude longitude:longitude];
+        double distance = [userLocation distanceFromLocation:[self currentLocation]];
+  
+        cell.shares.text = [self convertDistanceToString:distance];
+    } else {
+        cell.shares.text = @"-";
+    }
     
     NSNumber *playback_count = [track objectForKey:@"playback_count"];
     cell.plays.text = [NSString stringWithFormat:@"%d",(int)[playback_count intValue]];
@@ -255,6 +269,17 @@
             [cell setImageUrl:(NSString*)artworkImageUrlObject];
     }
     return cell;
+}
+
+- (NSString*) convertDistanceToString:(double) distance {
+    if (distance < 100)
+        return [NSString stringWithFormat:@"%g m", roundf(distance)];
+    else if (distance < 1000)
+        return [NSString stringWithFormat:@"%g m", roundf(distance/5)*5];
+    else if (distance < 10000)
+        return [NSString stringWithFormat:@"%g km", roundf(distance/100)/10];
+    else
+        return [NSString stringWithFormat:@"%g km", roundf(distance/1000)];
 }
 
 // showPlayer is called when user taps on a item
@@ -299,6 +324,10 @@
 }
 
 - (void) updateNearestSongList {
+    [self updateNearestSongListWithKNN:4];
+}
+
+- (void) updateNearestSongListWithKNN:(int)k {
     
     NSLog(@"update nearest song list");
     [self checkLogin];
@@ -312,7 +341,7 @@
     GeoMelodyBackendLocation *backendLocation = [GeoMelodyBackendLocation alloc];
     backendLocation.latitude =  [NSNumber numberWithDouble:self.currentLocation.coordinate.latitude];
     backendLocation.longitude = [NSNumber numberWithDouble:self.currentLocation.coordinate.longitude];
-    [backendApi getkNearestSongsWithLocation:backendLocation andFilters:genreFilter k:4 onSuccess:^(NSArray * objects) {
+    [backendApi getkNearestSongsWithLocation:backendLocation andFilters:genreFilter k:8 onSuccess:^(NSArray * objects) {
         NSLog(@"getkNearestSongsWithLocation successful");
         NSMutableString *ids_string = [NSMutableString stringWithCapacity:1000];
         NSDictionary *songsDict = (NSDictionary* ) objects;
@@ -379,6 +408,9 @@
                 if(!isSame) {
                     tracks = newData;
                     [self setCurrentSongPosition:-1];
+                    
+                    [nearestSongMapViewController updateMapAnnotations];
+                    [nearestSongMapViewController zoomToPins];
                 }
                 
                 [self.tableView reloadData];

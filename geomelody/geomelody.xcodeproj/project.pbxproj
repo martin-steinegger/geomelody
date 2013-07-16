@@ -85,6 +85,7 @@
 		84707E95178C7C9500FB14A0 /* 194-note-2.png in Resources */ = {isa = PBXBuildFile; fileRef = 84707E92178C7C9500FB14A0 /* 194-note-2.png */; };
 		84707E9C178C7E8300FB14A0 /* 103-map.png in Resources */ = {isa = PBXBuildFile; fileRef = 84707E9A178C7E8300FB14A0 /* 103-map.png */; };
 		84707E9D178C7E8300FB14A0 /* 152-rolodex.png in Resources */ = {isa = PBXBuildFile; fileRef = 84707E9B178C7E8300FB14A0 /* 152-rolodex.png */; };
+		847BCE05179575E800DAD2AE /* Ruler-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 847BCE04179575E800DAD2AE /* Ruler-icon.png */; };
 		8499582D178DA000003B4BA5 /* EmptyLibraryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8499582C178DA000003B4BA5 /* EmptyLibraryView.xib */; };
 		84B5CB75178D70B200A8F6DA /* play-overlay.png in Resources */ = {isa = PBXBuildFile; fileRef = 84B5CB74178D70B200A8F6DA /* play-overlay.png */; };
 		84CBE36C1782296000C4B1F2 /* BackendApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 84CBE36B1782296000C4B1F2 /* BackendApi.m */; };
@@ -307,6 +308,7 @@
 		84707E92178C7C9500FB14A0 /* 194-note-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "194-note-2.png"; sourceTree = "<group>"; };
 		84707E9A178C7E8300FB14A0 /* 103-map.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "103-map.png"; sourceTree = "<group>"; };
 		84707E9B178C7E8300FB14A0 /* 152-rolodex.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "152-rolodex.png"; sourceTree = "<group>"; };
+		847BCE04179575E800DAD2AE /* Ruler-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Ruler-icon.png"; sourceTree = "<group>"; };
 		8499582C178DA000003B4BA5 /* EmptyLibraryView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmptyLibraryView.xib; sourceTree = "<group>"; };
 		84B5CB74178D70B200A8F6DA /* play-overlay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "play-overlay.png"; sourceTree = "<group>"; };
 		84CBE36A1782296000C4B1F2 /* BackendApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackendApi.h; sourceTree = "<group>"; };
@@ -478,6 +480,7 @@
 		47752CA617818C57000B4F24 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				847BCE04179575E800DAD2AE /* Ruler-icon.png */,
 				84B5CB74178D70B200A8F6DA /* play-overlay.png */,
 				84707E9A178C7E8300FB14A0 /* 103-map.png */,
 				84707E9B178C7E8300FB14A0 /* 152-rolodex.png */,
@@ -809,6 +812,7 @@
 				84D1F32A178B44900031D50E /* SoundcloudLibraryViewController.xib in Resources */,
 				84B5CB75178D70B200A8F6DA /* play-overlay.png in Resources */,
 				8499582D178DA000003B4BA5 /* EmptyLibraryView.xib in Resources */,
+				847BCE05179575E800DAD2AE /* Ruler-icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

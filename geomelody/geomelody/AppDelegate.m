@@ -38,13 +38,15 @@ Reachability *internetReachable;
     [songMapViewController setDelegate:nearestSongListViewController];
     
     SoundcloudLibraryViewController * soundcloudLibraryViewController= [[SoundcloudLibraryViewController alloc] initWithNibName:@"SoundcloudLibraryViewController" bundle:nil];
-    soundcloudLibraryViewController.delegate = nearestSongListViewController;
+    [soundcloudLibraryViewController setDelegate:nearestSongListViewController];
     
     playerViewController = [[PlayerViewController alloc] initWithNibName:@"PlayerViewController" bundle:nil];
     [playerViewController setDelegate:nearestSongListViewController];
     
     [nearestSongListViewController setPlayerViewController:playerViewController];
     [nearestSongListViewController setSoundcloudLibraryViewController:soundcloudLibraryViewController];
+    [nearestSongListViewController setNearestSongMapViewController:songMapViewController];
+    
     [soundcloudLibraryViewController setPlayerViewController:playerViewController];
     
     _tabBarController = [[UITabBarController alloc] init];

@@ -417,7 +417,7 @@
 //save changes when go back button is pressed
 - (void)viewWillDisappear:(BOOL)animated {
     [self saveGenreFilterData];
-    [self.delegate updateNearestSongList];
+    [self.delegate updateNearestSongListWithKNN:8];
     //[self.nearestSongMapListViewController setFilter:_tagFilter];
 }
 

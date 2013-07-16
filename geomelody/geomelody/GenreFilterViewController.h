@@ -10,6 +10,7 @@
 
 @protocol GenreFilterViewControllerProtocol <NSObject>
 - (void) updateNearestSongList;
+- (void) updateNearestSongListWithKNN:(int)k;
 @end
 
 @interface GenreFilterViewController : UITableViewController

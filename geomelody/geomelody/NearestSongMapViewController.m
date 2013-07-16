@@ -42,7 +42,8 @@
     
 
     
-    [self configureView];
+    [self updateMapAnnotations];
+    [self zoomToPins];
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 }
@@ -57,7 +58,7 @@
     // Dispose of any resources that can be recreated.
 }
 
--(void) configureView  {
+-(void) updateMapAnnotations  {
     [self removeAllPinsButUserLocation];
     
     NSArray* tracks = [delegate getTracks];
@@ -75,7 +76,7 @@
         NSString* userName = [user objectForKey:@"username"];
         
         MapAnnotation *annotation = [MapAnnotation new];
-        annotation.coordinate = (CLLocationCoordinate2D){[longitude doubleValue], [latitude doubleValue]};
+        annotation.coordinate = (CLLocationCoordinate2D){[latitude doubleValue], [longitude doubleValue]};
         annotation.title = title;
         annotation.subtitle = userName;
         annotation.tag = track;
@@ -83,8 +84,6 @@
         
         [self.mapView addAnnotation:annotation];
     }
-    
-    [self zoomToPins];
 }
 
 -(void)zoomToPins {
@@ -103,7 +102,7 @@
     
     // use first song if no track was selected
     if(currentTrack == -1)
-        currentTrack = 1;
+        currentTrack = 0;
     
     for(id<MKAnnotation> annotation in _mapView.annotations)
     {
@@ -158,7 +157,7 @@
         
         // no Track set yet, use nearest
         if(currentTrack == -1)
-            currentTrack = 1;
+            currentTrack = 0;
         
         MKPinAnnotationView *pinView = [[MKPinAnnotationView alloc] initWithAnnotation:mapAnnotation reuseIdentifier:@""];
         if([mapAnnotation.index intValue] == currentTrack)
