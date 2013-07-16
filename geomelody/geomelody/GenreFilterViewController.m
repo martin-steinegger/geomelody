@@ -151,7 +151,7 @@
 
     // add header for each genre
     if (section == 0) {
-        UIView *header = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 50)];
+        UIView *header = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 40)];
         UISwitch *filterSwitch = [[UISwitch alloc] initWithFrame: CGRectMake(230, 22, 100, 30)];
         [filterSwitch setOn:_filterEnabled animated:YES];
         [filterSwitch addTarget:self action:@selector(toggleFilter:) forControlEvents:UIControlEventValueChanged];
