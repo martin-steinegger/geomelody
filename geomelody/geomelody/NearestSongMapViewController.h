@@ -25,4 +25,6 @@
 @property (weak, nonatomic) IBOutlet CalloutMapView *mapView;
 @property (strong, nonatomic) SMCalloutView *calloutView;
 
+-(void) updateMapAnnotations;
+-(void) zoomToPins;
 @end

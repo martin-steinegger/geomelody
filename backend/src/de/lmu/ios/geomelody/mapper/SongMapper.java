@@ -17,7 +17,7 @@ public class SongMapper implements RowMapper<Song> {
         song.setSoundCloudUserId(rs.getInt("soundcloud_user_id"));
         song.setComment(rs.getString("comment"));
         
-        Location location = new Location(rs.getDouble("longitude"), rs.getDouble("latitude"));
+        Location location = new Location(rs.getDouble("latitude"), rs.getDouble("longitude"));
         song.setLocation(location);
         
         song.setTags(Arrays.asList(rs.getString("tags").split(",")));
