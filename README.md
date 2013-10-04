@@ -1,3 +1,4 @@
 geomelody
 =========
-wonderful music project
+iPhone app to exp. local music 
+wonderful music project.
